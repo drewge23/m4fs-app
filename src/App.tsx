@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./Login/Login";
@@ -7,8 +7,16 @@ import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
 import Settings from "./Settings/Settings";
 import Lesson from "./Lesson/Lesson";
+import {useDispatch} from "react-redux";
+import {auth} from "./user/userSlice";
 
 function App() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(auth());
+    }, [dispatch])
+
     return (
         <BrowserRouter>
             <div className="App">
@@ -21,7 +29,6 @@ function App() {
                     <Route path="lesson" element={<Lesson/>}/>
                 </Routes>
             </div>
-
         </BrowserRouter>
     );
 }

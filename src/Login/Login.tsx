@@ -1,16 +1,19 @@
 import {FC} from "react";
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import {Form, Field} from 'react-final-form'
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../user/userSlice";
 
-const sleep = (ms:any) => new Promise(resolve => setTimeout(resolve, ms))
-
-const onSubmit = async (values:any) => {
-    //DLA API goes here
-    await sleep(300)
-    window.alert(JSON.stringify(values))
-}
 
 const LoginForm: FC = () => {
+    const dispatch = useDispatch();
+
+    const onSubmit = (values: any) => {
+        //DLA API goes here
+        dispatch(login(values.email, values.password, values.rememberMe));
+        window.alert(JSON.stringify(values))
+    }
+
     return (
         <div>
             <h1>Login</h1>
@@ -39,7 +42,7 @@ const LoginForm: FC = () => {
                         </div>
                         <div>
                             <label>remember me</label>
-                            <Field name="remember" component="input" type="checkbox"/>
+                            <Field name="rememberMe" component="input" type="checkbox"/>
                         </div>
                         <div className="buttons">
                             <button type="submit" disabled={submitting || pristine}>
@@ -62,6 +65,11 @@ const LoginForm: FC = () => {
 }
 
 const Login: FC = () => {
+    const isAuth = useSelector((state: any) => state.user.isAuth);
+    if (isAuth) {
+        return <Navigate to={'/profile'} />
+    }
+
     return (
         <div>
             <LoginForm/>

@@ -1,20 +1,32 @@
 import {FC} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../user/userSlice";
+import {Navigate} from "react-router-dom";
 
 const Profile: FC = () => {
-    const firstName = useSelector((state: any) => state.user.firstName)
-    const lastName = useSelector((state: any) => state.user.lastName)
-    const country = useSelector((state: any) => state.user.country)
+    const dispatch = useDispatch();
+
+    const user = useSelector((state: any) => state.user)
+    const isAuth = useSelector((state: any) => state.user.isAuth);
+    if (!isAuth) {
+        return <Navigate to={'/login'} />
+    }
 
     return (
         <div>
             Profile
             <div>
+                <button onClick={() => dispatch(logout())}>Log out</button>
+            </div>
+            <div>
                 <div>
-                    {firstName + "  " + lastName}
+                    {"Login: " + user.login}
                 </div>
                 <div>
-                    {"Country: " + country}
+                    {"Email: " + user.email}
+                </div>
+                <div>
+                    {"ID: " + user.id}
                 </div>
             </div>
         </div>
