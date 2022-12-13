@@ -1,4 +1,5 @@
 import {FC} from "react";
+import {NavLink} from "react-router-dom";
 
 const Registration: FC = () => {
     return (
@@ -12,6 +13,9 @@ const Registration: FC = () => {
             <label htmlFor="password">password</label>
             <input name="password" type="password"/>
             <button type="submit">submit</button>
+            <NavLink to={"/"}>
+                Skip
+            </NavLink>
         </form>
     )
 }
