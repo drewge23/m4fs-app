@@ -2,10 +2,16 @@ import {FC} from "react";
 import {NavLink} from "react-router-dom";
 import {Form, Field} from "react-final-form";
 import './Registration.module.css';
-
-const onSubmit = (values: any) => alert(JSON.stringify(values));
+import {useDispatch} from "react-redux";
+import {setUserInfo} from "../user/userSlice";
 
 const RegistrationForm: FC = () => {
+    const dispatch = useDispatch();
+
+    const onSubmit = (values: any) => {
+        dispatch(setUserInfo(values));
+    };
+
     return (
         <div className="formContainer">
             <h1>Registration</h1>
