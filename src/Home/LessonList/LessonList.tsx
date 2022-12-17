@@ -1,22 +1,25 @@
-import {NavLink} from "react-router-dom";
 import {FC} from "react";
+import {Container, Grid} from "@mui/material";
+import LessonListSection from "./LessonListSection/LessonListSection";
 
 const LessonList: FC = () => {
     return (
-        <div>
-            <div>
-                <NavLink to={"/lesson"}> lesson 1 </NavLink>
-            </div>
-            <div>
-                <NavLink to={"/lesson"}> bonus lesson 1 </NavLink>
-            </div>
-            <div>
-                <NavLink to={"/lesson"}> lesson 1 </NavLink>
-            </div>
-            <div>
-                <NavLink to={"/lesson"}> lesson 3 </NavLink>
-            </div>
-        </div>
+        <Container>
+            <Grid container spacing={2}>
+                <Grid item xs={6} md={6}>
+                    <LessonListSection/>
+                </Grid>
+                <Grid item xs={6} md={6}>
+                    <LessonListSection/>
+                </Grid>
+                <Grid item xs={6} md={6}>
+                    <LessonListSection/>
+                </Grid>
+                <Grid item xs={6} md={6}>
+                    <LessonListSection/>
+                </Grid>
+            </Grid>
+        </Container>
     )
 }
 

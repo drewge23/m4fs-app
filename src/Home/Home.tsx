@@ -1,11 +1,12 @@
 import {FC} from "react";
 import {NavLink} from "react-router-dom";
 import LessonList from "./LessonList/LessonList";
+import {Accordion, Button, Card} from "@mui/material";
 
 const Home: FC = () => {
     return (
         <div>
-            Home
+            <h1>Home</h1>
             <div>
                 <NavLink to={"/login"}> Log in </NavLink>
             </div>
@@ -17,7 +18,7 @@ const Home: FC = () => {
                     <button> Settings</button>
                 </NavLink>
             </div>
-            <LessonList />
+            <LessonList/>
         </div>
     )
 }

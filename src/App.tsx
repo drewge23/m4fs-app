@@ -6,7 +6,7 @@ import Registration from "./Registration/Registration";
 import Home from "./Home/Home";
 import Profile from "./Profile/Profile";
 import Settings from "./Settings/Settings";
-import Lesson from "./Lesson/Lesson";
+import LessonScreen from "./LessonScreen/LessonScreen";
 import {useDispatch} from "react-redux";
 import {auth} from "./user/userSlice";
 
@@ -26,7 +26,7 @@ function App() {
                     <Route path="" element={<Home/>}/>
                     <Route path="profile" element={<Profile/>}/>
                     <Route path="settings" element={<Settings/>}/>
-                    <Route path="lesson" element={<Lesson/>}/>
+                    <Route path="lesson" element={<LessonScreen/>}/>
                 </Routes>
             </div>
         </BrowserRouter>
