@@ -13,6 +13,8 @@ const initialFunction = () => {
 let currentLessonSlice = createSlice({
     name: 'currentLesson',
     initialState: {
+        grade: 0,
+        section: 0,
         id: 0,
         name: '',
         component: InitialComponent,
