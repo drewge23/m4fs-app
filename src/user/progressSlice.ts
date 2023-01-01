@@ -1,22 +1,27 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const grade1 = new Map([
+    ["addition", [0, 0, false, false, false]],
+    ["subtraction", [0, 0, false, false, false]],
+])
+
+const grade2 = new Map([
+    ["quadratic", [0, 0, false, false, false]],
+])
+
 const initialState = [
-    [
-        [0, 0, false, false, false],
-        [0, 0, false, false, false],
-    ],
-    [
-        [0, 0, false, false, false]
-    ]
+    grade1,
+    grade2,
 ]
 
 let progressSlice = createSlice({
     name: 'progress',
     initialState: initialState,
     reducers: {
-        incrementLessonProgress: (state, action) => {
-            // @ts-ignore
-            state[action.payload.grade][action.payload.section][0]++;
+        incrementLessonProgress: (state: any, action) => {
+            let grade = action.payload.grade;
+            let section = action.payload.section;
+            state[grade].get(section)[0]++;
             return state;
         },
         incrementBonusProgress: (state, action) => {
@@ -44,9 +49,9 @@ let progressSlice = createSlice({
 
 export default progressSlice.reducer;
 export const {
-                incrementLessonProgress,
-                incrementBonusProgress,
-                lessonsCompleted,
-                bonusCompleted,
-                testCompleted
-             } = progressSlice.actions;
+    incrementLessonProgress,
+    incrementBonusProgress,
+    lessonsCompleted,
+    bonusCompleted,
+    testCompleted
+} = progressSlice.actions;

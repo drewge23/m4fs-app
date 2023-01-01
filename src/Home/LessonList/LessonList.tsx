@@ -13,7 +13,7 @@ const LessonList: FC = () => {
                         {grade.lessonSections.map(section => {
                                 return (
                                     <Grid item xs={6} md={6}  key={section.id}>
-                                        <LessonListSection sectionProps={section} />
+                                        <LessonListSection sectionProps={section} grade={grade.id}/>
                                     </Grid>
                                 )
                             }

@@ -5,20 +5,28 @@ import {useFormik} from "formik";
 import AdditionComponent, {generateAddition} from "../lessons/grade1/additionSection/Addition/AdditionComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {setLessonStateThunk} from "./currentLessonSlice";
+import {incrementLessonProgress} from "../user/progressSlice";
 
 const LessonScreen: FC = (props: any) => {
-    // const location = useLocation();
-    // let lessonId = props.location.id;
+    const location = useLocation();
+    let {id, grade, sectionName, sectionProgress, lessonIndex} = location.state;
 
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
     useEffect(() => {
         if (progress >= 100) {
-            alert('good job!');
-            navigate('/');
-            setProgress(0);
+            onCompletion(grade, sectionName, sectionProgress, lessonIndex)
         }
     }, [progress])
+
+    function onCompletion(grade: number, sectionName: string, sectionProgress: number, lessonIndex: number) {
+        if (lessonIndex >= sectionProgress) {
+            dispatch(incrementLessonProgress({grade: grade - 1, section: sectionName}))
+        }
+        alert('good job!');
+        navigate('/');
+        setProgress(0);
+    }
 
     let Lesson = AdditionComponent;
     let generateFunction = generateAddition;
@@ -43,6 +51,7 @@ const LessonScreen: FC = (props: any) => {
     for (let i = 0; i < rightAnswers.length; i++) {
         initialAnswers.push('');
     }
+
     const formik = useFormik({
         initialValues: {answers: initialAnswers},
         onSubmit: (values, {resetForm}) => {
