@@ -9,6 +9,7 @@ import Settings from "./Settings/Settings";
 import LessonScreen from "./LessonScreen/LessonScreen";
 import {useDispatch} from "react-redux";
 import {auth} from "./user/userSlice";
+import Shop from "./Shop/Shop";
 
 function App() {
     const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function App() {
                     <Route path="registration" element={<Registration/>}/>
                     <Route path="" element={<Home/>}/>
                     <Route path="profile" element={<Profile/>}/>
+                    <Route path="shop" element={<Shop/>}/>
                     <Route path="settings" element={<Settings/>}/>
                     <Route path="lesson" element={<LessonScreen/>}/>
                 </Routes>

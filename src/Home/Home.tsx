@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {NavLink} from "react-router-dom";
-import LessonList from "./LessonList/LessonList";
+import SectionList from "./SectionList/SectionList";
 import {useSelector} from "react-redux";
 
 const Home: FC = () => {
@@ -16,12 +16,15 @@ const Home: FC = () => {
                 <NavLink to={"/profile"}> Profile </NavLink>
             </div>
             <div>
+                <NavLink to={"/shop"}> Shop </NavLink>
+            </div>
+            <div>
                 <NavLink to={"/settings"}>
                     <button> Settings</button>
                 </NavLink>
             </div>
             <div>{money + '$'}</div>
-            <LessonList/>
+            <SectionList/>
         </div>
     )
 }

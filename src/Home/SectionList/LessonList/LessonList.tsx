@@ -18,24 +18,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {bonusLessonsCompleted, lessonsCompleted} from "../../../user/progressSlice";
 
-const LessonListSection = (props: any) => {
+const LessonList = (props: any) => {
     let grade = props.grade;
     let section = props.sectionProps
     const progress = useSelector((state: any) => state.progress[grade - 1].get(section.name));
     let [sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted] = progress;
 
     function isDisabled(index: number) {
-        if (sectionProgress >= index) {
-            return false
-        }
-        return true
+        return sectionProgress < index;
     }
 
     function isGold(index: number) {
-        if (sectionProgress > index) {
-            return true
-        }
-        return false
+        return sectionProgress > index;
     }
 
     const dispatch = useDispatch();
@@ -94,8 +88,6 @@ const LessonListSection = (props: any) => {
                         <Accordion key={lesson.id}
                             disabled={
                                  (sectionProgress / section.lessons.length) <= (index / section.bonusLessons.length)
-                                      ? true
-                                      : false
                             }>
                             <AccordionSummary
                                 expandIcon={
@@ -141,7 +133,7 @@ const LessonListSection = (props: any) => {
                     <div>
                         {sectionCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
                         {bonusCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
-                        <StarBorderPurple500OutlinedIcon/>
+                        {testCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
                     </div>
                 </Container>
             </CardActions>
@@ -149,4 +141,4 @@ const LessonListSection = (props: any) => {
     )
 }
 
-export default LessonListSection;
+export default LessonList;

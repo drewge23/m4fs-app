@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../user/userSlice";
-import {Navigate} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 
 const Profile: FC = () => {
     const dispatch = useDispatch();
@@ -29,6 +29,9 @@ const Profile: FC = () => {
                     {"ID: " + user.id}
                 </div>
             </div>
+            <NavLink to={"/"}>
+                Back
+            </NavLink>
         </div>
     )
 }

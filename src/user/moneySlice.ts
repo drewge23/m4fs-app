@@ -10,8 +10,10 @@ const moneySlice = createSlice({
         spend: (state, action) => {
             if (state >= action.payload) {
                 return state - action.payload
+            } else {
+                return state
             }
-            alert('not enough money!')
+            // alert('not enough money!')
         },
     }
 })

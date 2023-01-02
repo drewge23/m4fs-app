@@ -1,9 +1,9 @@
 import {FC} from "react";
 import {Container, Grid} from "@mui/material";
-import LessonListSection from "./LessonListSection/LessonListSection";
+import LessonList from "./LessonList/LessonList";
 import grades from "../../lessons/grades";
 
-const LessonList: FC = () => {
+const SectionList: FC = () => {
     return (
         <Container>
             {grades.map(grade => {
@@ -13,7 +13,7 @@ const LessonList: FC = () => {
                         {grade.lessonSections.map(section => {
                                 return (
                                     <Grid item xs={6} md={6}  key={section.id}>
-                                        <LessonListSection sectionProps={section} grade={grade.id}/>
+                                        <LessonList sectionProps={section} grade={grade.id}/>
                                     </Grid>
                                 )
                             }
@@ -25,4 +25,4 @@ const LessonList: FC = () => {
     )
 }
 
-export default LessonList;
+export default SectionList;
