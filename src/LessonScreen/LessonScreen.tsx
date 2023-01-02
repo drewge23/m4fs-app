@@ -5,11 +5,13 @@ import {useFormik} from "formik";
 import AdditionComponent, {generateAddition} from "../lessons/grade1/additionSection/Addition/AdditionComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {setLessonStateThunk} from "./currentLessonSlice";
-import {incrementLessonProgress} from "../user/progressSlice";
+import {incrementBonusProgress, incrementLessonProgress} from "../user/progressSlice";
+import {earn} from "../user/moneySlice";
+//?? pass section object through props?
+import additionSection from "../lessons/grade1/additionSection/additionSection";
 
 const LessonScreen: FC = (props: any) => {
-    const location = useLocation();
-    let {id, grade, sectionName, sectionProgress, lessonIndex} = location.state;
+    let section = additionSection;
 
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
@@ -20,20 +22,34 @@ const LessonScreen: FC = (props: any) => {
     }, [progress])
 
     function onCompletion(grade: number, sectionName: string, sectionProgress: number, lessonIndex: number) {
-        if (lessonIndex >= sectionProgress) {
-            dispatch(incrementLessonProgress({grade: grade - 1, section: sectionName}))
+        if (isBonus) {
+            if (lessonIndex >= bonusProgress) {
+                dispatch(incrementBonusProgress({grade: grade - 1, section: sectionName}))
+            }
+        } else {
+            if (lessonIndex >= sectionProgress) {
+                dispatch(incrementLessonProgress({grade: grade - 1, section: sectionName}))
+            }
         }
+        dispatch(earn(reward)) //??
         alert('good job!');
         navigate('/');
         setProgress(0);
     }
 
-    let Lesson = AdditionComponent;
-    let generateFunction = generateAddition;
+    const location = useLocation()
+    let {id, reward, grade, sectionName, sectionProgress, bonusProgress, lessonIndex, isBonus} = location.state;
+
+    let lesson = isBonus
+        ? section.bonusLessons.find(lesson => lesson.id === id)
+        : section.lessons.find(lesson => lesson.id === id)
+    let Lesson = lesson?.component || AdditionComponent;
+    let generateFunction = lesson?.generateFunction || generateAddition;
+    let theory = lesson?.theory || 'theory sector is not yet ready for this lesson'
 
     const dispatch = useDispatch();
     let isFetching = useSelector((state: any) => state.currentLesson.isFetching)
-    let path = '../lessons/grade1/additionSection/Addition/AdditionComponent'
+    let path = '../lessons/grade1/additionSection/Addition/BonusAdditionComponent2'
     useEffect(() => {
         // @ts-ignore
         dispatch(setLessonStateThunk(path))
@@ -81,7 +97,7 @@ const LessonScreen: FC = (props: any) => {
     return (
         <div>
             <h1>Lesson</h1>
-            <button onClick={() => alert('here goes the Theory section')}>Theory</button>
+            <button onClick={() => alert(theory)}>Theory</button>
             <NavLink to={"/"}>
                 <button>Exit</button>
             </NavLink>

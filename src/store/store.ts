@@ -3,6 +3,7 @@ import userReducer from "../user/userSlice";
 import progressReducer from "../user/progressSlice";
 import currentLessonReducer from "../LessonScreen/currentLessonSlice";
 import { enableMapSet } from 'immer';
+import moneyReducer from "../user/moneySlice";
 
 enableMapSet()
 
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     currentLesson: currentLessonReducer,
     progress: progressReducer,
+    money: moneyReducer,
 })
 
 const store = configureStore({

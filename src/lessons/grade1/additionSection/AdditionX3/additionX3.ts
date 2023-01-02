@@ -5,7 +5,7 @@ let additionX3 = {
     name: 'additionX3',
     component: AdditionX3Component,
     generateFunction: generateAddition,
-    reward: 1,
+    reward: 2,
     isCompleted: false,
     isBonus: false,
     description: 'the second addition lesson',

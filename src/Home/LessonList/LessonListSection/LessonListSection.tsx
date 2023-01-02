@@ -14,79 +14,139 @@ import StarBorderPurple500OutlinedIcon from '@mui/icons-material/StarBorderPurpl
 import StarIcon from '@mui/icons-material/Star';
 import {NavLink} from "react-router-dom";
 import {motion} from "framer-motion";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {bonusLessonsCompleted, lessonsCompleted} from "../../../user/progressSlice";
 
 const LessonListSection = (props: any) => {
     let grade = props.grade;
     let section = props.sectionProps
-    const progress = useSelector((state: any) => state.progress[0].get('addition'));
-    let [sectionProgress, bonusProgress, testCompletion, sectionCompletion, bonusCompletion] = progress;
-
-    console.log('sectionProgress ' + sectionProgress)
+    const progress = useSelector((state: any) => state.progress[grade - 1].get(section.name));
+    let [sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted] = progress;
 
     function isDisabled(index: number) {
-        if (sectionProgress >= index) { return false }
+        if (sectionProgress >= index) {
+            return false
+        }
         return true
     }
 
     function isGold(index: number) {
-        if (sectionProgress > index) { return true }
+        if (sectionProgress > index) {
+            return true
+        }
         return false
     }
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (sectionProgress >= section.lessons.length) {
+            dispatch(lessonsCompleted({grade: grade - 1, section: section.name}))
+        }
+        if (bonusProgress >= section.bonusLessons.length) {
+            dispatch(bonusLessonsCompleted({grade: grade - 1, section: section.name}))
+        }
+    }, [sectionProgress, bonusProgress])
 
     return (
         <Card sx={{maxWidth: 600}}>
             <CardContent>
                 <h1>{section.name}</h1>
+
+                {/*LESSONS*/}
                 {section.lessons.map((lesson: any, index: number) => {
-                    console.log('index ' + index)
                     return (
                         <Accordion key={lesson.id} disabled={isDisabled(index)}>
                             <AccordionSummary
                                 expandIcon={isGold(index)
-                                    ? <StarIcon />
+                                    ? <StarIcon/>
                                     : <StarBorderPurple500OutlinedIcon/>}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                    >
-                                    <Typography>{lesson.name}</Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                    <Typography>{lesson.description}</Typography>
-                                    <div>
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                            >
+                                <Typography>{lesson.name}</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography>{lesson.description}</Typography>
+                                <div>
                                     <NavLink to={"/lesson"}
                                              state={{
-                                                 id: lesson.id,
-                                                 lessonIndex: index,
+                                                 grade: grade,
                                                  sectionName: section.name,
                                                  sectionProgress: sectionProgress,
-                                                 grade: grade
-                                             }}> start </NavLink>
-                                    </div>
-                                    </AccordionDetails>
-                                    </Accordion>
-                                    )
-                                })}
-                        </CardContent>
-                    <CardActions>
-                        <Container>
-                            <Box
-                                component={motion.div}
-                                style={{width: 100, height: 100, backgroundColor: 'pink', borderRadius: '50%'}}
-                                whileHover={{scale: 1.1}}
-                                whileTap={{scale: 0.9}}
-                            >
-                                <EmojiEventsIcon sx={{marginTop: 4.5}}/>
-                            </Box>
-                            <div>
-                                <StarBorderPurple500OutlinedIcon/>
-                                <StarBorderPurple500OutlinedIcon/>
-                                <StarBorderPurple500OutlinedIcon/>
-                            </div>
-                        </Container>
-                    </CardActions>
-                </Card>
-                )
-                }
+                                                 bonusProgress: bonusProgress,
 
-                    export default LessonListSection;
+                                                 lessonIndex: index,
+                                                 isBonus: false,
+                                                 id: lesson.id,
+                                                 reward: lesson.reward,
+                                             }}> start </NavLink>
+                                </div>
+                            </AccordionDetails>
+                        </Accordion>
+                    )
+                })}
+
+                {/*BONUS LESSONS*/}
+                <h3>bonus lessons</h3>
+                {section.bonusLessons.map((lesson: any, index: number) => {
+                    return (
+                        <Accordion key={lesson.id}
+                            disabled={
+                                 (sectionProgress / section.lessons.length) <= (index / section.bonusLessons.length)
+                                      ? true
+                                      : false
+                            }>
+                            <AccordionSummary
+                                expandIcon={
+                                    bonusProgress > index
+                                        ? <StarIcon/>
+                                        : <StarBorderPurple500OutlinedIcon/>}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                            >
+                                <Typography>{lesson.name}</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography>{lesson.description}</Typography>
+                                <div>
+                                    <NavLink to={"/lesson"}
+                                             state={{
+                                                 grade: grade,
+                                                 sectionName: section.name,
+                                                 sectionProgress: sectionProgress,
+                                                 bonusProgress: bonusProgress,
+
+                                                 lessonIndex: index,
+                                                 isBonus: true,
+                                                 id: lesson.id,
+                                                 reward: lesson.reward,
+                                             }}> start </NavLink>
+                                </div>
+                            </AccordionDetails>
+                        </Accordion>
+                    )
+                })}
+            </CardContent>
+            <CardActions>
+                <Container>
+                    <Box
+                        component={motion.div}
+                        style={{width: 100, height: 100, backgroundColor: 'pink', borderRadius: '50%'}}
+                        whileHover={{scale: 1.1}}
+                        whileTap={{scale: 0.9}}
+                    >
+                        <EmojiEventsIcon sx={{marginTop: 4.5}}/>
+                    </Box>
+                    <div>
+                        {sectionCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
+                        {bonusCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
+                        <StarBorderPurple500OutlinedIcon/>
+                    </div>
+                </Container>
+            </CardActions>
+        </Card>
+    )
+}
+
+export default LessonListSection;
