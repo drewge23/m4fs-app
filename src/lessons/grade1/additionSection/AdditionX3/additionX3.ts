@@ -8,7 +8,7 @@ let additionX3 = {
     reward: 2,
     isCompleted: false,
     isBonus: false,
-    description: 'the second addition lesson',
+    description: 'the second quadraticSection lesson',
     theory: 'just add six numbers, love',
 }
 

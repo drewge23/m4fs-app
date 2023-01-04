@@ -37,7 +37,7 @@ const LessonList = (props: any) => {
         if (sectionProgress >= section.lessons.length) {
             dispatch(lessonsCompleted({grade: grade - 1, section: section.name}))
         }
-        if (bonusProgress >= section.bonusLessons.length) {
+        if (section.bonusLessons.length && (bonusProgress >= section.bonusLessons.length)) {
             dispatch(bonusLessonsCompleted({grade: grade - 1, section: section.name}))
         }
     }, [sectionProgress, bonusProgress])
@@ -71,7 +71,6 @@ const LessonList = (props: any) => {
                                                  bonusProgress: bonusProgress,
 
                                                  lessonIndex: index,
-                                                 isBonus: false,
                                                  id: lesson.id,
                                                  reward: lesson.reward,
                                              }}> start </NavLink>
@@ -86,9 +85,9 @@ const LessonList = (props: any) => {
                 {section.bonusLessons.map((lesson: any, index: number) => {
                     return (
                         <Accordion key={lesson.id}
-                            disabled={
-                                 (sectionProgress / section.lessons.length) <= (index / section.bonusLessons.length)
-                            }>
+                                   disabled={
+                                       (sectionProgress / section.lessons.length) <= (index / section.bonusLessons.length)
+                                   }>
                             <AccordionSummary
                                 expandIcon={
                                     bonusProgress > index
@@ -122,14 +121,28 @@ const LessonList = (props: any) => {
             </CardContent>
             <CardActions>
                 <Container>
-                    <Box
-                        component={motion.div}
-                        style={{width: 100, height: 100, backgroundColor: 'pink', borderRadius: '50%'}}
-                        whileHover={{scale: 1.1}}
-                        whileTap={{scale: 0.9}}
-                    >
-                        <EmojiEventsIcon sx={{marginTop: 4.5}}/>
-                    </Box>
+                    <NavLink to={"/lesson"}
+                             state={{
+                                 grade: grade,
+                                 sectionName: section.name,
+                                 sectionProgress: sectionProgress,
+                                 bonusProgress: bonusProgress,
+
+                                 lessonIndex: 1,
+                                 isTest: true,
+                                 id: 1,
+                                 reward: 2,
+                             }}>
+                        <Box
+                            component={motion.div}
+                            style={{width: 100, height: 100, borderRadius: '50%',
+                                backgroundColor: testCompleted ? 'gold' : 'pink'}}
+                            whileHover={{scale: 1.1}}
+                            whileTap={{scale: 0.9}}
+                        >
+                            <EmojiEventsIcon sx={{marginTop: 4.5}}/>
+                        </Box>
+                    </NavLink>
                     <div>
                         {sectionCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
                         {bonusCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}

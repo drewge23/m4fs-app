@@ -5,24 +5,30 @@ import {useFormik} from "formik";
 import AdditionComponent, {generateAddition} from "../lessons/grade1/additionSection/Addition/AdditionComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {setLessonStateThunk} from "./currentLessonSlice";
-import {incrementBonusProgress, incrementLessonProgress} from "../user/progressSlice";
+import {incrementBonusProgress, incrementLessonProgress, testCompleted} from "../user/progressSlice";
 import {earn} from "../user/moneySlice";
-//?? pass section object through props?
-import additionSection from "../lessons/grade1/additionSection/additionSection";
+import grades from "../lessons/grades";
 
 const LessonScreen: FC = (props: any) => {
-    let section = additionSection;
-
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
+
     useEffect(() => {
         if (progress >= 100) {
-            onCompletion(grade, sectionName, sectionProgress, lessonIndex)
+            if (isTest && id < section.lessons.length) {
+                setProgress(0)
+                setId(id + 1)
+            } else {
+                onCompletion(grade, sectionName, sectionProgress, lessonIndex)
+            }
         }
+        generateCoefs(generateFunction());
     }, [progress])
 
     function onCompletion(grade: number, sectionName: string, sectionProgress: number, lessonIndex: number) {
-        if (isBonus) {
+        if (isTest) {
+            dispatch(testCompleted({grade: grade - 1, section: sectionName}))
+        } else if (isBonus) {
             if (lessonIndex >= bonusProgress) {
                 dispatch(incrementBonusProgress({grade: grade - 1, section: sectionName}))
             }
@@ -31,18 +37,23 @@ const LessonScreen: FC = (props: any) => {
                 dispatch(incrementLessonProgress({grade: grade - 1, section: sectionName}))
             }
         }
-        dispatch(earn(reward)) //??
+        isTest ? dispatch(earn(reward * 5)) : dispatch(earn(reward))
         alert('good job!');
         navigate('/');
         setProgress(0);
     }
 
     const location = useLocation()
-    let {id, reward, grade, sectionName, sectionProgress, bonusProgress, lessonIndex, isBonus} = location.state;
+    let {reward, grade, sectionName, sectionProgress, bonusProgress, lessonIndex} = location.state;
+    let isTest = location.state.isTest || false;
+    let isBonus = location.state.isBonus || false;
+    const [id, setId] = useState(location.state.id);
 
+    // @ts-ignore
+    let section = grades[grade - 1].lessonSections.find((section: any) => section.name === sectionName)
     let lesson = isBonus
-        ? section.bonusLessons.find(lesson => lesson.id === id)
-        : section.lessons.find(lesson => lesson.id === id)
+        ? section?.bonusLessons.find((lesson: any) => lesson.id === id)
+        : section?.lessons.find((lesson: any) => lesson.id === id)
     let Lesson = lesson?.component || AdditionComponent;
     let generateFunction = lesson?.generateFunction || generateAddition;
     let theory = lesson?.theory || 'theory sector is not yet ready for this lesson'
@@ -72,8 +83,8 @@ const LessonScreen: FC = (props: any) => {
         initialValues: {answers: initialAnswers},
         onSubmit: (values, {resetForm}) => {
             alert(JSON.stringify(values, null, 2));
-            setProgress(progress + 50)
-            generateCoefs(generateFunction());
+            setProgress(progress + 50) //?
+            // generateCoefs(generateFunction());
             resetForm();
         },
         validate: (values) => {

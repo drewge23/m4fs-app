@@ -8,7 +8,7 @@ let addition = {
     reward: 1,
     isCompleted: false,
     isBonus: false,
-    description: 'the first addition lesson',
+    description: 'the first quadraticSection lesson',
     theory: 'just add two numbers, love',
 }
 
