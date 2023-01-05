@@ -6,6 +6,7 @@ let bonusAddition = {
     component: BonusAdditionComponent,
     generateFunction: generateBonusAddition,
     reward: 10,
+    progress: 1,
     description: 'the first bonus lesson',
     theory: 'just add two numbers, love',
 

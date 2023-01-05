@@ -79,6 +79,14 @@ const LessonScreen: FC = (props: any) => {
         initialAnswers.push('');
     }
 
+    const [lives, setLives] = useState([1, 1, 1]);
+    const loseTest = () => {
+        alert("nice try anyway! here's something for going this far")
+        dispatch(earn(1));
+        navigate('/');
+        setProgress(0);
+    }
+
     const formik = useFormik({
         initialValues: {answers: initialAnswers},
         onSubmit: (values, {resetForm}) => {
@@ -92,12 +100,18 @@ const LessonScreen: FC = (props: any) => {
             // for (let i = 0; i < rightAnswers.length; i++) {
             //     errors.answers?.push('');
             // }
+            let canTakeLifeOff = true;
             for (let i = 0; i < rightAnswers.length; i++) {
                 if (values.answers[i] !== rightAnswers[i]) {
                     errors.answers[i] = '❌'
+                    if (isTest) {
+                        if (canTakeLifeOff) { setLives(lives.slice(1)) };
+                        canTakeLifeOff = false
+                    }
                     console.log(errors.answers[i])
                 }
             }
+            if (isTest && lives.length === 0) { loseTest() };
             return errors.answers.length === 0 ? {} : errors;
         },
         validateOnBlur: false,
@@ -113,6 +127,7 @@ const LessonScreen: FC = (props: any) => {
                 <button>Exit</button>
             </NavLink>
             <LinearProgress variant="determinate" value={progress}/>
+            {isTest ? <div> {lives.map((life: any, index) => <span key={index}> 💗 </span>)} </div> : null}
             <form onSubmit={formik.handleSubmit}>
                 <Lesson formik={formik} coefs={coefs}/>
                 <button type="submit">Submit</button>

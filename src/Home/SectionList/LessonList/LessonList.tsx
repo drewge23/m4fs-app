@@ -24,6 +24,13 @@ const LessonList = (props: any) => {
     const progress = useSelector((state: any) => state.progress[grade - 1].get(section.name));
     let [sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted] = progress;
 
+    let stars = 0;
+    for (let bool of [testCompleted, sectionCompleted, bonusCompleted]) {
+        if (bool === true) {
+            stars++
+        }
+    }
+
     function isDisabled(index: number) {
         return sectionProgress < index;
     }
@@ -86,7 +93,10 @@ const LessonList = (props: any) => {
                     return (
                         <Accordion key={lesson.id}
                                    disabled={
-                                       (sectionProgress / section.lessons.length) <= (index / section.bonusLessons.length)
+                                       // (sectionProgress / section.lessons.length) <= (index / section.bonusLessons.length)
+                                       lesson.progress >= 0
+                                           ? sectionProgress < lesson.progress
+                                           : sectionProgress < (section.lessons.length + lesson.progress)
                                    }>
                             <AccordionSummary
                                 expandIcon={
@@ -135,8 +145,10 @@ const LessonList = (props: any) => {
                              }}>
                         <Box
                             component={motion.div}
-                            style={{width: 100, height: 100, borderRadius: '50%',
-                                backgroundColor: testCompleted ? 'gold' : 'pink'}}
+                            style={{
+                                width: 100, height: 100, borderRadius: '50%',
+                                backgroundColor: testCompleted ? 'gold' : 'pink'
+                            }}
                             whileHover={{scale: 1.1}}
                             whileTap={{scale: 0.9}}
                         >
@@ -144,9 +156,9 @@ const LessonList = (props: any) => {
                         </Box>
                     </NavLink>
                     <div>
-                        {sectionCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
-                        {bonusCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
-                        {testCompleted ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
+                        {stars > 0 ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
+                        {stars > 1 ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
+                        {stars > 2 ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
                     </div>
                 </Container>
             </CardActions>
