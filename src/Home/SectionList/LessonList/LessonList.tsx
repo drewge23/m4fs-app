@@ -15,7 +15,7 @@ import StarIcon from '@mui/icons-material/Star';
 import {NavLink} from "react-router-dom";
 import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {bonusLessonsCompleted, lessonsCompleted} from "../../../user/progressSlice";
 
 const LessonList = (props: any) => {
@@ -70,6 +70,7 @@ const LessonList = (props: any) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography>{lesson.description}</Typography>
+                                <button onClick={() => alert(lesson.theory)}>Theory</button>
                                 <div>
                                     <NavLink to={"/lesson"}
                                              state={{
@@ -111,6 +112,7 @@ const LessonList = (props: any) => {
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography>{lesson.description}</Typography>
+                                <button onClick={() => alert(lesson.theory)}>Theory</button>
                                 <div>
                                     <NavLink to={"/lesson"}
                                              state={{

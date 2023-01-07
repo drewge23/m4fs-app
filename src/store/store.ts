@@ -5,6 +5,7 @@ import currentLessonReducer from "../LessonScreen/currentLessonSlice";
 import { enableMapSet } from 'immer';
 import moneyReducer from "../user/moneySlice";
 import gradeReducer from "../Home/SectionList/gradeSlice";
+import globalProgressReducer from "../user/globalProgressSlice";
 
 enableMapSet()
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     currentLesson: currentLessonReducer,
     progress: progressReducer,
+    globalProgress: globalProgressReducer,
     money: moneyReducer,
     grade: gradeReducer,
 })

@@ -8,6 +8,7 @@ import {setLessonStateThunk} from "./currentLessonSlice";
 import {incrementBonusProgress, incrementLessonProgress, testCompleted} from "../user/progressSlice";
 import {earn} from "../user/moneySlice";
 import grades from "../lessons/grades";
+import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../user/globalProgressSlice";
 
 const LessonScreen: FC = (props: any) => {
     const [progress, setProgress] = useState(0);
@@ -35,8 +36,10 @@ const LessonScreen: FC = (props: any) => {
                 lesson.isCompleted = true
                 if (isBonus) {
                     dispatch(incrementBonusProgress({grade: grade - 1, section: sectionName}))
+                    dispatch(incrementBonusLessonsTotal())
                 } else {
                     dispatch(incrementLessonProgress({grade: grade - 1, section: sectionName}))
+                    dispatch(incrementLessonsTotal())
                 }
             }
         }

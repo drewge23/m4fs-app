@@ -4,6 +4,7 @@ import {logout} from "../user/userSlice";
 import {Navigate, NavLink} from "react-router-dom";
 
 const Profile: FC = () => {
+    const globalProgress = useSelector((state: any) => state.globalProgress)
     const dispatch = useDispatch();
 
     const user = useSelector((state: any) => state.user)
@@ -15,6 +16,10 @@ const Profile: FC = () => {
     return (
         <div>
             Profile
+            <div>
+                <p>{'lessons completed = ' + globalProgress.lessonsTotal}</p>
+                <p>{'bonus lessons completed = ' + globalProgress.bonusLessonsTotal}</p>
+            </div>
             <div>
                 <button onClick={() => dispatch(logout())}>Log out</button>
             </div>
