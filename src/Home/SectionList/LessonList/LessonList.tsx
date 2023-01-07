@@ -35,9 +35,9 @@ const LessonList = (props: any) => {
         return sectionProgress < index;
     }
 
-    function isGold(index: number) {
-        return sectionProgress > index;
-    }
+    // function isGold(index: number) {
+    //     return sectionProgress > index;
+    // }
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -53,13 +53,14 @@ const LessonList = (props: any) => {
         <Card sx={{maxWidth: 600}}>
             <CardContent>
                 <h1>{section.name}</h1>
+                <p>{section.description || 'section description goes here'}</p>
 
                 {/*LESSONS*/}
                 {section.lessons.map((lesson: any, index: number) => {
                     return (
-                        <Accordion key={lesson.id} disabled={isDisabled(index)}>
+                        <Accordion key={lesson.id} disabled={!testCompleted && isDisabled(index)}>
                             <AccordionSummary
-                                expandIcon={isGold(index)
+                                expandIcon={lesson.isCompleted
                                     ? <StarIcon/>
                                     : <StarBorderPurple500OutlinedIcon/>}
                                 aria-controls="panel1a-content"
@@ -79,7 +80,6 @@ const LessonList = (props: any) => {
 
                                                  lessonIndex: index,
                                                  id: lesson.id,
-                                                 reward: lesson.reward,
                                              }}> start </NavLink>
                                 </div>
                             </AccordionDetails>
@@ -94,13 +94,14 @@ const LessonList = (props: any) => {
                         <Accordion key={lesson.id}
                                    disabled={
                                        // (sectionProgress / section.lessons.length) <= (index / section.bonusLessons.length)
-                                       lesson.progress >= 0
+                                       !testCompleted && (lesson.progress >= 0
                                            ? sectionProgress < lesson.progress
-                                           : sectionProgress < (section.lessons.length + lesson.progress)
+                                           : sectionProgress < (section.lessons.length + lesson.progress) )
                                    }>
                             <AccordionSummary
                                 expandIcon={
-                                    bonusProgress > index
+                                    // bonusProgress > index
+                                    lesson.isCompleted
                                         ? <StarIcon/>
                                         : <StarBorderPurple500OutlinedIcon/>}
                                 aria-controls="panel1a-content"
@@ -121,7 +122,6 @@ const LessonList = (props: any) => {
                                                  lessonIndex: index,
                                                  isBonus: true,
                                                  id: lesson.id,
-                                                 reward: lesson.reward,
                                              }}> start </NavLink>
                                 </div>
                             </AccordionDetails>
@@ -141,7 +141,6 @@ const LessonList = (props: any) => {
                                  lessonIndex: 1,
                                  isTest: true,
                                  id: 1,
-                                 reward: 2,
                              }}>
                         <Box
                             component={motion.div}

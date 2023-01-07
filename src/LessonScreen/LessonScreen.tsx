@@ -15,6 +15,7 @@ const LessonScreen: FC = (props: any) => {
 
     useEffect(() => {
         if (progress >= 100) {
+            // @ts-ignore
             if (isTest && id < section.lessons.length) {
                 setProgress(0)
                 setId(id + 1)
@@ -28,13 +29,15 @@ const LessonScreen: FC = (props: any) => {
     function onCompletion(grade: number, sectionName: string, sectionProgress: number, lessonIndex: number) {
         if (isTest) {
             dispatch(testCompleted({grade: grade - 1, section: sectionName}))
-        } else if (isBonus) {
-            if (lessonIndex >= bonusProgress) {
-                dispatch(incrementBonusProgress({grade: grade - 1, section: sectionName}))
-            }
         } else {
-            if (lessonIndex >= sectionProgress) {
-                dispatch(incrementLessonProgress({grade: grade - 1, section: sectionName}))
+            if (!lesson?.isCompleted) {
+                // @ts-ignore
+                lesson.isCompleted = true
+                if (isBonus) {
+                    dispatch(incrementBonusProgress({grade: grade - 1, section: sectionName}))
+                } else {
+                    dispatch(incrementLessonProgress({grade: grade - 1, section: sectionName}))
+                }
             }
         }
         isTest ? dispatch(earn(reward * 5)) : dispatch(earn(reward))
@@ -44,30 +47,38 @@ const LessonScreen: FC = (props: any) => {
     }
 
     const location = useLocation()
-    let {reward, grade, sectionName, sectionProgress, bonusProgress, lessonIndex} = location.state;
+    let {grade, sectionName, sectionProgress, bonusProgress, lessonIndex} = location.state;
     let isTest = location.state.isTest || false;
     let isBonus = location.state.isBonus || false;
     const [id, setId] = useState(location.state.id);
 
     // @ts-ignore
     let section = grades[grade - 1].lessonSections.find((section: any) => section.name === sectionName)
+    // || grades[grade - 1].lessonSections.find((section: any) => section.name === 'subtraction')
     let lesson = isBonus
         ? section?.bonusLessons.find((lesson: any) => lesson.id === id)
         : section?.lessons.find((lesson: any) => lesson.id === id)
     let Lesson = lesson?.component || AdditionComponent;
     let generateFunction = lesson?.generateFunction || generateAddition;
     let theory = lesson?.theory || 'theory sector is not yet ready for this lesson'
+    let reward = lesson?.reward || 1
+
+    // let isFetching = useSelector((state: any) => state.currentLesson.isFetching)
+    // let path = '../lessons/grade1/additionSection/Addition/BonusAdditionComponent2'
+    // useEffect(() => {
+    //     // @ts-ignore
+    //     dispatch(setLessonStateThunk(path))
+    // }, [dispatch])
 
     const dispatch = useDispatch();
-    let isFetching = useSelector((state: any) => state.currentLesson.isFetching)
-    let path = '../lessons/grade1/additionSection/Addition/BonusAdditionComponent2'
-    useEffect(() => {
-        // @ts-ignore
-        dispatch(setLessonStateThunk(path))
-    }, [dispatch])
+    const [lives, setLives] = useState([1, 1, 1]);
+    const loseTest = () => {
+        alert("nice try anyway! here's something for going this far")
+        dispatch(earn(1));
+        navigate('/');
+        setProgress(0);
+    }
 
-    // let Lesson = useSelector((state: any) => state.currentLesson.component);
-    // let generateFunction = useSelector((state: any) => state.currentLesson.generateFunction);
     const [{coefs, rightAnswers}, generateCoefs] = useState(generateFunction()); //? useEffect [generateFunc]?
 
     interface Errors {
@@ -77,14 +88,7 @@ const LessonScreen: FC = (props: any) => {
     let initialAnswers: string[] = [];
     for (let i = 0; i < rightAnswers.length; i++) {
         initialAnswers.push('');
-    }
 
-    const [lives, setLives] = useState([1, 1, 1]);
-    const loseTest = () => {
-        alert("nice try anyway! here's something for going this far")
-        dispatch(earn(1));
-        navigate('/');
-        setProgress(0);
     }
 
     const formik = useFormik({
@@ -105,13 +109,19 @@ const LessonScreen: FC = (props: any) => {
                 if (values.answers[i] !== rightAnswers[i]) {
                     errors.answers[i] = '❌'
                     if (isTest) {
-                        if (canTakeLifeOff) { setLives(lives.slice(1)) };
+                        if (canTakeLifeOff) {
+                            setLives(lives.slice(1))
+                        }
+                        ;
                         canTakeLifeOff = false
                     }
                     console.log(errors.answers[i])
                 }
             }
-            if (isTest && lives.length === 0) { loseTest() };
+            if (isTest && lives.length === 0) {
+                loseTest()
+            }
+            ;
             return errors.answers.length === 0 ? {} : errors;
         },
         validateOnBlur: false,
@@ -122,7 +132,7 @@ const LessonScreen: FC = (props: any) => {
     return (
         <div>
             <h1>Lesson</h1>
-            <button onClick={() => alert(theory)}>Theory</button>
+            {!isTest ? <button onClick={() => alert(theory)}>Theory</button> : null}
             <NavLink to={"/"}>
                 <button>Exit</button>
             </NavLink>
