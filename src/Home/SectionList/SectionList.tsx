@@ -1,5 +1,4 @@
-import {FC, useState} from "react";
-import {Container, Grid} from "@mui/material";
+import {FC} from "react";
 import LessonList from "./LessonList/LessonList";
 import grades from "../../lessons/grades";
 import {useDispatch, useSelector} from "react-redux";
@@ -21,7 +20,7 @@ const SectionList: FC = () => {
     }
 
     return (
-        <Container>
+        <>
             <div style={{marginBottom: 20}}>
                 <button onClick={decrement}> -</button>
                 <span> {gradeNum} </span>
@@ -30,21 +29,23 @@ const SectionList: FC = () => {
             {grades.map(grade => {
                 if (grade.id === gradeNum) {
                     return (
-                        <Grid container spacing={2} key={grade.id}>
+                        // <Grid container spacing={2} key={grade.id}>
+                        <div key={grade.id}>
                             <h1>{grade.name}</h1>
                             {grade.lessonSections.map(section => {
                                     return (
-                                        <Grid item xs={6} md={6} key={section.id}>
+                                        // <Grid item xs={6} md={6} key={section.id}>
                                             <LessonList sectionProps={section} grade={grade.id}/>
-                                        </Grid>
+                                        // </Grid>
                                     )
                                 }
                             )}
-                        </Grid>
+                        </div>
+                        // </Grid>
                     )
                 }
             })}
-        </Container>
+        </>
     )
 }
 

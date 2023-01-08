@@ -2,29 +2,59 @@ import {FC} from "react";
 import {NavLink} from "react-router-dom";
 import SectionList from "./SectionList/SectionList";
 import {useSelector} from "react-redux";
+import HomeNavBar from "./HomeNavBar";
+import {Box, Container, Grid} from "@mui/material";
+import SectionNav from "./SectionNav";
 
 const Home: FC = () => {
     const money = useSelector((state: any) => state.money)
 
     return (
         <div>
-            <h1>Home</h1>
-            <div>
-                <NavLink to={"/login"}> Log in </NavLink>
-            </div>
-            <div>
-                <NavLink to={"/profile"}> Profile </NavLink>
-            </div>
-            <div>
-                <NavLink to={"/shop"}> Shop </NavLink>
-            </div>
-            <div>
-                <NavLink to={"/settings"}>
-                    <button> Settings</button>
-                </NavLink>
-            </div>
-            <div>{money + '$'}</div>
-            <SectionList/>
+            <HomeNavBar/>
+            <Box sx={{marginTop: 10}}>
+                <h1>Home</h1>
+                <div>
+                    <NavLink to={"/login"}> Log in </NavLink>
+                </div>
+                <div>
+                    <NavLink to={"/profile"}> Profile </NavLink>
+                </div>
+                <div>
+                    <NavLink to={"/shop"}> Shop </NavLink>
+                </div>
+                <div>
+                    <NavLink to={"/settings"}>
+                        <button> Settings</button>
+                    </NavLink>
+                </div>
+                <div>{money + '$'}</div>
+                <Container sx={{width: 1200}}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={2}>
+                            <Box sx={{
+                                position: 'fixed',
+                                backgroundColor: 'lightblue',
+                                height: '100%'
+                            }}>
+                                <SectionNav/>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={6.5}>
+                            <SectionList/>
+                        </Grid>
+                        <Grid item xs={3.5}>
+                            <Box sx={{
+                                backgroundColor: 'lightblue',
+                                width: '100%',
+                                height: '100%'
+                            }}>
+
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </Box>
         </div>
     )
 }
