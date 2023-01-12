@@ -6,26 +6,9 @@ import {decrementGrade, incrementGrade} from "./gradeSlice";
 
 const SectionList: FC = () => {
     const gradeNum = useSelector( (state: any) => state.grade)
-    const dispatch = useDispatch()
-
-    const increment = () => {
-        if (gradeNum < grades.length) {
-            dispatch(incrementGrade())
-        }
-    }
-    const decrement = () => {
-        if (gradeNum > 1) {
-            dispatch(decrementGrade())
-        }
-    }
 
     return (
         <>
-            <div style={{marginBottom: 20}}>
-                <button onClick={decrement}> -</button>
-                <span> {gradeNum} </span>
-                <button onClick={increment}> +</button>
-            </div>
             {grades.map(grade => {
                 if (grade.id === gradeNum) {
                     return (

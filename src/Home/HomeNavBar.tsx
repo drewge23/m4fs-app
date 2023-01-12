@@ -12,11 +12,17 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import {NavLink} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import grades from "../lessons/grades";
+import {decrementGrade, incrementGrade} from "./SectionList/gradeSlice";
 
-const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function HomeNavBar() {
+    const isAuth = useSelector((state: any) => state.user.isAuth)
+    const money = useSelector((state: any) => state.money)
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -35,9 +41,23 @@ function HomeNavBar() {
         setAnchorElUser(null);
     };
 
+    const gradeNum = useSelector( (state: any) => state.grade)
+    const dispatch = useDispatch()
+
+    const increment = () => {
+        if (gradeNum < grades.length) {
+            dispatch(incrementGrade())
+        }
+    }
+    const decrement = () => {
+        if (gradeNum > 1) {
+            dispatch(decrementGrade())
+        }
+    }
+
     return (
         <AppBar position="fixed">
-            <Container maxWidth="xl">
+            <Container sx={{maxWidth: "1200px", width: "100%"}}>
                 <Toolbar disableGutters>
                     <Typography
                         variant="h6"
@@ -46,7 +66,7 @@ function HomeNavBar() {
                         href="/"
                         sx={{
                             mr: 2,
-                            display: { xs: 'none', md: 'flex' },
+                            display: {xs: 'none', md: 'flex'},
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
@@ -56,54 +76,37 @@ function HomeNavBar() {
                     >
                         M4FS
                     </Typography>
+                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}/>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
+                    <Box sx={{flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
+                        <div style={{marginBottom: 20}}>
+                            <button onClick={decrement}> -</button>
+                            <span> {gradeNum} </span>
+                            <button onClick={increment}> +</button>
+                        </div>
+                    </Box>
+
+                    <Box sx={{flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
+                        <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{my: 2, color: 'white', display: 'block'}}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
+                            <NavLink to={'/shop'}>
+                                {"Shop " + money + "$"}
+                            </NavLink>
+                        </Button>
                     </Box>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
-                    </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                            </IconButton>
+                            {isAuth
+                                ? <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                </IconButton>
+                                : <NavLink to={"/login"}> Log in </NavLink>}
                         </Tooltip>
                         <Menu
-                            sx={{ mt: '45px' }}
+                            sx={{mt: '45px'}}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
                             anchorOrigin={{
@@ -118,11 +121,16 @@ function HomeNavBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">
+                                    <NavLink to={"/profile"}> Profile </NavLink>
+                                </Typography>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">
+                                    <NavLink to={"/settings"}> Settings </NavLink>
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
@@ -130,4 +138,5 @@ function HomeNavBar() {
         </AppBar>
     );
 }
+
 export default HomeNavBar;

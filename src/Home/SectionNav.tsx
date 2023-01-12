@@ -7,6 +7,13 @@ import grades from "../lessons/grades";
 const SectionNav: FC = () => {
     const gradeNum = useSelector((state: any) => state.grade)
     const progress = useSelector((state: any) => state.progress)
+
+    const scrollWithOffset = (el: any) => {
+        const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+        const yOffset = -60;
+        window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
+    }
+
     return (
         <>
             {grades.map(grade => {
@@ -20,7 +27,8 @@ const SectionNav: FC = () => {
                                     (progress[grade.id - 1].get(section.name)[2] && 20 || 0))
                                 return (
                                     <Box key={section.id}>
-                                        <HashLink smooth to={"#" + section.name}>
+                                        <HashLink smooth to={"#" + section.name}
+                                                  scroll={el => scrollWithOffset(el)}>
                                             {section.name}
                                         </HashLink>
                                         <span>{" " + comletionPercent + "%"}</span>

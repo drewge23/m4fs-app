@@ -13,22 +13,6 @@ const Home: FC = () => {
         <div>
             <HomeNavBar/>
             <Box sx={{marginTop: 10}}>
-                <h1>Home</h1>
-                <div>
-                    <NavLink to={"/login"}> Log in </NavLink>
-                </div>
-                <div>
-                    <NavLink to={"/profile"}> Profile </NavLink>
-                </div>
-                <div>
-                    <NavLink to={"/shop"}> Shop </NavLink>
-                </div>
-                <div>
-                    <NavLink to={"/settings"}>
-                        <button> Settings</button>
-                    </NavLink>
-                </div>
-                <div>{money + '$'}</div>
                 <Container sx={{width: 1200}}>
                     <Grid container spacing={3}>
                         <Grid item xs={2}>
