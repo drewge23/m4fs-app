@@ -35,7 +35,7 @@ const SectionList: FC = () => {
                             {grade.lessonSections.map(section => {
                                     return (
                                         // <Grid item xs={6} md={6} key={section.id}>
-                                            <LessonList sectionProps={section} grade={grade.id}/>
+                                            <LessonList sectionProps={section} grade={grade.id} key={section.id}/>
                                         // </Grid>
                                     )
                                 }

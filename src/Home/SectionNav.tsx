@@ -1,23 +1,32 @@
-import {NavLink} from "react-router-dom";
+import {HashLink} from 'react-router-hash-link';
 import {FC} from "react";
-import {Box} from "@mui/material";
+import {Box, Link} from "@mui/material";
 import {useSelector} from "react-redux";
 import grades from "../lessons/grades";
 
 const SectionNav: FC = () => {
     const gradeNum = useSelector((state: any) => state.grade)
+    const progress = useSelector((state: any) => state.progress)
     return (
         <>
             {grades.map(grade => {
                     if (grade.id === gradeNum) {
                         return (
-                            grade.lessonSections.map(section => (
-                                <Box key={section.id}>
-                                    <NavLink to={'/'}>
-                                        {section.name}
-                                    </NavLink>
-                                </Box>
-                            ))
+                            grade.lessonSections.map(section => {
+                                let comletionPercent = Math.round(
+                                 (progress[grade.id - 1].get(section.name)[0] +
+                                    progress[grade.id - 1].get(section.name)[1]) /
+                                    (section.lessons.length + section.bonusLessons.length) * 80 +
+                                    (progress[grade.id - 1].get(section.name)[2] && 20 || 0))
+                                return (
+                                    <Box key={section.id}>
+                                        <HashLink smooth to={"#" + section.name}>
+                                            {section.name}
+                                        </HashLink>
+                                        <span>{" " + comletionPercent + "%"}</span>
+                                    </Box>
+                                )
+                            })
                         )
                     }
                 }

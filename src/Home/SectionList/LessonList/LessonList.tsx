@@ -50,7 +50,7 @@ const LessonList = (props: any) => {
     }, [sectionProgress, bonusProgress])
 
     return (
-        <Card>
+        <Card id={section.name}>
             <CardContent>
                 <h1>{section.name}</h1>
                 <p>{section.description || 'section description goes here'}</p>
