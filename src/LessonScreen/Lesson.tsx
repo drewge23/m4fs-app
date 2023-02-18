@@ -1,14 +1,13 @@
 import React from 'react';
 
-function Lesson({formik, task, subtasks, pic}) {
+function Lesson({formik, task, subtasks, pic}: any) {
     return (
         <div>
             <h2>{task}</h2>
             <div>
-                {subtasks.map((item, index) => (
-                    <div>
-                        <span>{item + ' = '}</span>
-                        <input type="text"/>
+                {subtasks.map((item: any, index: number) => (
+                    <div key={index}>
+                        {index + '. '}
                         <label htmlFor={`answers[${index}]`}><span> {item + ' = '} </span></label>
                         <input
                             id={`answers[${index}]`}

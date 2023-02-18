@@ -1,24 +1,28 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {generateAddition} from "../lessons/grade1/additionSection/Addition/AdditionComponent";
 
-const InitialComponent = () => {
-    return <div> nothing yet </div>;
-}
+import firebase from "firebase/compat/app";
+import 'firebase/compat/firestore';
 
-const initialFunction = () => {
-    // return generateAddition()
-    return {coefs: [], rightAnswers: []}
-}
+const firebaseConfig = {
+    apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
+    authDomain: "m4fs-id.firebaseapp.com",
+    projectId: "m4fs-id",
+    storageBucket: "m4fs-id.appspot.com",
+    messagingSenderId: "807617556673",
+    appId: "1:807617556673:web:1f4b1c4653a1daf301a440",
+    measurementId: "G-K46HV2C4F8"
+};
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(app)
 
-let currentLessonSlice = createSlice({
+const currentLessonSlice = createSlice({
     name: 'currentLesson',
     initialState: {
         grade: 0,
         section: 0,
         id: 0,
         name: '',
-        component: InitialComponent,
-        generateFunction: initialFunction,
+        tasks: null,
         reward: 1,
         isCompleted: false,
         isBonus: false,
@@ -28,21 +32,22 @@ let currentLessonSlice = createSlice({
     },
     reducers: {
         setLessonState: (state, action) => {
-            state.component = action.payload.component
-            state.generateFunction = action.payload.generateFunction
-            state.name = action.payload.name
+            state.tasks = action.payload
+            return state
         },
         setIsFetching: (state, action) => {
             state.isFetching = action.payload
+            return state
         },
     }
 })
 
-export const setLessonStateThunk = (lessonPath: any) => (dispatch: any) => {
+export const setLessonStateThunk = (lessonId: string) => (dispatch: any) => {
     setIsFetching(true)
-    import("../lessons/grade1/additionSection/Addition/AdditionComponent").then(response => {
-            setLessonState(response)
-            setIsFetching(false)
+    db.collection("lessons").doc(lessonId).get()
+        .then( (response: any) => {
+            dispatch(setLessonState(response.data().lesson_1.tasks))
+            dispatch(setIsFetching(false))
         }
     )
 }
