@@ -91,7 +91,6 @@ const LessonScreen: FC = (props: any) => {
     let initialAnswers: string[] = [];
     for (let i = 0; i < rightAnswers.length; i++) {
         initialAnswers.push('');
-
     }
 
     const formik = useFormik({
@@ -115,7 +114,6 @@ const LessonScreen: FC = (props: any) => {
                         if (canTakeLifeOff) {
                             setLives(lives.slice(1))
                         }
-                        ;
                         canTakeLifeOff = false
                     }
                     console.log(errors.answers[i])
@@ -124,7 +122,6 @@ const LessonScreen: FC = (props: any) => {
             if (isTest && lives.length === 0) {
                 loseTest()
             }
-            ;
             return errors.answers.length === 0 ? {} : errors;
         },
         validateOnBlur: false,
