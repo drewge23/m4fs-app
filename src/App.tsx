@@ -9,12 +9,13 @@ import Settings from "./Settings/Settings";
 import LessonScreen from "./LessonScreen/LessonScreen";
 import {useDispatch} from "react-redux";
 import Shop from "./Shop/Shop";
-import LessonScreenCopy from "./LessonScreen/LessonScreenCopy";
+import LessonScreenCopy from "./LessonScreen/LessonScreen";
 
 import firebase from "firebase/compat/app";
 import 'firebase/compat/analytics';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import {setApp} from "./firebaseSlice";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
@@ -31,6 +32,9 @@ const auth = firebase.auth(app);
 const db = firebase.firestore(app)
 
 function App() {
+    const dispatch = useDispatch()
+    dispatch(setApp(app))
+
     return (
         <BrowserRouter>
             <div className="App">

@@ -6,6 +6,7 @@ import { enableMapSet } from 'immer';
 import moneyReducer from "../user/moneySlice";
 import gradeReducer from "../Home/SectionList/gradeSlice";
 import globalProgressReducer from "../user/globalProgressSlice";
+import firebaseReducer from "../firebaseSlice";
 
 enableMapSet()
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     globalProgress: globalProgressReducer,
     money: moneyReducer,
     grade: gradeReducer,
+    firebase: firebaseReducer,
 })
 
 const store = configureStore({

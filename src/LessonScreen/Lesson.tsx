@@ -7,7 +7,6 @@ function Lesson({formik, task, subtasks, pic}: any) {
             <div>
                 {subtasks.map((item: any, index: number) => (
                     <div key={index}>
-                        {index + '. '}
                         <label htmlFor={`answers[${index}]`}><span> {item + ' = '} </span></label>
                         <input
                             id={`answers[${index}]`}
