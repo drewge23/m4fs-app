@@ -2,7 +2,7 @@ import {FC} from "react";
 import {Navigate, NavLink} from "react-router-dom";
 import {Form, Field} from 'react-final-form'
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../user/userSlice";
+import {login} from "../../BLL/userSlice";
 
 
 const LoginForm: FC = () => {

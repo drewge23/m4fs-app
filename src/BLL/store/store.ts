@@ -1,12 +1,12 @@
 import {combineReducers, configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
-import userReducer from "../user/userSlice";
-import progressReducer from "../user/progressSlice";
-import currentLessonReducer from "../LessonScreen/currentLessonSlice";
+import userReducer from "../userSlice";
+import progressReducer from "../progressSlice";
+import currentLessonReducer from "../currentLessonSlice";
 import { enableMapSet } from 'immer';
-import moneyReducer from "../user/moneySlice";
-import gradeReducer from "../Home/SectionList/gradeSlice";
-import globalProgressReducer from "../user/globalProgressSlice";
-import firebaseReducer from "../firebaseSlice";
+import moneyReducer from "../moneySlice";
+import gradeReducer from "../gradeSlice";
+import globalProgressReducer from "../globalProgressSlice";
+import firebaseReducer from "../../firebaseSlice";
 
 enableMapSet()
 

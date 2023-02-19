@@ -14,8 +14,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import grades from "../lessons/grades";
-import {decrementGrade, incrementGrade} from "./SectionList/gradeSlice";
+import grades from "../../lessons/grades";
+import {decrementGrade, incrementGrade} from "../../BLL/gradeSlice";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 

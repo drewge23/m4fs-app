@@ -16,7 +16,7 @@ import {NavLink} from "react-router-dom";
 import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
-import {bonusLessonsCompleted, lessonsCompleted} from "../../../user/progressSlice";
+import {bonusLessonsCompleted, lessonsCompleted} from "../../../../BLL/progressSlice";
 import firebase from "firebase/compat/app";
 import {useCollectionOnce} from "react-firebase-hooks/firestore";
 
@@ -50,9 +50,6 @@ const LessonList = ({sectionName}: any) => {
         if (sectionProgress >= section.docs.length) {
             dispatch(lessonsCompleted({grade: gradeNum - 1, section: sectionName}))
         }
-        // if (section.bonusLessons.length && (bonusProgress >= section.bonusLessons.length)) {
-        //     dispatch(bonusLessonsCompleted({grade: gradeNum - 1, section: sectionName}))
-        // }
     }, [sectionProgress, bonusProgress])
 
     return (<>
@@ -76,17 +73,13 @@ const LessonList = ({sectionName}: any) => {
                         </AccordionSummary>
                         <AccordionDetails>
                             {/*<Typography>{lesson.description}</Typography>*/}
-                            <button onClick={() => alert(lesson.theory)}>Theory</button>
+                            <button onClick={() => alert(lesson.data().theory)}>Theory</button>
                             <div>
                                 <NavLink to={"/lesson"}
                                          state={{
-                                             grade: gradeNum,
                                              sectionName: sectionName,
-                                             sectionProgress: sectionProgress,
-                                             bonusProgress: bonusProgress,
-
-                                             lessonIndex: index,
-                                             id: lesson.id,
+                                             lessonId: lesson.id,
+                                             // lessonIndex: index,
                                          }}> start </NavLink>
                             </div>
                         </AccordionDetails>
@@ -141,11 +134,7 @@ const LessonList = ({sectionName}: any) => {
             <Container>
                 <NavLink to={"/lesson"}
                          state={{
-                             grade: gradeNum,
                              sectionName: sectionName,
-                             sectionProgress: sectionProgress,
-                             bonusProgress: bonusProgress,
-
                              lessonIndex: 1,
                              isTest: true,
                              id: 1,

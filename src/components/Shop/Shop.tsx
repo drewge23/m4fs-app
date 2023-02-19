@@ -1,9 +1,9 @@
 import {FC} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {spend} from "../user/moneySlice";
+import {spend} from "../../BLL/moneySlice";
 import useSound from 'use-sound';
 // @ts-ignore
-import coinSound from '../sounds/coin.mp3';
+import coinSound from '../../assets/sounds/coin.mp3';
 import {NavLink} from "react-router-dom";
 
 const Shop: FC = () => {

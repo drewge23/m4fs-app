@@ -42,11 +42,12 @@ const currentLessonSlice = createSlice({
     }
 })
 
-export const setLessonStateThunk = (lessonId: string) => (dispatch: any) => {
+export const setLessonStateThunk = (gradeNum: number, sectionName: string, lessonId: string) => (dispatch: any) => {
     setIsFetching(true)
-    db.collection("lessons").doc(lessonId).get()
+    db.collection("lessons").doc(`grade_${gradeNum}`)
+        .collection(sectionName).doc(lessonId).get()
         .then( (response: any) => {
-            dispatch(setLessonState(response.data().lesson_1.tasks))
+            dispatch(setLessonState(response.data().tasks))
             dispatch(setIsFetching(false))
         }
     )

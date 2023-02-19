@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../user/userSlice";
+import {logout} from "../../BLL/userSlice";
 import {Navigate, NavLink} from "react-router-dom";
 
 const Profile: FC = () => {

@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Login from "./Login/Login";
-import Registration from "./Registration/Registration";
-import Home from "./Home/Home";
-import Profile from "./Profile/Profile";
-import Settings from "./Settings/Settings";
-import LessonScreen from "./LessonScreen/LessonScreen";
+import Login from "./components/Login/Login";
+import Registration from "./components/Registration/Registration";
+import Home from "./components/Home/Home";
+import Profile from "./components/Profile/Profile";
+import Settings from "./components/Settings/Settings";
+import LessonScreen from "./components/LessonScreen/LessonScreen";
 import {useDispatch} from "react-redux";
-import Shop from "./Shop/Shop";
-import LessonScreenCopy from "./LessonScreen/LessonScreen";
+import Shop from "./components/Shop/Shop";
+import LessonScreenCopy from "./components/LessonScreen/LessonScreen";
 
 import firebase from "firebase/compat/app";
 import 'firebase/compat/analytics';

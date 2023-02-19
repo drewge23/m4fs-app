@@ -2,7 +2,7 @@ import {HashLink} from 'react-router-hash-link';
 import {FC} from "react";
 import {Box, Link} from "@mui/material";
 import {useSelector} from "react-redux";
-import grades from "../lessons/grades";
+import grades from "../../lessons/grades";
 
 const SectionNav: FC = () => {
     const gradeNum = useSelector((state: any) => state.grade)
