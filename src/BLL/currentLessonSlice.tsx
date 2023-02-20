@@ -44,6 +44,7 @@ const currentLessonSlice = createSlice({
 
 export const setLessonStateThunk = (gradeNum: number, sectionName: string, lessonId: string) => (dispatch: any) => {
     setIsFetching(true)
+    //TODO: configure lesson state object
     db.collection("lessons").doc(`grade_${gradeNum}`)
         .collection(sectionName).doc(lessonId).get()
         .then( (response: any) => {

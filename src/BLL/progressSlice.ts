@@ -1,27 +1,29 @@
 import {createSlice} from "@reduxjs/toolkit";
+import initialState from "./initialProgress";
 
-const grade1 = new Map([
-    ["addition", [0, 0, false, false, false]],
-    ["subtraction", [0, 0, false, false, false]],
-])
+import firebase from "firebase/compat/app";
+import 'firebase/compat/firestore';
 
-const grade2 = new Map([
-    ["quadratic", [0, 0, false, false, false]],
-])
+const firebaseConfig = {
+    apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
+    authDomain: "m4fs-id.firebaseapp.com",
+    projectId: "m4fs-id",
+    storageBucket: "m4fs-id.appspot.com",
+    messagingSenderId: "807617556673",
+    appId: "1:807617556673:web:1f4b1c4653a1daf301a440",
+    measurementId: "G-K46HV2C4F8"
+};
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(app)
 
-const initialState = [
-    grade1,
-    grade2,
-]
-
-let progressSlice = createSlice({
+const progressSlice = createSlice({
     name: 'progress',
     initialState: initialState,
     reducers: {
         incrementLessonProgress: (state: any, action) => {
             let grade = action.payload.grade;
             let section = action.payload.section;
-            state[grade].get(section)[0]++;
+            state[grade][section][0]++;
             return state;
         },
         incrementBonusProgress: (state, action) => {
@@ -52,8 +54,21 @@ let progressSlice = createSlice({
             state[grade].get(section)[4] = true;
             return state;
         },
+        setProgress: (state, action) => {
+            return action.payload
+        }
     }
 })
+
+export const getProgressThunk = (uid: string) => (dispatch: any) => {
+    //TODO: configure user object to have initial progress state
+    db.collection("users").doc(uid).get()
+        .then((response: any) => {
+            // console.log(JSON.parse(response.data().progress))
+                dispatch(setProgress(JSON.parse(response.data().progress)))
+            }
+        )
+}
 
 export default progressSlice.reducer;
 export const {
@@ -61,5 +76,6 @@ export const {
     incrementBonusProgress,
     lessonsCompleted,
     bonusLessonsCompleted,
-    testCompleted
+    testCompleted,
+    setProgress
 } = progressSlice.actions;

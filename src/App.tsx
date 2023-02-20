@@ -6,16 +6,21 @@ import Registration from "./components/Registration/Registration";
 import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import Settings from "./components/Settings/Settings";
-import LessonScreen from "./components/LessonScreen/LessonScreen";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Shop from "./components/Shop/Shop";
-import LessonScreenCopy from "./components/LessonScreen/LessonScreen";
 
 import firebase from "firebase/compat/app";
 import 'firebase/compat/analytics';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import {setApp} from "./firebaseSlice";
+import LessonScreenContainer from "./components/LessonScreen/LessonScreenContainer";
+import {getProgressThunk} from "./BLL/progressSlice";
+import {getUserDataThunk} from "./BLL/userDataSlice";
+import initialProgress from "./BLL/initialProgress";
+import Auth from "./BLL/Auth";
+import {useAuthState} from "react-firebase-hooks/auth";
+import SignUp from "./BLL/SignUp";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
@@ -28,27 +33,67 @@ const firebaseConfig = {
 };
 const app = firebase.initializeApp(firebaseConfig);
 const analytics = firebase.analytics(app);
-const auth = firebase.auth(app);
+// const auth = firebase.auth(app);
 const db = firebase.firestore(app)
+const auth = firebase.auth(app)
 
 function App() {
     const dispatch = useDispatch()
-    dispatch(setApp(app))
+    // @ts-ignore
+    const [user] = useAuthState(auth)
+    const signOut = () => {
+        auth.signOut()
+    }
+
+    // @ts-ignore
+    useEffect(() => {
+        dispatch(setApp(app))
+        // @ts-ignore
+        dispatch(getUserDataThunk(db, user?.uid))
+        // @ts-ignore
+        dispatch(getProgressThunk('user_0')) //TODO: delete
+    }, [user])
+
+    const progress = useSelector((state: any) => state.progress) //delete
+    useEffect(() => {
+        if (progress !== initialProgress)
+            db.collection("users").doc('user_0')
+                .update({progress: JSON.stringify(progress)})
+    }, [progress])
+
+    // @ts-ignore
+    // const [userInDB] = useDocument(db.collection('users').doc(auth.currentUser?.uid))
+    // const [userInDB, setUserInDB] = useState(null)
+    // useEffect(() => {
+    //     db.collection('users').doc(auth.currentUser?.uid).get()
+    //         .then((response: any) => setUserInDB(response))
+    //     console.log(userInDB)
+    // }, [])
+    const userData = useSelector((state: any) => state.userData)
+    console.log(userData)
 
     return (
-        <BrowserRouter>
-            <div className="App">
-                <Routes>
-                    <Route path="login" element={<Login/>}/>
-                    <Route path="registration" element={<Registration/>}/>
-                    <Route path="" element={<Home/>}/>
-                    <Route path="profile" element={<Profile/>}/>
-                    <Route path="shop" element={<Shop/>}/>
-                    <Route path="settings" element={<Settings/>}/>
-                    <Route path="lesson" element={<LessonScreenCopy/>}/>
-                </Routes>
-            </div>
-        </BrowserRouter>
+        <>
+            {!user && <Auth app={app}/>}
+            {/*@ts-ignore*/}
+            {user && !userData?.progress && <SignUp userInAuth={user} db={db}/>}
+            {/*@ts-ignore*/}
+            {user && userData?.progress && <BrowserRouter>
+                <div className="App">
+                    <Routes>
+                        <Route path="login" element={<Login/>}/>
+                        <Route path="registration" element={<Registration/>}/>
+                        {/*@ts-ignore*/}
+                        <Route path="" element={<Home signOut={signOut}/>}/>
+                        <Route path="profile" element={<Profile/>}/>
+                        <Route path="shop" element={<Shop/>}/>
+                        <Route path="settings" element={<Settings/>}/>
+                        <Route path="lesson" element={<LessonScreenContainer/>}/>
+                        <Route path="/*" element={<div>404</div>}/>
+                    </Routes>
+                </div>
+            </BrowserRouter>}
+        </>
     );
 }
 

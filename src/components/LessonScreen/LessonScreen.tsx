@@ -10,52 +10,34 @@ import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/globa
 import LessonForm from "./LessonForm";
 
 // @ts-ignore
-const LessonScreen: FC = (props) => {
+const LessonScreen: FC = ({sectionName, lessonId, sectionProgress, lessonIndex, isBonus, isTest, tasks}: any) => {
     const dispatch = useDispatch()
-    const location = useLocation()
+    const navigate = useNavigate();
 
     const gradeNum = useSelector((state: any) => state.grade)
-    const {sectionName, lessonId} = location.state;
-    //from fetched data
-    const isBonus = location.state.isBonus || false
-    const isTest = location.state.isTest || false
-
-    const tasks = useSelector((state: any) => state.currentLesson.tasks)
-
-    //In container?
-    useEffect(() => {
-        // @ts-ignore
-        dispatch(setLessonStateThunk(gradeNum, sectionName, lessonId))
-    }, [])
-
-    const navigate = useNavigate();
 
     const [progress, setProgress] = useState(0);
     const [currentTask, setCurrentTask] = useState(0)
 
     useEffect(() => {
         if (progress >= 100) {
-            // @ts-ignore
-            if (isTest && id < section.lessons.length) {
-                setProgress(0)
-                // setId(id + 1)
-            } else {
-                onCompletion(gradeNum, sectionName, 0, 0)
-            }
+            onCompletion(gradeNum, sectionName, sectionProgress, lessonIndex)
         }
         if (progress > 0) setCurrentTask(currentTask + 1);
     }, [progress])
 
     function onCompletion(gradeNum: number, sectionName: string, sectionProgress: number, lessonIndex: number) {
-        if (isTest) {
-            dispatch(testCompleted({grade: gradeNum - 1, section: sectionName}))
-        } else {
-            if (isBonus) {
-                dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
-                dispatch(incrementBonusLessonsTotal())
+        if (sectionProgress <= lessonIndex) {
+            if (isTest) {
+                dispatch(testCompleted({grade: gradeNum - 1, section: sectionName}))
             } else {
-                dispatch(incrementLessonProgress({grade: gradeNum - 1, section: sectionName}))
-                dispatch(incrementLessonsTotal())
+                if (isBonus) {
+                    dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
+                    dispatch(incrementBonusLessonsTotal())
+                } else {
+                    dispatch(incrementLessonProgress({grade: gradeNum - 1, section: sectionName}))
+                    dispatch(incrementLessonsTotal())
+                }
             }
         }
         // isTest ? dispatch(earn(reward * 5)) : dispatch(earn(reward))
@@ -63,7 +45,6 @@ const LessonScreen: FC = (props) => {
         navigate('/');
         setProgress(0);
     }
-
 
     const [lives, setLives] = useState([1, 1, 1]);
     const loseTest = () => {
@@ -76,25 +57,22 @@ const LessonScreen: FC = (props) => {
     const lessonFormProps = {tasks, currentTask, setProgress, progress, isTest, setLives, lives, loseTest}
 
     return <>
-        {tasks
-            ? <div>
-                <h1>Lesson</h1>
+        <div>
+            <h1>Lesson</h1>
 
-                {/*{!isTest && <button onClick={() => alert(theory)}>Theory</button>}*/}
+            {/*{!isTest && <button onClick={() => alert(theory)}>Theory</button>}*/}
 
-                <NavLink to={"/"}>
-                    <button>Exit</button>
-                </NavLink>
+            <NavLink to={"/"}>
+                <button>Exit</button>
+            </NavLink>
 
-                <LinearProgress variant="determinate" value={progress}/>
+            <LinearProgress variant="determinate" value={progress}/>
 
-                {isTest ? <div> {lives.map((life: any, index) => <span key={index}> 💗 </span>)} </div> : null}
+            {isTest ? <div> {lives.map((life: any, index) => <span key={index}> 💗 </span>)} </div> : null}
 
-                {tasks && <LessonForm {...lessonFormProps}/>}
+            {tasks && <LessonForm {...lessonFormProps}/>}
 
-            </div>
-            : <div> Loading . . .</div>
-        }
+        </div>
     </>
 }
 

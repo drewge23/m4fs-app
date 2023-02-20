@@ -9,7 +9,7 @@ const SectionNav: FC = () => {
     const progress = useSelector((state: any) => state.progress)
 
     const scrollWithOffset = (el: any) => {
-        const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+        const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
         const yOffset = -60;
         window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
     }
@@ -21,10 +21,10 @@ const SectionNav: FC = () => {
                         return (
                             grade.lessonSections.map(section => {
                                 let comletionPercent = Math.round(
-                                 (progress[grade.id - 1].get(section.name)[0] +
-                                    progress[grade.id - 1].get(section.name)[1]) /
+                                 (progress[grade.id - 1][section.name][0] +
+                                    progress[grade.id - 1][section.name][1]) /
                                     (section.lessons.length + section.bonusLessons.length) * 80 +
-                                    (progress[grade.id - 1].get(section.name)[2] && 20 || 0))
+                                    (progress[grade.id - 1][section.name][2] && 20 || 0))
                                 return (
                                     <Box key={section.id}>
                                         <HashLink smooth to={"#" + section.name}

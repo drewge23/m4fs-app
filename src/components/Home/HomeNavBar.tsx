@@ -19,7 +19,7 @@ import {decrementGrade, incrementGrade} from "../../BLL/gradeSlice";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function HomeNavBar() {
+function HomeNavBar({signOut}: any) {
     const isAuth = useSelector((state: any) => state.user.isAuth)
     const money = useSelector((state: any) => state.money)
 
@@ -76,6 +76,9 @@ function HomeNavBar() {
                     >
                         M4FS
                     </Typography>
+                    <button onClick={signOut}>
+                        Sign out
+                    </button>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}/>
 
                     <Box sx={{flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>

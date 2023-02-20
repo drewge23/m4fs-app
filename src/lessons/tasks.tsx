@@ -17,4 +17,13 @@ for (let i = 0; i < 20; i++) {
     tasks.push(generateFunc())
 }
 
-export default tasks
+const lesson_1 = {
+    name: 'addition_1',
+    description: 'description',
+    theory: 'theory',
+    isBonus: false,
+    isTest: false,
+    tasks: tasks,
+}
+
+export default lesson_1
