@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import {Form, Field} from "react-final-form";
 import './Registration.module.css';
 import {useDispatch} from "react-redux";
-import {setUserInfo} from "../../BLL/userSlice";
+import {setUserInfo} from "../../BLL/junk/userSlice";
 
 const RegistrationForm: FC = () => {
     const dispatch = useDispatch();

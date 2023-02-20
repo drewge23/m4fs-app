@@ -19,7 +19,7 @@ import {decrementGrade, incrementGrade} from "../../BLL/gradeSlice";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function HomeNavBar({signOut}: any) {
+function HomeHeaderNav({signOut}: any) {
     const isAuth = useSelector((state: any) => state.user.isAuth)
     const money = useSelector((state: any) => state.money)
 
@@ -142,4 +142,4 @@ function HomeNavBar({signOut}: any) {
     );
 }
 
-export default HomeNavBar;
+export default HomeHeaderNav;

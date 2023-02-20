@@ -6,7 +6,7 @@ const initialState = {
     sectionsTotal: 0,
 }
 
-let globalProgressSlice = createSlice({
+let statisticsSlice = createSlice({
     name: 'globalProgress',
     initialState: initialState,
     reducers: {
@@ -25,9 +25,9 @@ let globalProgressSlice = createSlice({
     }
 })
 
-export default globalProgressSlice.reducer;
+export default statisticsSlice.reducer;
 export const {
     incrementLessonsTotal,
     incrementBonusLessonsTotal,
     incrementSectionsTotal
-} = globalProgressSlice.actions;
+} = statisticsSlice.actions;

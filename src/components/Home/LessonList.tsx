@@ -20,17 +20,21 @@ import {bonusLessonsCompleted, lessonsCompleted} from "../../BLL/progressSlice";
 import firebase from "firebase/compat/app";
 import {useCollectionOnce} from "react-firebase-hooks/firestore";
 
+//TODO: refactor
 const LessonList = ({sectionName}: any) => {
     const gradeNum = useSelector((state: any) => state.grade)
-    const app = useSelector((state: any) => state.firebase.app)
-    const db = firebase.firestore(app)
+    const db = useSelector((state: any) => state.firebase.db)
 
     // @ts-ignore
     const [section, loading] = useCollectionOnce(db.collection('lessons')
         .doc(`grade_${gradeNum}`).collection(sectionName))
 
+    let [sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted] = [null, null, null, null, null];
     const progress = useSelector((state: any) => state.progress[gradeNum - 1][sectionName]);
-    let [sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted] = progress;
+    useEffect(() => {
+        if (!progress) return
+        [sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted] = progress;
+    }, [progress])
 
     let stars = 0;
     for (let bool of [testCompleted, sectionCompleted, bonusCompleted]) {

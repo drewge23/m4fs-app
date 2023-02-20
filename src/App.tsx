@@ -13,7 +13,7 @@ import firebase from "firebase/compat/app";
 import 'firebase/compat/analytics';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import {setApp} from "./firebaseSlice";
+import {setApp, setDB} from "./BLL/firebaseSlice";
 import LessonScreenContainer from "./components/LessonScreen/LessonScreenContainer";
 import {getProgressThunk} from "./BLL/progressSlice";
 import {getUserDataThunk} from "./BLL/userDataSlice";
@@ -48,16 +48,17 @@ function App() {
     // @ts-ignore
     useEffect(() => {
         dispatch(setApp(app))
+        dispatch(setDB(db))
         // @ts-ignore
         dispatch(getUserDataThunk(db, user?.uid))
         // @ts-ignore
-        dispatch(getProgressThunk('user_0')) //TODO: delete
+        dispatch(getProgressThunk(db, user?.uid)) //TODO: delete
     }, [user])
 
     const progress = useSelector((state: any) => state.progress) //delete
     useEffect(() => {
         if (progress !== initialProgress)
-            db.collection("users").doc('user_0')
+            db.collection("users").doc(user?.uid)
                 .update({progress: JSON.stringify(progress)})
     }, [progress])
 
@@ -70,7 +71,6 @@ function App() {
     //     console.log(userInDB)
     // }, [])
     const userData = useSelector((state: any) => state.userData)
-    console.log(userData)
 
     return (
         <>

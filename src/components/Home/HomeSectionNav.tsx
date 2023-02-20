@@ -4,7 +4,8 @@ import {Box, Link} from "@mui/material";
 import {useSelector} from "react-redux";
 import grades from "../../lessons/grades";
 
-const SectionNav: FC = () => {
+//TODO: refactor
+const HomeSectionNav: FC = () => {
     const gradeNum = useSelector((state: any) => state.grade)
     const progress = useSelector((state: any) => state.progress)
 
@@ -43,4 +44,4 @@ const SectionNav: FC = () => {
     )
 }
 
-export default SectionNav;
+export default HomeSectionNav;

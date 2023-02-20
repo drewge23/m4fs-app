@@ -18,10 +18,11 @@ function SignUp({userInAuth, db}) {
         <div style={{
             width: '500px',
             height: '500px',
-            backgroundColor: 'red',
+            backgroundColor: 'lightblue',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            margin: '0 auto',
         }}>
             <h3>Input your name please</h3>
             <input type="text"

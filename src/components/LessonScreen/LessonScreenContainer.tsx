@@ -6,7 +6,7 @@ import {setLessonStateThunk} from "../../BLL/currentLessonSlice";
 import {incrementBonusProgress, incrementLessonProgress, testCompleted} from "../../BLL/progressSlice";
 import {earn} from "../../BLL/moneySlice";
 import grades from "../../lessons/grades";
-import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/globalProgressSlice";
+import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/statisticsSlice";
 import LessonForm from "./LessonForm";
 import LessonScreen from "./LessonScreen";
 

@@ -1,15 +1,15 @@
-const grade1 = {
+const grade_1 = {
     addition: [0, 0, false, false, false],
     subtraction: [0, 0, false, false, false],
 }
 
-const grade2 = {
+const grade_2 = {
     quadratic: [0, 0, false, false, false]
 }
 
 const initialProgress = [
-    grade1,
-    grade2,
+    grade_1,
+    grade_2,
 ]
 
 export default initialProgress

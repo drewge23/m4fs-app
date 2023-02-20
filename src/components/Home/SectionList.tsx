@@ -5,11 +5,10 @@ import {useDocumentOnce} from "react-firebase-hooks/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 
+//TODO: refactor
 const SectionList: FC = () => {
     const gradeNum = useSelector((state: any) => state.grade)
-
-    const app = useSelector((state: any) => state.firebase.app)
-    const db = firebase.firestore(app)
+    const db = useSelector((state: any) => state.firebase.db)
 
     const gradeRef = db.collection('lessons').doc(`grade_${gradeNum}`)
     // @ts-ignore
@@ -19,9 +18,9 @@ const SectionList: FC = () => {
         <div>
             <h1>Grade {gradeNum}</h1>
             {/*// @ts-ignore*/}
-            {!loading && grade?.data().sections.map((section: any) => {
+            {!loading && grade?.data().sections.map((sectionName: any) => {
                     return (
-                        <LessonList sectionName={section} key={section}/>
+                        <LessonList sectionName={sectionName} key={sectionName}/>
                     )
                 }
             )}
