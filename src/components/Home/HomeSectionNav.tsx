@@ -25,11 +25,14 @@ const HomeSectionNav: FC = () => {
         <>
             {/*@ts-ignore*/}
             {grade?.data().sections.map((section: any) => {
-                let completionPercent = Math.round(
-                    (progress[gradeNum - 1][section.name][0] +
-                        progress[gradeNum - 1][section.name][1]) /
-                    (section.lessonCount) * 80 +
-                    (progress[gradeNum - 1][section.name][2] && 20 || 0))
+                let completionPercent = progress[gradeNum - 1][section.name]
+                    ? Math.round(
+                        (progress[gradeNum - 1][section.name][0]
+                        + progress[gradeNum - 1][section.name][1])
+                        / (section.lessonCount)
+                        * 80
+                        + (progress[gradeNum - 1][section.name][2] && 20 || 0))
+                    : 0
                 return (
                     <Box key={section.name}>
                         <HashLink smooth to={"#" + section.name}

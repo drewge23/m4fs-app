@@ -14,6 +14,7 @@ import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {decrementGrade, incrementGrade} from "../../BLL/gradeSlice";
 
+const GRADES_COUNT = 2
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function HomeHeaderNav({signOut}: any) {
@@ -36,7 +37,6 @@ function HomeHeaderNav({signOut}: any) {
         setAnchorElUser(null);
     };
 
-    const GRADES_COUNT = 3
     const gradeNum = useSelector( (state: any) => state.grade)
     const dispatch = useDispatch()
 
