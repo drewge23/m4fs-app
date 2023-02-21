@@ -1,13 +1,7 @@
-import React, {FC, useEffect, useState} from "react";
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {LinearProgress} from "@mui/material";
+import React, {FC, useEffect} from "react";
+import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setLessonStateThunk} from "../../BLL/currentLessonSlice";
-import {incrementBonusProgress, incrementLessonProgress, testCompleted} from "../../BLL/progressSlice";
-import {earn} from "../../BLL/moneySlice";
-import grades from "../../lessons/grades";
-import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/statisticsSlice";
-import LessonForm from "./LessonForm";
 import LessonScreen from "./LessonScreen";
 
 // @ts-ignore

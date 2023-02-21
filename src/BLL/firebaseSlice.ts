@@ -5,6 +5,7 @@ const firebaseSlice = createSlice({
     initialState: {
         app: null,
         db: null,
+        user: null,
     },
     reducers: {
         setApp: (state, action) => {
@@ -14,9 +15,13 @@ const firebaseSlice = createSlice({
         setDB: (state, action) => {
             state.db = action.payload
             return state
+        },
+        setUser: (state, action) => {
+            state.user = action.payload
+            return state
         }
     }
 })
 
 export default firebaseSlice.reducer
-export const {setApp,setDB} = firebaseSlice.actions
+export const {setApp,setDB, setUser} = firebaseSlice.actions

@@ -5,22 +5,19 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import grades from "../../lessons/grades";
 import {decrementGrade, incrementGrade} from "../../BLL/gradeSlice";
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function HomeHeaderNav({signOut}: any) {
-    const isAuth = useSelector((state: any) => state.user.isAuth)
+    const userPhotoURL = useSelector((state: any) => state.firebase.user.photoURL)
     const money = useSelector((state: any) => state.money)
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -32,20 +29,19 @@ function HomeHeaderNav({signOut}: any) {
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
-
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
+    const GRADES_COUNT = 3
     const gradeNum = useSelector( (state: any) => state.grade)
     const dispatch = useDispatch()
 
     const increment = () => {
-        if (gradeNum < grades.length) {
+        if (gradeNum < GRADES_COUNT) {
             dispatch(incrementGrade())
         }
     }
@@ -102,11 +98,9 @@ function HomeHeaderNav({signOut}: any) {
 
                     <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
-                            {isAuth
-                                ? <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                                    <Avatar alt="Remy Sharp" src={userPhotoURL}/>
                                 </IconButton>
-                                : <NavLink to={"/login"}> Log in </NavLink>}
                         </Tooltip>
                         <Menu
                             sx={{mt: '45px'}}

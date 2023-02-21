@@ -1,6 +1,5 @@
 import {FC} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../../BLL/junk/userSlice";
 import {Navigate, NavLink} from "react-router-dom";
 
 const Profile: FC = () => {
@@ -19,9 +18,6 @@ const Profile: FC = () => {
             <div>
                 <p>{'lessons completed = ' + globalProgress.lessonsTotal}</p>
                 <p>{'bonus lessons completed = ' + globalProgress.bonusLessonsTotal}</p>
-            </div>
-            <div>
-                <button onClick={() => dispatch(logout())}>Log out</button>
             </div>
             <div>
                 <div>

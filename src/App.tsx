@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Login from "./components/Login/Login";
-import Registration from "./components/Registration/Registration";
 import Home from "./components/Home/Home";
 import Profile from "./components/Profile/Profile";
 import Settings from "./components/Settings/Settings";
@@ -13,7 +11,7 @@ import firebase from "firebase/compat/app";
 import 'firebase/compat/analytics';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import {setApp, setDB} from "./BLL/firebaseSlice";
+import {setApp, setDB, setUser} from "./BLL/firebaseSlice";
 import LessonScreenContainer from "./components/LessonScreen/LessonScreenContainer";
 import {getProgressThunk} from "./BLL/progressSlice";
 import {getUserDataThunk} from "./BLL/userDataSlice";
@@ -33,7 +31,6 @@ const firebaseConfig = {
 };
 const app = firebase.initializeApp(firebaseConfig);
 const analytics = firebase.analytics(app);
-// const auth = firebase.auth(app);
 const db = firebase.firestore(app)
 const auth = firebase.auth(app)
 
@@ -49,6 +46,7 @@ function App() {
     useEffect(() => {
         dispatch(setApp(app))
         dispatch(setDB(db))
+        if (user) dispatch(setUser(user))
         // @ts-ignore
         dispatch(getUserDataThunk(db, user?.uid))
         // @ts-ignore
@@ -81,8 +79,6 @@ function App() {
             {user && userData?.progress && <BrowserRouter>
                 <div className="App">
                     <Routes>
-                        <Route path="login" element={<Login/>}/>
-                        <Route path="registration" element={<Registration/>}/>
                         {/*@ts-ignore*/}
                         <Route path="" element={<Home signOut={signOut}/>}/>
                         <Route path="profile" element={<Profile/>}/>

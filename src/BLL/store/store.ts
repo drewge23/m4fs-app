@@ -1,5 +1,4 @@
-import {combineReducers, configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
-import userReducer from "../junk/userSlice";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import progressReducer from "../progressSlice";
 import currentLessonReducer from "../currentLessonSlice";
 import { enableMapSet } from 'immer';
@@ -12,7 +11,6 @@ import userDataSlice from "../userDataSlice";
 enableMapSet()
 
 const rootReducer = combineReducers({
-    user: userReducer,
     currentLesson: currentLessonReducer,
     progress: progressReducer,
     statistics: statistics,
