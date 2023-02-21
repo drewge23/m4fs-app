@@ -15,12 +15,10 @@ import StarIcon from '@mui/icons-material/Star';
 import {NavLink} from "react-router-dom";
 import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
-import React, {useEffect} from "react";
-import {bonusLessonsCompleted, lessonsCompleted} from "../../BLL/progressSlice";
-import firebase from "firebase/compat/app";
+import React, {useEffect, useState} from "react";
+import {lessonsCompleted} from "../../BLL/progressSlice";
 import {useCollectionOnce} from "react-firebase-hooks/firestore";
 
-//TODO: refactor
 const LessonList = ({sectionName}: any) => {
     const gradeNum = useSelector((state: any) => state.grade)
     const db = useSelector((state: any) => state.firebase.db)
@@ -29,29 +27,33 @@ const LessonList = ({sectionName}: any) => {
     const [section, loading] = useCollectionOnce(db.collection('lessons')
         .doc(`grade_${gradeNum}`).collection(sectionName))
 
-    let [sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted] = [null, null, null, null, null];
+    const [[sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted], setProgressArray]
+        = useState([0, 0, false, false, false])
     const progress = useSelector((state: any) => state.progress[gradeNum - 1][sectionName]);
     useEffect(() => {
         if (!progress) return
-        [sectionProgress, bonusProgress, testCompleted, sectionCompleted, bonusCompleted] = progress;
+        setProgressArray(progress);
     }, [progress])
 
     let stars = 0;
     for (let bool of [testCompleted, sectionCompleted, bonusCompleted]) {
-        if (bool === true) {
+        if (bool) {
             stars++
         }
     }
 
     function isDisabled(index: number) {
-        return sectionProgress < index;
+        return sectionProgress < index
+    }
+    function isGold(index: number) {
+        return sectionProgress > index
     }
 
     const dispatch = useDispatch();
     useEffect(() => {
         if (!section) return
         // @ts-ignore
-        if (sectionProgress >= section.docs.length) {
+        if (sectionProgress === section.docs.length - 1) {
             dispatch(lessonsCompleted({grade: gradeNum - 1, section: sectionName}))
         }
     }, [sectionProgress, bonusProgress])
@@ -67,7 +69,7 @@ const LessonList = ({sectionName}: any) => {
                     return (
                         <Accordion key={lesson.id} disabled={!testCompleted && isDisabled(index)}>
                             <AccordionSummary
-                                expandIcon={sectionProgress > index
+                                expandIcon={isGold(index)
                                     ? <StarIcon/>
                                     : <StarBorderPurple500OutlinedIcon/>}
                                 aria-controls="panel1a-content"

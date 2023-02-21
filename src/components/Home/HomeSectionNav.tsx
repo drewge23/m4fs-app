@@ -1,45 +1,45 @@
 import {HashLink} from 'react-router-hash-link';
 import {FC} from "react";
-import {Box, Link} from "@mui/material";
+import {Box} from "@mui/material";
 import {useSelector} from "react-redux";
-import grades from "../../lessons/grades";
+import {useDocumentOnce} from "react-firebase-hooks/firestore";
 
 //TODO: refactor
 const HomeSectionNav: FC = () => {
     const gradeNum = useSelector((state: any) => state.grade)
     const progress = useSelector((state: any) => state.progress)
 
+    const db = useSelector((state: any) => state.firebase.db)
+    // @ts-ignore
+    const [grade, loading] = useDocumentOnce(db.collection('lessons')
+        .doc(`grade_${gradeNum}`))
+    //get all grade's collections' length
+
     const scrollWithOffset = (el: any) => {
         const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
         const yOffset = -60;
-        window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
+        window.scrollTo({top: yCoordinate + yOffset, behavior: 'smooth'});
     }
 
     return (
         <>
-            {grades.map(grade => {
-                    if (grade.id === gradeNum) {
-                        return (
-                            grade.lessonSections.map(section => {
-                                let comletionPercent = Math.round(
-                                 (progress[grade.id - 1][section.name][0] +
-                                    progress[grade.id - 1][section.name][1]) /
-                                    (section.lessons.length + section.bonusLessons.length) * 80 +
-                                    (progress[grade.id - 1][section.name][2] && 20 || 0))
-                                return (
-                                    <Box key={section.id}>
-                                        <HashLink smooth to={"#" + section.name}
-                                                  scroll={el => scrollWithOffset(el)}>
-                                            {section.name}
-                                        </HashLink>
-                                        <span>{" " + comletionPercent + "%"}</span>
-                                    </Box>
-                                )
-                            })
-                        )
-                    }
-                }
-            )}
+            {/*@ts-ignore*/}
+            {grade?.data().sections.map((sectionName: any) => {
+                let completionPercent = Math.round(
+                    (progress[gradeNum - 1][sectionName][0] +
+                        progress[gradeNum - 1][sectionName][1]) /
+                    (3 /*section.lessons.length + section.bonusLessons.length*/) * 80 +
+                    (progress[gradeNum - 1][sectionName][2] && 20 || 0))
+                return (
+                    <Box key={sectionName}>
+                        <HashLink smooth to={"#" + sectionName}
+                                  scroll={el => scrollWithOffset(el)}>
+                            {sectionName}
+                        </HashLink>
+                        <span>{" " + completionPercent + "%"}</span>
+                    </Box>
+                )
+            })}
         </>
     )
 }
