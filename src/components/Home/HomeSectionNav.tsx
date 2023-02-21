@@ -1,8 +1,9 @@
 import {HashLink} from 'react-router-hash-link';
-import {FC} from "react";
+import {FC, useEffect, useState} from "react";
 import {Box} from "@mui/material";
 import {useSelector} from "react-redux";
 import {useDocumentOnce} from "react-firebase-hooks/firestore";
+import { getCountFromServer } from 'firebase/firestore';
 
 //TODO: refactor
 const HomeSectionNav: FC = () => {
@@ -13,7 +14,6 @@ const HomeSectionNav: FC = () => {
     // @ts-ignore
     const [grade, loading] = useDocumentOnce(db.collection('lessons')
         .doc(`grade_${gradeNum}`))
-    //get all grade's collections' length
 
     const scrollWithOffset = (el: any) => {
         const yCoordinate = el.getBoundingClientRect().top + window.scrollY;
@@ -24,17 +24,17 @@ const HomeSectionNav: FC = () => {
     return (
         <>
             {/*@ts-ignore*/}
-            {grade?.data().sections.map((sectionName: any) => {
+            {grade?.data().sections.map((section: any) => {
                 let completionPercent = Math.round(
-                    (progress[gradeNum - 1][sectionName][0] +
-                        progress[gradeNum - 1][sectionName][1]) /
-                    (3 /*section.lessons.length + section.bonusLessons.length*/) * 80 +
-                    (progress[gradeNum - 1][sectionName][2] && 20 || 0))
+                    (progress[gradeNum - 1][section.name][0] +
+                        progress[gradeNum - 1][section.name][1]) /
+                    (section.lessonCount) * 80 +
+                    (progress[gradeNum - 1][section.name][2] && 20 || 0))
                 return (
-                    <Box key={sectionName}>
-                        <HashLink smooth to={"#" + sectionName}
+                    <Box key={section.name}>
+                        <HashLink smooth to={"#" + section.name}
                                   scroll={el => scrollWithOffset(el)}>
-                            {sectionName}
+                            {section.name}
                         </HashLink>
                         <span>{" " + completionPercent + "%"}</span>
                     </Box>

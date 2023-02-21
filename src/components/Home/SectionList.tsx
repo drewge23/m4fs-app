@@ -18,9 +18,9 @@ const SectionList: FC = () => {
         <div>
             <h1>Grade {gradeNum}</h1>
             {/*// @ts-ignore*/}
-            {!loading && grade?.data().sections.map((sectionName: any) => {
+            {!loading && grade?.data().sections.map((section: any) => {
                     return (
-                        <LessonList sectionName={sectionName} key={sectionName}/>
+                        <LessonList sectionName={section.name} key={section.name}/>
                     )
                 }
             )}

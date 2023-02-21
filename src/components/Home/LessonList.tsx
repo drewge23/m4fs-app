@@ -53,7 +53,7 @@ const LessonList = ({sectionName}: any) => {
     useEffect(() => {
         if (!section) return
         // @ts-ignore
-        if (sectionProgress === section.docs.length - 1) {
+        if (sectionProgress === section.docs.length) {
             dispatch(lessonsCompleted({grade: gradeNum - 1, section: sectionName}))
         }
     }, [sectionProgress, bonusProgress])
