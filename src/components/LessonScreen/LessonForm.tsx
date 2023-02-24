@@ -7,8 +7,10 @@ function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives
 interface Errors {
     answers: string[];
 }
+
+const MAX_ANSWERS = 20
 let initialAnswers: string[] = [];
-for (let i = 0; i < tasks[0].rightAnswers.length; i++) {
+for (let i = 0; i < MAX_ANSWERS; i++) {
     initialAnswers.push('');
 }
 const formik = useFormik({

@@ -1,11 +1,9 @@
 import {HashLink} from 'react-router-hash-link';
-import {FC, useEffect, useState} from "react";
+import {FC} from "react";
 import {Box} from "@mui/material";
 import {useSelector} from "react-redux";
 import {useDocumentOnce} from "react-firebase-hooks/firestore";
-import { getCountFromServer } from 'firebase/firestore';
 
-//TODO: refactor
 const HomeSectionNav: FC = () => {
     const gradeNum = useSelector((state: any) => state.grade)
     const progress = useSelector((state: any) => state.progress)
@@ -31,7 +29,7 @@ const HomeSectionNav: FC = () => {
                         + progress[gradeNum - 1][section.name][1])
                         / (section.lessonCount)
                         * 80
-                        + (progress[gradeNum - 1][section.name][2] && 20 || 0))
+                        + (progress[gradeNum - 1][section.name][4] && 20 || 0))
                     : 0
                 return (
                     <Box key={section.name}>

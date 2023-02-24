@@ -7,22 +7,32 @@ import {incrementBonusProgress, incrementLessonProgress, testCompleted} from "..
 import {earn} from "../../BLL/moneySlice";
 import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/statisticsSlice";
 import LessonForm from "./LessonForm";
+import Theory from "./Theory";
 
 // @ts-ignore
-const LessonScreen: FC = ({sectionName, lessonId, sectionProgress, lessonIndex, isBonus, isTest, tasks}: any) => {
+const LessonScreen: FC = ({
+                              sectionName, lessonId, sectionProgress, lessonIndex,
+                              isBonus, isTest, tasks, reward, theory
+                          }: any) => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
     const gradeNum = useSelector((state: any) => state.grade)
 
     const [progress, setProgress] = useState(0);
-    const [currentTask, setCurrentTask] = useState(0)
+    const [tasksUndone, setTasksUndone] = useState(tasks)
+    const [currentTask, setCurrentTask] = useState(Math.floor(Math.random() * tasks.length))
 
     useEffect(() => {
         if (progress >= 100) {
             onCompletion(gradeNum, sectionName, sectionProgress, lessonIndex)
         }
-        if (progress > 0) setCurrentTask(currentTask + 1);
+        if (progress > 0) {
+            let temp = [...tasksUndone]
+            temp.splice(currentTask, 1)
+            setTasksUndone(temp)
+            setCurrentTask(Math.floor(Math.random() * tasksUndone.length));
+        }
     }, [progress])
 
     function onCompletion(gradeNum: number, sectionName: string, sectionProgress: number, lessonIndex: number) {
@@ -39,11 +49,13 @@ const LessonScreen: FC = ({sectionName, lessonId, sectionProgress, lessonIndex, 
                 }
             }
         }
-        // isTest ? dispatch(earn(reward * 5)) : dispatch(earn(reward))
+        isTest ? dispatch(earn(reward * 5)) : dispatch(earn(reward))
         alert('good job!');
         navigate('/');
         setProgress(0);
     }
+
+    const [showTheory, setShowTheory] = useState(false)
 
     const [lives, setLives] = useState([1, 1, 1]);
     const loseTest = () => {
@@ -59,13 +71,17 @@ const LessonScreen: FC = ({sectionName, lessonId, sectionProgress, lessonIndex, 
         <div>
             <h1>Lesson</h1>
 
-            {/*{!isTest && <button onClick={() => alert(theory)}>Theory</button>}*/}
+            {!isTest && <button onClick={() => setShowTheory(!showTheory)}>Theory</button>}
 
             <NavLink to={"/"}>
                 <button>Exit</button>
             </NavLink>
 
             <LinearProgress variant="determinate" value={progress}/>
+
+            <div style={{display: showTheory ? 'flex' : 'none'}}>
+                <Theory theory={theory} setShowTheory={setShowTheory}/>
+            </div>
 
             {isTest ? <div> {lives.map((life: any, index) => <span key={index}> 💗 </span>)} </div> : null}
 

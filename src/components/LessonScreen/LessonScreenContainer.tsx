@@ -11,9 +11,10 @@ const LessonScreenContainer: FC = () => {
 
     const gradeNum = useSelector((state: any) => state.grade)
     const {sectionName, lessonId, sectionProgress, lessonIndex} = location.state;
-    //TODO: from fetched data
     const isBonus = location.state.isBonus || false
     const isTest = location.state.isTest || false
+    const reward = location.state.reward || 1
+    const theory = location.state.theory || [null, 'theory']
 
     const tasks = useSelector((state: any) => state.currentLesson.tasks)
 
@@ -23,7 +24,7 @@ const LessonScreenContainer: FC = () => {
     }, [])
 
     const lessonScreenProps = {
-        sectionName, lessonId, sectionProgress, lessonIndex, isBonus, isTest, tasks
+        sectionName, lessonId, sectionProgress, lessonIndex, isBonus, isTest, tasks, reward, theory
     }
 
     return <>

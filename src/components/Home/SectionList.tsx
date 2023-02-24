@@ -1,5 +1,5 @@
 import {FC} from "react";
-import LessonList from "./LessonList";
+import LessonList from "./LessonList/LessonList";
 import {useSelector} from "react-redux";
 import {useDocumentOnce} from "react-firebase-hooks/firestore";
 import firebase from "firebase/compat/app";
