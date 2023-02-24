@@ -19,6 +19,7 @@ import React, {useEffect, useState} from "react";
 import {lessonsCompleted} from "../../../BLL/progressSlice";
 import {useCollectionOnce, useDocumentOnce} from "react-firebase-hooks/firestore";
 import Lessons from "./Lessons";
+import Test from "./Test";
 
 const LessonList = ({sectionName}: any) => {
     const gradeNum = useSelector((state: any) => state.grade)
@@ -29,10 +30,16 @@ const LessonList = ({sectionName}: any) => {
         .doc(`grade_${gradeNum}`).collection(sectionName))
 
     const [test, setTest] = useState(null)
+    const [lessons, setLessons] = useState([])
+    const [bonuses, setBonuses] = useState([])
     useEffect(() => {
         if (!section) return
         // @ts-ignore
         setTest(section?.docs.filter((task: any) => task.isTest)[0])
+        // @ts-ignore
+        setLessons(section?.docs.filter((task: any) => (!task.isBonus && !task.isTest)))
+        // @ts-ignore
+        setBonuses(section?.docs.filter((task: any) => task.isBonus))
     }, [section])
 
     const [[sectionProgress, bonusProgress, sectionCompleted, bonusCompleted, testCompleted], setProgressArray]
@@ -59,16 +66,19 @@ const LessonList = ({sectionName}: any) => {
         }
     }, [sectionProgress, bonusProgress, section])
 
-    const lessonsProps = {section, sectionProgress, testCompleted, sectionName}
+    const lessonsProps = {lessons, sectionProgress, testCompleted, sectionName}
+    const bonusesProps = {bonuses, bonusProgress, testCompleted, sectionName}
+    const testProps = {test, testCompleted, sectionName}
 
     return (<>
         {!loading && <Card id={sectionName}>
             <CardContent>
                 <h1>{sectionName}</h1>
 
-                <Lessons {...lessonsProps} />
+                <Lessons {...lessonsProps} isBonus={false}/>
+                {bonuses.length !== 0 && <h3>Bonus levels</h3>}
+                <Lessons {...bonusesProps} isBonus={true}/>
 
-                {/*BONUS LESSONS*/}
                 {/*BONUS LESSONS*/}
                 {/*<h3>bonus lessons</h3>*/}
                 {/*// {section.bonusLessons.map((lesson: any, index: number) => {*/}
@@ -114,26 +124,9 @@ const LessonList = ({sectionName}: any) => {
             </CardContent>
             <CardActions>
                 <Container>
-                    <NavLink to={"/lesson"}
-                             state={{
-                                 sectionName: sectionName,
-                                 lessonIndex: 1,
-                                 isTest: true,
-                                 id: 1,
-                                 // reward: 1,
-                             }}>
-                        <Box
-                            component={motion.div}
-                            style={{
-                                width: 100, height: 100, borderRadius: '50%',
-                                backgroundColor: testCompleted ? 'gold' : 'pink'
-                            }}
-                            whileHover={{scale: 1.1}}
-                            whileTap={{scale: 0.9}}
-                        >
-                            <EmojiEventsIcon sx={{marginTop: 4.5}}/>
-                        </Box>
-                    </NavLink>
+
+                    {test && <Test {...testProps}/>}
+
                     <div>
                         {stars > 0 ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
                         {stars > 1 ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
@@ -142,7 +135,7 @@ const LessonList = ({sectionName}: any) => {
                 </Container>
             </CardActions>
         </Card>}
-        {loading && <div>Loading...</div>}
+        {loading && <div style={{height: '300px'}}>Loading...</div>}
     </>)
 }
 
