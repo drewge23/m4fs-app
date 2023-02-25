@@ -20,7 +20,7 @@ const LessonScreen: FC = ({
     const gradeNum = useSelector((state: any) => state.grade)
 
     const [progress, setProgress] = useState(0);
-    const [tasksUndone, setTasksUndone] = useState(tasks)
+    const [tasksDone, setTasksDone] = useState([])
     const [currentTask, setCurrentTask] = useState(Math.floor(Math.random() * tasks.length))
 
     useEffect(() => {
@@ -28,18 +28,25 @@ const LessonScreen: FC = ({
             onCompletion(gradeNum, sectionName, sectionProgress, lessonIndex)
         }
         if (progress > 0) {
-            let temp = [...tasksUndone]
-            temp.splice(currentTask, 1)
-            setTasksUndone(temp)
-            setCurrentTask(Math.floor(Math.random() * tasksUndone.length));
+            let temp = [...tasksDone]
+            // @ts-ignore
+            temp.push(currentTask)
+            setTasksDone(temp)
+
+            let tempIndex = Math.floor(Math.random() * tasks.length)
+            // @ts-ignore
+            while (tasksDone.includes(tempIndex)) {
+                tempIndex = Math.floor(Math.random() * tasks.length)
+            }
+            setCurrentTask(tempIndex);
         }
     }, [progress])
 
     function onCompletion(gradeNum: number, sectionName: string, sectionProgress: number, lessonIndex: number) {
-        if (sectionProgress <= lessonIndex) {
-            if (isTest) {
-                dispatch(testCompleted({grade: gradeNum - 1, section: sectionName}))
-            } else {
+        if (isTest) {
+            dispatch(testCompleted({grade: gradeNum - 1, section: sectionName}))
+        } else {
+            if (sectionProgress <= lessonIndex) {
                 if (isBonus) {
                     dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
                     dispatch(incrementBonusLessonsTotal())

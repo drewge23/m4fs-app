@@ -26,7 +26,7 @@ const HomeSectionNav: FC = () => {
                 let completionPercent = progress[gradeNum - 1][section.name]
                     ? Math.round(
                         (progress[gradeNum - 1][section.name][0]
-                        + progress[gradeNum - 1][section.name][1])
+                        + ((progress[gradeNum - 1][section.name][1] < 0) ? 0 : progress[gradeNum - 1][section.name][1]))
                         / (section.lessonCount)
                         * 80
                         + (progress[gradeNum - 1][section.name][4] && 20 || 0))

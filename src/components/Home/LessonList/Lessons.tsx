@@ -5,7 +5,6 @@ import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurpl
 import {NavLink} from "react-router-dom";
 
 function Lessons({lessons, sectionProgress, testCompleted, sectionName, isBonus}: any) {
-
     function isDisabled(index: number) {
         return sectionProgress < index
     }

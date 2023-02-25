@@ -1,25 +1,13 @@
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Box,
-    Card,
-    CardActions,
-    CardContent,
-    Container,
-    Typography
-} from "@mui/material";
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import {Card, CardActions, CardContent, Container} from "@mui/material";
 import StarBorderPurple500OutlinedIcon from '@mui/icons-material/StarBorderPurple500Outlined';
 import StarIcon from '@mui/icons-material/Star';
-import {NavLink} from "react-router-dom";
-import {motion} from "framer-motion";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {lessonsCompleted} from "../../../BLL/progressSlice";
-import {useCollectionOnce, useDocumentOnce} from "react-firebase-hooks/firestore";
+import {bonusLessonsCompleted, incrementBonusProgress, lessonsCompleted} from "../../../BLL/progressSlice";
+import {useCollectionOnce} from "react-firebase-hooks/firestore";
 import Lessons from "./Lessons";
 import Test from "./Test";
+import {spend} from "../../../BLL/moneySlice";
 
 const LessonList = ({sectionName}: any) => {
     const gradeNum = useSelector((state: any) => state.grade)
@@ -35,11 +23,11 @@ const LessonList = ({sectionName}: any) => {
     useEffect(() => {
         if (!section) return
         // @ts-ignore
-        setTest(section?.docs.filter((task: any) => task.isTest)[0])
+        setTest(section?.docs.filter((lesson: any) => lesson.data().isTest)[0])
         // @ts-ignore
-        setLessons(section?.docs.filter((task: any) => (!task.isBonus && !task.isTest)))
+        setLessons(section?.docs.filter((lesson: any) => (!lesson.data().isBonus && !lesson.data().isTest)))
         // @ts-ignore
-        setBonuses(section?.docs.filter((task: any) => task.isBonus))
+        setBonuses(section?.docs.filter((lesson: any) => lesson.data().isBonus))
     }, [section])
 
     const [[sectionProgress, bonusProgress, sectionCompleted, bonusCompleted, testCompleted], setProgressArray]
@@ -59,15 +47,18 @@ const LessonList = ({sectionName}: any) => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        if (!section) return
-        // @ts-ignore
-        if (sectionProgress === section?.docs.length) {
+        if (!lessons.length) return
+        if (sectionProgress === lessons.length) {
             dispatch(lessonsCompleted({grade: gradeNum - 1, section: sectionName}))
         }
-    }, [sectionProgress, bonusProgress, section])
+        if (!bonuses.length) return
+        if (bonusProgress === bonuses.length) {
+            dispatch(bonusLessonsCompleted({grade: gradeNum - 1, section: sectionName}))
+        }
+    }, [sectionProgress, bonusProgress, lessons, bonuses])
 
     const lessonsProps = {lessons, sectionProgress, testCompleted, sectionName}
-    const bonusesProps = {bonuses, bonusProgress, testCompleted, sectionName}
+    const bonusesProps = {lessons: bonuses, sectionProgress: bonusProgress, testCompleted, sectionName}
     const testProps = {test, testCompleted, sectionName}
 
     return (<>
@@ -76,7 +67,13 @@ const LessonList = ({sectionName}: any) => {
                 <h1>{sectionName}</h1>
 
                 <Lessons {...lessonsProps} isBonus={false}/>
-                {bonuses.length !== 0 && <h3>Bonus levels</h3>}
+                {bonuses.length !== 0 && <>
+                    <h3>Bonus levels</h3>
+                    {bonusProgress < 0 && <button onClick={() => {
+                        dispatch(spend(5)) // 5 --> section.price
+                        dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
+                    }}> Unlock bonus lessons for 5$ </button>}
+                </>}
                 <Lessons {...bonusesProps} isBonus={true}/>
 
                 {/*BONUS LESSONS*/}

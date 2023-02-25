@@ -21,8 +21,8 @@
 // }
 
 const generateAdditionTaskGeneral = (maxNum: number) => {
-    let a = Math.ceil(Math.random() * 2 * maxNum) - maxNum || 1;
-    let b = Math.ceil(Math.random() * 2 * maxNum) - maxNum || 1;
+    let a = Math.ceil(Math.random() * maxNum) || 1;
+    let b = Math.ceil(Math.random() * maxNum) || 1;
     return {
         pic: null,
         task: a + ' + ' + b + ' = ?',
@@ -32,10 +32,13 @@ const generateAdditionTaskGeneral = (maxNum: number) => {
 }
 
 const generateLinear = () => {
-    const k = Math.ceil(Math.random() * 10) - 5
+    let k = Math.ceil(Math.random() * 10) - 5
+    if (k === 0) k++
     const b = Math.ceil(Math.random() * 10) - 5
     const task = k + 'x' + (b >= 0 ? ' + ' + b : ' - ' + -b) + ' = 0 '
-    const x = (-b / k).toFixed(2)
+    let x = (-b / k) % 1
+        ? (-b / k).toFixed(2)
+        : (-b / k)
     return {
         pic: null,
         task: task,
@@ -129,6 +132,26 @@ const addition_2 = {
     isTest: false,
     tasks: populateTasks(() => generateAdditionTaskGeneral(10)),
 }
+const bonus_addition_1 = {
+    gradeNum: 1,
+    sectionName: 'addition',
+    lessonName: 'bonus_addition_1',
+    description: 'Bonus lesson 1',
+    theory: [null, 'theory', '10 + 10 = 20', 'more theory'],
+    isBonus: true,
+    isTest: false,
+    tasks: populateTasks(() => generateAdditionTaskGeneral(100)),
+}
+const addition_test = {
+    gradeNum: 1,
+    sectionName: 'addition',
+    lessonName: 'addition_test',
+    description: 'Addition test',
+    theory: [null, 'theory', '100 + 100 = 200', 'more theory'],
+    isBonus: false,
+    isTest: true,
+    tasks: populateTasks(() => generateAdditionTaskGeneral(100)),
+}
 const linear_1 = {
     gradeNum: 2,
     sectionName: 'linear',
@@ -159,16 +182,32 @@ const quadratic_2 = {
     isTest: false,
     tasks: populateTasks(() => generateQuadraticTaskGeneral(5)),
 }
-const quadratic_3 = {
+const bonus_quadratic_1 = {
     gradeNum: 2,
     sectionName: 'quadratic',
-    lessonName: 'quadratic_3',
+    lessonName: 'bonus_quadratic_1',
     description: 'Let\'s learn about quadratic equations!',
     theory: [null, 'theory', 'ax² + bx + c = 0', 'more theory', 'x = tbh i dont remember rn', 'good luck!'],
-    isBonus: false,
+    isBonus: true,
     isTest: false,
     tasks: populateTasks(() => generateQuadraticTaskGeneral(7)),
 }
+const quadratic_test = {
+    gradeNum: 2,
+    sectionName: 'quadratic',
+    lessonName: 'quadratic_test',
+    description: 'Let\'s learn about quadratic equations!',
+    theory: [null, 'theory', 'ax² + bx + c = 0', 'more theory', 'x = tbh i dont remember rn', 'good luck!'],
+    isBonus: false,
+    isTest: true,
+    tasks: populateTasks(() => generateQuadraticTaskGeneral(7)),
+}
 
-const lessons = [addition_1, addition_2, linear_1, quadratic_1, quadratic_2, quadratic_3]
+const lessons = [
+    addition_1, addition_2,
+    bonus_addition_1, addition_test,
+    linear_1, quadratic_1,
+    quadratic_2, bonus_quadratic_1,
+    quadratic_test
+]
 export default lessons
