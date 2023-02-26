@@ -3,6 +3,7 @@ import {FC} from "react";
 import {Box} from "@mui/material";
 import {useSelector} from "react-redux";
 import {useDocumentOnce} from "react-firebase-hooks/firestore";
+import s from './home.module.css'
 
 const HomeSectionNav: FC = () => {
     const gradeNum = useSelector((state: any) => state.grade)
@@ -32,14 +33,12 @@ const HomeSectionNav: FC = () => {
                         + (progress[gradeNum - 1][section.name][4] && 20 || 0))
                     : 0
                 return (
-                    <Box key={section.name} sx={{
-                        width: '100%'
-                    }}>
+                    <Box key={section.name} className={s.leftLinks}>
                         <HashLink smooth to={"#" + section.name}
                                   scroll={el => scrollWithOffset(el)}>
                             {section.name}
                         </HashLink>
-                        <span>{" " + completionPercent + "%"}</span>
+                        <span className={s.percent}>{completionPercent + "%"}</span>
                     </Box>
                 )
             })}

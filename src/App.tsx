@@ -20,6 +20,7 @@ import Auth from "./BLL/Auth";
 import {useAuthState} from "react-firebase-hooks/auth";
 import SignUp from "./BLL/SignUp";
 import lessons from "./tasks/tasks";
+import "./assets/fonts/Cunia.ttf"
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",

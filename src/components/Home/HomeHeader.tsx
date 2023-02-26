@@ -13,11 +13,12 @@ import MenuItem from '@mui/material/MenuItem';
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {decrementGrade, incrementGrade} from "../../BLL/gradeSlice";
+import s from './home.module.css'
 
 const GRADES_COUNT = 2
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function HomeHeaderNav({signOut}: any) {
+function HomeHeader({signOut}: any) {
     const userPhotoURL = useSelector((state: any) => state.firebase.user.photoURL)
     const money = useSelector((state: any) => state.money)
 
@@ -37,7 +38,7 @@ function HomeHeaderNav({signOut}: any) {
         setAnchorElUser(null);
     };
 
-    const gradeNum = useSelector( (state: any) => state.grade)
+    const gradeNum = useSelector((state: any) => state.grade)
     const dispatch = useDispatch()
 
     const increment = () => {
@@ -53,55 +54,39 @@ function HomeHeaderNav({signOut}: any) {
 
     return (
         <AppBar position="fixed">
-            <Container sx={{maxWidth: "1200px", width: "100%"}}>
-                <Toolbar disableGutters>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: {xs: 'none', md: 'flex'},
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        M4FS
-                    </Typography>
-                    <button onClick={signOut}>
-                        Sign out
-                    </button>
-                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}/>
-
-                    <Box sx={{flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
-                        <div style={{marginBottom: 20}}>
-                            <button onClick={decrement}> -</button>
-                            <span> {gradeNum} </span>
-                            <button onClick={increment}> +</button>
-                        </div>
-                    </Box>
-
-                    <Box sx={{flexGrow: 0, display: {xs: 'none', md: 'flex'}}}>
-                        <Button
-                            onClick={handleCloseNavMenu}
-                            sx={{my: 2, color: 'white', display: 'block'}}
+            <Container sx={{width: '100%', maxWidth: 1600}}>
+                <Box className={s.header}>
+                    <Box sx={{display: {xs: 'none', sm: 'flex'}}} className={s.logoContainer}>
+                        <Typography
+                            variant="h4"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{fontFamily: 'Cunia'}}
+                            className={s.logo}
                         >
-                            <NavLink to={'/shop'}>
-                                {"Shop " + money + "$"}
-                            </NavLink>
-                        </Button>
+                            M4FS
+                        </Typography>
                     </Box>
 
-                    <Box sx={{flexGrow: 0}}>
-                        <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                    <Avatar alt="Remy Sharp" src={userPhotoURL}/>
-                                </IconButton>
-                        </Tooltip>
+                    <Box className={s.grade}>
+                        <button onClick={decrement}> - </button>
+                        <span> {gradeNum} </span>
+                        <button onClick={increment}> + </button>
+                    </Box>
+
+                    <Box className={s.profile}>
+                        <NavLink to={'/shop'}>
+                            <span className={s.money}>
+                                {money}<span className={s.dollar}>$</span>
+                            </span>
+                        </NavLink>
+                        <button onClick={signOut} className={s.signOut}>
+                            Sign out
+                        </button>
+                        <IconButton onClick={handleOpenUserMenu} className={s.icon}>
+                            <Avatar alt="AA" src={userPhotoURL}/>
+                        </IconButton>
                         <Menu
                             sx={{mt: '45px'}}
                             id="menu-appbar"
@@ -130,10 +115,10 @@ function HomeHeaderNav({signOut}: any) {
                             </MenuItem>
                         </Menu>
                     </Box>
-                </Toolbar>
+                </Box>
             </Container>
         </AppBar>
     );
 }
 
-export default HomeHeaderNav;
+export default HomeHeader;

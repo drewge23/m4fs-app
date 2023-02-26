@@ -10,6 +10,7 @@ import Test from "./Test";
 import {spend} from "../../../BLL/moneySlice";
 
 const LessonList = ({sectionName}: any) => {
+    const money = useSelector((state: any) => state.money)
     const gradeNum = useSelector((state: any) => state.grade)
     const db = useSelector((state: any) => state.firebase.db)
 
@@ -61,6 +62,15 @@ const LessonList = ({sectionName}: any) => {
     const bonusesProps = {lessons: bonuses, sectionProgress: bonusProgress, testCompleted, sectionName}
     const testProps = {test, testCompleted, sectionName}
 
+    const unlockBonus = (price: number) => {
+        if (money >= price) {
+            dispatch(spend(price))
+            dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
+        } else {
+            alert('Not enough money!')
+        }
+    }
+
     return (<>
         {!loading && <Card id={sectionName}>
             <CardContent>
@@ -70,8 +80,7 @@ const LessonList = ({sectionName}: any) => {
                 {bonuses.length !== 0 && <>
                     <h3>Bonus levels</h3>
                     {bonusProgress < 0 && <button onClick={() => {
-                        dispatch(spend(5)) // 5 --> section.price
-                        dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
+                        unlockBonus(5) // 5 --> section.price
                     }}> Unlock bonus lessons for 5$ </button>}
                 </>}
                 <Lessons {...bonusesProps} isBonus={true}/>

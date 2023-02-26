@@ -1,7 +1,7 @@
 import {FC} from "react";
 import SectionList from "./SectionList";
 import {useSelector} from "react-redux";
-import HomeHeaderNav from "./HomeHeaderNav";
+import HomeHeader from "./HomeHeader";
 import {Box, Container, Grid} from "@mui/material";
 import HomeSectionNav from "./HomeSectionNav";
 import s from './home.module.css'
@@ -11,31 +11,17 @@ const Home: FC = ({signOut}: any) => {
 
     return (
         <div>
-            <HomeHeaderNav signOut={signOut}/>
-            <Container className={s.main}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={2}>
-                            <Box sx={{
-                                position: 'fixed',
-                                backgroundColor: 'lightblue',
-                                height: '100%',
-                            }}>
-                                <HomeSectionNav/>
-                            </Box>
-                        </Grid>
-                        <Grid item xs={6.5}>
-                            <SectionList/>
-                        </Grid>
-                        <Grid item xs={3.5}>
-                            <Box sx={{
-                                backgroundColor: 'lightblue',
-                                width: '100%',
-                                height: '100%'
-                            }}>
-
-                            </Box>
-                        </Grid>
-                    </Grid>
+            <HomeHeader signOut={signOut}/>
+            <Container sx={{width: '100%', maxWidth: 1600}}>
+                <Box className={s.main}>
+                    <div className={s.left}>
+                        <HomeSectionNav/>
+                    </div>
+                    <div className={s.center}>
+                        <SectionList/>
+                    </div>
+                    <Box className={s.right}></Box>
+                </Box>
             </Container>
         </div>
     )

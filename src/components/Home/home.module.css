@@ -1,8 +1,101 @@
-.main {
-    height: 100vh;
-    padding-top: 68.5px;
-    width: 100%;
-    max-width: 1200px;
+.header {
+    padding: 0.5rem 0;
 
     display: flex;
+    /*justify-content: space-between;*/
+    align-items: center;
+}
+
+.logoContainer {
+    width: 30%;
+    max-width: 250px;
+    text-align: left;
+}
+.logo {
+    padding: 0 1rem;
+    font-family: 'Cunia', monospace;
+    font-size: 2rem;
+    letter-spacing: .3rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.grade {
+    width: 50%;
+    max-width: 700px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.grade span {
+    margin: 0 1rem;
+    font-family: 'Cunia', sans-serif;
+    font-size: 3rem;
+}
+.profile {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile a {
+    text-decoration: none;
+    color: white;
+}
+.money {
+    margin: 0 1rem;
+    font-family: 'Cunia', sans-serif;
+    font-size: 2rem;
+}
+.dollar {
+    font-size: 1.5rem;
+}
+.signOut {
+
+}
+.icon {
+
+}
+
+.main {
+    height: 100vh;
+    padding-top: 100px;
+
+    display: flex;
+}
+
+.left {
+    width: 30%;
+    max-width: 250px;
+    padding: 0 1rem;
+
+    font-family: 'Cunia', sans-serif;
+    font-size: 1.2rem;
+    color: var(--black-color);
+
+    text-align: left;
+}
+
+.leftLinks {
+    margin: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftLinks a {
+    color: var(--black-color);
+    text-decoration: none;
+}
+.percent {
+    margin: 0 1rem;
+}
+.center {
+    width: 50%;
+    max-width: 700px;
+}
+
+.right {
+    width: 20%;
+    background-color: white;
 }
