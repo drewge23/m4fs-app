@@ -1,0 +1,8 @@
+.main {
+    height: 100vh;
+    padding-top: 68.5px;
+    width: 100%;
+    max-width: 1200px;
+
+    display: flex;
+}

@@ -1,10 +1,12 @@
+const INITIAL_ARRAY = [0, -1, false, false, false]
+
 const grade_1 = {
-    addition: [0, -1, false, false, false],
+    addition: INITIAL_ARRAY,
 }
 
 const grade_2 = {
-    linear: [0, -1, false, false, false],
-    quadratic: [0, -1, false, false, false],
+    linear: INITIAL_ARRAY,
+    quadratic: INITIAL_ARRAY,
 }
 
 const initialProgress = [

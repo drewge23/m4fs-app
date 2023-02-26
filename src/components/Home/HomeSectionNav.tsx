@@ -32,7 +32,9 @@ const HomeSectionNav: FC = () => {
                         + (progress[gradeNum - 1][section.name][4] && 20 || 0))
                     : 0
                 return (
-                    <Box key={section.name}>
+                    <Box key={section.name} sx={{
+                        width: '100%'
+                    }}>
                         <HashLink smooth to={"#" + section.name}
                                   scroll={el => scrollWithOffset(el)}>
                             {section.name}

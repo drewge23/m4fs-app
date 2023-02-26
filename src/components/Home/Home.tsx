@@ -1,10 +1,10 @@
 import {FC} from "react";
-import {NavLink} from "react-router-dom";
 import SectionList from "./SectionList";
 import {useSelector} from "react-redux";
 import HomeHeaderNav from "./HomeHeaderNav";
 import {Box, Container, Grid} from "@mui/material";
 import HomeSectionNav from "./HomeSectionNav";
+import s from './home.module.css'
 
 const Home: FC = ({signOut}: any) => {
     const money = useSelector((state: any) => state.money)
@@ -12,14 +12,13 @@ const Home: FC = ({signOut}: any) => {
     return (
         <div>
             <HomeHeaderNav signOut={signOut}/>
-            <Box sx={{marginTop: 10}}>
-                <Container sx={{width: 1200}}>
+            <Container className={s.main}>
                     <Grid container spacing={3}>
                         <Grid item xs={2}>
                             <Box sx={{
                                 position: 'fixed',
                                 backgroundColor: 'lightblue',
-                                height: '100%'
+                                height: '100%',
                             }}>
                                 <HomeSectionNav/>
                             </Box>
@@ -37,8 +36,7 @@ const Home: FC = ({signOut}: any) => {
                             </Box>
                         </Grid>
                     </Grid>
-                </Container>
-            </Box>
+            </Container>
         </div>
     )
 }
