@@ -18,7 +18,7 @@ import s from './home.module.css'
 const GRADES_COUNT = 2
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function HomeHeader({signOut}: any) {
+function Header({signOut}: any) {
     const userPhotoURL = useSelector((state: any) => state.firebase.user.photoURL)
     const money = useSelector((state: any) => state.money)
 
@@ -121,4 +121,4 @@ function HomeHeader({signOut}: any) {
     );
 }
 
-export default HomeHeader;
+export default Header;

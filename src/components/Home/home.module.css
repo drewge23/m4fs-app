@@ -76,7 +76,9 @@
 
     text-align: left;
 }
-
+.leftLinksContainer {
+    position: fixed;
+}
 .leftLinks {
     margin: 1rem 0;
     display: flex;
