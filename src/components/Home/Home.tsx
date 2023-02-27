@@ -5,6 +5,8 @@ import Header from "./Header";
 import {Box, Container, Grid} from "@mui/material";
 import SectionNav from "./SectionNav";
 import s from './home.module.css'
+import Streak from "./Streak";
+import Stars from "./Stars";
 
 const Home: FC = ({signOut}: any) => {
     const money = useSelector((state: any) => state.money)
@@ -20,7 +22,10 @@ const Home: FC = ({signOut}: any) => {
                     <div className={s.center}>
                         <SectionList/>
                     </div>
-                    <Box className={s.right}></Box>
+                    <Box className={s.right}>
+                        <Streak />
+                        <Stars />
+                    </Box>
                 </Box>
             </Container>
         </div>

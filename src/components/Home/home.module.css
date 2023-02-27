@@ -100,4 +100,19 @@
 .right {
     width: 20%;
     background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.streak {
+    width: 200px;
+    height: 200px;
+    background-color: var(--light-color);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 1rem;
 }

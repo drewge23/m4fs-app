@@ -6,7 +6,8 @@ import moneyReducer from "../moneySlice";
 import gradeReducer from "../gradeSlice";
 import statistics from "../statisticsSlice";
 import firebaseReducer from "../firebaseSlice";
-import userDataSlice from "../userDataSlice";
+import userDataReducer from "../userDataSlice";
+import streakReducer from "../streakSlice";
 
 enableMapSet()
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     money: moneyReducer,
     grade: gradeReducer,
     firebase: firebaseReducer,
-    userData: userDataSlice,
+    userData: userDataReducer,
+    streak: streakReducer,
 })
 
 const store = configureStore({

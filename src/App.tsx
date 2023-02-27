@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./components/Home/Home";
@@ -13,14 +13,15 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import {setApp, setDB, setUser} from "./BLL/firebaseSlice";
 import LessonScreenContainer from "./components/LessonScreen/LessonScreenContainer";
+import {getStreakThunk} from "./BLL/streakSlice";
 import {getProgressThunk} from "./BLL/progressSlice";
 import {getUserDataThunk} from "./BLL/userDataSlice";
 import initialProgress from "./BLL/initialProgress";
 import Auth from "./BLL/Auth";
 import {useAuthState} from "react-firebase-hooks/auth";
 import SignUp from "./BLL/SignUp";
-import lessons from "./tasks/tasks";
 import "./assets/fonts/Cunia.ttf"
+import {resetStreak, setStreakIsIncrementable} from "./BLL/streakSlice";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
@@ -48,6 +49,19 @@ function App() {
     // }, [])
 
     const dispatch = useDispatch()
+
+    const streak = useSelector((state: any) => state.streak)
+    useEffect(() => {
+        let currentTime = new Date()
+        let deadline = streak.streakDeadline
+        if (currentTime > deadline) {
+            dispatch(resetStreak())
+        }
+        if (currentTime > deadline.setDate(deadline.getDate() - 1)) {
+            dispatch(setStreakIsIncrementable(true))
+        }
+    }, [])
+
     // @ts-ignore
     const [user] = useAuthState(auth)
     const signOut = () => {
@@ -62,8 +76,21 @@ function App() {
         // @ts-ignore
         dispatch(getUserDataThunk(db, user?.uid))
         // @ts-ignore
+        dispatch(getStreakThunk(db, user?.uid))
+        // @ts-ignore
         dispatch(getProgressThunk(db, user?.uid)) //TODO: delete
     }, [user])
+
+    useEffect(() => {
+        if (streak.streakUpdateTime.getTime() !== 0) {
+            const dbStreak = {
+                streak: streak.streak,
+                streakIsIncrementable: streak.streakIsIncrementable,
+            }
+            db.collection("users").doc(user?.uid)
+                .update({streak: JSON.stringify(dbStreak)})
+        }
+    }, [streak])
 
     const progress = useSelector((state: any) => state.progress) //delete
     useEffect(() => {

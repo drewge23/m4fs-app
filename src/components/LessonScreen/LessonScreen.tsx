@@ -8,6 +8,7 @@ import {earn} from "../../BLL/moneySlice";
 import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/statisticsSlice";
 import LessonForm from "./LessonForm";
 import Theory from "./Theory";
+import {incrementStreak, setStreakIsIncrementable} from "../../BLL/streakSlice";
 
 // @ts-ignore
 const LessonScreen: FC = ({
@@ -42,7 +43,13 @@ const LessonScreen: FC = ({
         }
     }, [progress])
 
+    const streak = useSelector((state: any) => state.streak)
+
     function onCompletion(gradeNum: number, sectionName: string, sectionProgress: number, lessonIndex: number) {
+        if (streak.streakIsIncrementable) {
+            dispatch(incrementStreak())
+            dispatch(setStreakIsIncrementable(false))
+        }
         if (isTest) {
             dispatch(testCompleted({grade: gradeNum - 1, section: sectionName}))
         } else {
