@@ -34,15 +34,15 @@ const streakSlice = createSlice({
     }
 })
 
-export const getStreakThunk = (db: any, uid: string) => (dispatch: any) => {
-    db.collection("users").doc(uid).get()
-        .then((response: any) => {
-                if (response.exists) {
-                    dispatch(setStreak(JSON.parse(response.data().streak)))
-                }
-            }
-        )
-}
+// export const getStreakThunk = (db: any, uid: string) => (dispatch: any) => {
+//     db.collection("users").doc(uid).get()
+//         .then((response: any) => {
+//                 if (response.exists) {
+//                     dispatch(setStreak(JSON.parse(response.data().streak)))
+//                 }
+//             }
+//         )
+// }
 
 export default streakSlice.reducer
 export const {incrementStreak, resetStreak, setStreakIsIncrementable, setStreak} = streakSlice.actions

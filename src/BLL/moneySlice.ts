@@ -5,6 +5,7 @@ const moneySlice = createSlice({
     name: 'money',
     initialState: 0,
     reducers: {
+        setMoney: (state, action) => action.payload,
         earn: (state, action) => {
             return state + action.payload
         },
@@ -14,10 +15,9 @@ const moneySlice = createSlice({
             } else {
                 return state
             }
-            // alert('not enough money!')
         },
     }
 })
 
 export default moneySlice.reducer
-export const {earn, spend} = moneySlice.actions
+export const {setMoney, earn, spend} = moneySlice.actions

@@ -45,16 +45,15 @@ const progressSlice = createSlice({
     }
 })
 
-export const getProgressThunk = (db: any, uid: string) => (dispatch: any) => {
-    //TODO: configure user object to have initial progress state
-    db.collection("users").doc(uid).get()
-        .then((response: any) => {
-                if (response.exists) {
-                    dispatch(setProgress(JSON.parse(response.data().progress)))
-                }
-            }
-        )
-}
+// export const getProgressThunk = (db: any, uid: string) => (dispatch: any) => {
+//     db.collection("users").doc(uid).get()
+//         .then((response: any) => {
+//                 if (response.exists) {
+//                     dispatch(setProgress(JSON.parse(response.data().progress)))
+//                 }
+//             }
+//         )
+// }
 
 export default progressSlice.reducer;
 export const {

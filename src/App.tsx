@@ -13,15 +13,13 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import {setApp, setDB, setUser} from "./BLL/firebaseSlice";
 import LessonScreenContainer from "./components/LessonScreen/LessonScreenContainer";
-import {getStreakThunk} from "./BLL/streakSlice";
-import {getProgressThunk} from "./BLL/progressSlice";
+import {resetStreak, setStreakIsIncrementable} from "./BLL/streakSlice";
 import {getUserDataThunk} from "./BLL/userDataSlice";
 import initialProgress from "./BLL/initialProgress";
 import Auth from "./BLL/Auth";
 import {useAuthState} from "react-firebase-hooks/auth";
 import SignUp from "./BLL/SignUp";
 import "./assets/fonts/Cunia.ttf"
-import {resetStreak, setStreakIsIncrementable} from "./BLL/streakSlice";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
@@ -50,6 +48,27 @@ function App() {
 
     const dispatch = useDispatch()
 
+    // AUTHENTICATION
+    // @ts-ignore
+    const [user] = useAuthState(auth)
+    const signOut = () => {
+        auth.signOut()
+    }
+
+    // GETTING USER DATA
+    // @ts-ignore
+    useEffect(() => {
+        dispatch(setApp(app))
+        dispatch(setDB(db))
+        if (!user) return
+        dispatch(setUser(user))
+        // @ts-ignore
+        dispatch(getUserDataThunk(db, user?.uid))
+    }, [user])
+
+    const isInitialized = useSelector((state: any) => state.userData.isInitialized)
+
+    // UPDATING THE STREAK
     const streak = useSelector((state: any) => state.streak)
     useEffect(() => {
         let currentTime = new Date()
@@ -61,27 +80,8 @@ function App() {
             dispatch(setStreakIsIncrementable(true))
         }
     }, [])
-
-    // @ts-ignore
-    const [user] = useAuthState(auth)
-    const signOut = () => {
-        auth.signOut()
-    }
-
-    // @ts-ignore
     useEffect(() => {
-        dispatch(setApp(app))
-        dispatch(setDB(db))
-        if (user) dispatch(setUser(user))
-        // @ts-ignore
-        dispatch(getUserDataThunk(db, user?.uid))
-        // @ts-ignore
-        dispatch(getStreakThunk(db, user?.uid))
-        // @ts-ignore
-        dispatch(getProgressThunk(db, user?.uid)) //TODO: delete
-    }, [user])
-
-    useEffect(() => {
+        if (!isInitialized) return
         if (streak.streakUpdateTime.getTime() !== 0) {
             const dbStreak = {
                 streak: streak.streak,
@@ -92,30 +92,34 @@ function App() {
         }
     }, [streak])
 
-    const progress = useSelector((state: any) => state.progress) //delete
+    const progress = useSelector((state: any) => state.progress)
+    const stars = useSelector((state: any) => state.stars)
     useEffect(() => {
-        if (progress !== initialProgress)
+        if (!isInitialized) return
+        if (progress !== initialProgress) {
             db.collection("users").doc(user?.uid)
                 .update({progress: JSON.stringify(progress)})
+            db.collection("users").doc(user?.uid)
+                .update({stars: stars})
+        }
     }, [progress])
 
-    // @ts-ignore
-    // const [userInDB] = useDocument(db.collection('users').doc(auth.currentUser?.uid))
-    // const [userInDB, setUserInDB] = useState(null)
-    // useEffect(() => {
-    //     db.collection('users').doc(auth.currentUser?.uid).get()
-    //         .then((response: any) => setUserInDB(response))
-    //     console.log(userInDB)
-    // }, [])
+    const money = useSelector((state: any) => state.money)
+    useEffect(() => {
+        if (!isInitialized) return
+        db.collection("users").doc(user?.uid)
+                .update({money: money})
+    }, [money])
+
     const userData = useSelector((state: any) => state.userData)
 
     return (
         <>
             {!user && <Auth app={app}/>}
             {/*@ts-ignore*/}
-            {user && !userData?.progress && <SignUp userInAuth={user} db={db}/>}
+            {user && !userData?.fullName && <SignUp userInAuth={user} db={db}/>}
             {/*@ts-ignore*/}
-            {user && userData?.progress && <BrowserRouter>
+            {user && userData?.fullName && <BrowserRouter>
                 <div className="App">
                     <Routes>
                         {/*@ts-ignore*/}

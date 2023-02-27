@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import initialProgress from "./initialProgress";
 import {useDispatch} from "react-redux";
-import {setUserData, setUserDataThunk} from "./userDataSlice";
+import {setInitialUserDataThunk} from "./userDataSlice";
 
 function SignUp({userInAuth, db}) {
     const dispatch = useDispatch()
@@ -10,10 +9,10 @@ function SignUp({userInAuth, db}) {
     const onSubmit = () => {
         const userData = {
             fullName: userName,
-            progress: initialProgress,
         }
-        dispatch(setUserDataThunk(db, userInAuth.uid, userData))
+        dispatch(setInitialUserDataThunk(db, userInAuth.uid, userData))
     }
+
     return (
         <div style={{
             width: '500px',

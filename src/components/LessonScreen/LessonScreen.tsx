@@ -57,6 +57,7 @@ const LessonScreen: FC = ({
                 if (isBonus) {
                     dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
                     dispatch(incrementBonusLessonsTotal())
+                    //TODO
                 } else {
                     dispatch(incrementLessonProgress({grade: gradeNum - 1, section: sectionName}))
                     dispatch(incrementLessonsTotal())
