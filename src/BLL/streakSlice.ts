@@ -1,20 +1,18 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {initialStreak} from "./initialStreak";
 
 const streakSlice = createSlice({
     name: 'streak',
-    initialState: {
-        streak: 0,
-        streakUpdateTime: new Date(0),
-        streakDeadline: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1),
-        streakIsIncrementable: true,
-    },
+    initialState: initialStreak,
     reducers: {
         setStreak: (state, action) => {
             state.streak = action.payload.streak
             state.streakIsIncrementable = action.payload.streakIsIncrementable
-            state.streakDeadline = action.payload.streakIsIncrementable
-                ? new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1)
-                : new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)
+            // state.streakDeadline = action.payload.streakIsIncrementable
+            //     ? new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1)
+            //     : new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 2)
+            state.streakDeadline = new Date(Date.parse(action.payload.streakDeadline))
+            state.streakUpdateTime = new Date(Date.parse(action.payload.streakUpdateTime))
             return state
         },
         incrementStreak: (state) => {

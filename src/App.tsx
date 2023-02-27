@@ -83,12 +83,8 @@ function App() {
     useEffect(() => {
         if (!isInitialized) return
         if (streak.streakUpdateTime.getTime() !== 0) {
-            const dbStreak = {
-                streak: streak.streak,
-                streakIsIncrementable: streak.streakIsIncrementable,
-            }
             db.collection("users").doc(user?.uid)
-                .update({streak: JSON.stringify(dbStreak)})
+                .update({streak: JSON.stringify(streak)})
         }
     }, [streak])
 
