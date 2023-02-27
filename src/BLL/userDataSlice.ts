@@ -4,6 +4,7 @@ import {setStars} from "./starsSlice";
 import {setStreak} from "./streakSlice";
 import {setMoney} from "./moneySlice";
 import initialProgress from "./initialProgress";
+import {initialStreak} from "./initialStreak";
 
 const userDataSlice = createSlice({
     name: 'userData',
@@ -38,15 +39,15 @@ export const getUserDataThunk = (db: any, userId: any) => (dispatch: any) => {
 export const setInitialUserDataThunk = (db: any, userId: any, userData: any) => (dispatch: any) => {
     db.collection('users').doc(userId).set({
         ...userData,
-        progress: initialProgress,
-        streak: 0,
+        progress: JSON.stringify(initialProgress),
+        streak: JSON.stringify(initialStreak),
         money: 0,
         stars: 0,
     })
         .then(() => {
             dispatch(setUserData({...userData, isInitialized: true}))
             dispatch(setProgress(initialProgress))
-            dispatch(setStreak(0))
+            dispatch(setStreak(initialStreak))
             dispatch(setMoney(0))
             dispatch(setStars(0))
         })

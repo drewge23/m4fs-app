@@ -9,6 +9,7 @@ import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/stati
 import LessonForm from "./LessonForm";
 import Theory from "./Theory";
 import {incrementStreak, setStreakIsIncrementable} from "../../BLL/streakSlice";
+import {incrementStars} from "../../BLL/starsSlice";
 
 // @ts-ignore
 const LessonScreen: FC = ({
@@ -54,10 +55,10 @@ const LessonScreen: FC = ({
             dispatch(testCompleted({grade: gradeNum - 1, section: sectionName}))
         } else {
             if (sectionProgress <= lessonIndex) {
+                dispatch(incrementStars())
                 if (isBonus) {
                     dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
                     dispatch(incrementBonusLessonsTotal())
-                    //TODO
                 } else {
                     dispatch(incrementLessonProgress({grade: gradeNum - 1, section: sectionName}))
                     dispatch(incrementLessonsTotal())

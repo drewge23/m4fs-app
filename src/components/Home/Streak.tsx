@@ -6,9 +6,10 @@ function Streak(props: any) {
     const streak = useSelector((state: any) => state.streak)
     return (
         <div className={s.streak}>
-            <h2>
-                {streak.streakIsIncrementable ? '🧯' : '🔥'}
-                {streak.streak}</h2>
+            <h2 style={{color: streak.streakIsIncrementable ? 'gray' : 'black'}}>
+                {streak.streakIsIncrementable ? '🕔 ' : '🔥 '}
+                {streak.streak}
+            </h2>
         </div>
     );
 }
