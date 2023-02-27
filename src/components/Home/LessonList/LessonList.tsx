@@ -3,11 +3,15 @@ import StarBorderPurple500OutlinedIcon from '@mui/icons-material/StarBorderPurpl
 import StarIcon from '@mui/icons-material/Star';
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useState} from "react";
-import {bonusLessonsCompleted, incrementBonusProgress, lessonsCompleted} from "../../../BLL/progressSlice";
+import {
+    incrementBonusProgress,
+    setBonusCompleted, setLessonsCompleted
+} from "../../../BLL/progressSlice";
 import {useCollectionOnce} from "react-firebase-hooks/firestore";
 import Lessons from "./Lessons";
 import Test from "./Test";
 import {spend} from "../../../BLL/moneySlice";
+import {incrementStars} from "../../../BLL/starsSlice";
 
 const LessonList = ({sectionName}: any) => {
     const money = useSelector((state: any) => state.money)
@@ -49,12 +53,14 @@ const LessonList = ({sectionName}: any) => {
     const dispatch = useDispatch();
     useEffect(() => {
         if (!lessons.length) return
-        if (sectionProgress === lessons.length) {
-            dispatch(lessonsCompleted({grade: gradeNum - 1, section: sectionName}))
+        if (!sectionCompleted && sectionProgress === lessons.length) {
+            dispatch(setLessonsCompleted({grade: gradeNum - 1, section: sectionName}))
+            dispatch(incrementStars())
         }
         if (!bonuses.length) return
-        if (bonusProgress === bonuses.length) {
-            dispatch(bonusLessonsCompleted({grade: gradeNum - 1, section: sectionName}))
+        if (!bonusCompleted && bonusProgress === bonuses.length) {
+            dispatch(setBonusCompleted({grade: gradeNum - 1, section: sectionName}))
+            dispatch(incrementStars())
         }
     }, [sectionProgress, bonusProgress, lessons, bonuses])
 
@@ -133,10 +139,10 @@ const LessonList = ({sectionName}: any) => {
 
                     {test && <Test {...testProps}/>}
 
-                    <div>
-                        {stars > 0 ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
-                        {stars > 1 ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
-                        {stars > 2 ? <StarIcon/> : <StarBorderPurple500OutlinedIcon/>}
+                    <div style={{fontSize: '1.5rem'}}>
+                        {stars > 0 ? '⭐ ' : '🔮️ '}
+                        {stars > 1 ? '⭐ ' : '🔮️ '}
+                        {stars > 2 ? '⭐ ' : '🔮️ '}
                     </div>
                 </Container>
             </CardActions>

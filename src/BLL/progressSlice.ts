@@ -18,21 +18,21 @@ const progressSlice = createSlice({
             state[grade][section][1]++;
             return state;
         },
-        lessonsCompleted: (state, action) => {
+        setLessonsCompleted: (state, action) => {
             let grade = action.payload.grade;
             let section = action.payload.section;
             // @ts-ignore
             state[grade][section][2] = true;
             return state;
         },
-        bonusLessonsCompleted: (state, action) => {
+        setBonusCompleted: (state, action) => {
             let grade = action.payload.grade;
             let section = action.payload.section;
             // @ts-ignore
             state[grade][section][3] = true;
             return state;
         },
-        testCompleted: (state, action) => {
+        setTestCompleted: (state, action) => {
             let grade = action.payload.grade;
             let section = action.payload.section;
             // @ts-ignore
@@ -59,8 +59,8 @@ export default progressSlice.reducer;
 export const {
     incrementLessonProgress,
     incrementBonusProgress,
-    lessonsCompleted,
-    bonusLessonsCompleted,
-    testCompleted,
+    setLessonsCompleted,
+    setBonusCompleted,
+    setTestCompleted,
     setProgress
 } = progressSlice.actions;

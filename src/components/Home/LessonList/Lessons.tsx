@@ -20,8 +20,8 @@ function Lessons({lessons, sectionProgress, testCompleted, sectionName, isBonus}
                     <Accordion key={lesson.id} disabled={(!testCompleted || isBonus) && isDisabled(index)}>
                         <AccordionSummary
                             expandIcon={isGold(index)
-                                ? <StarIcon/>
-                                : <StarBorderPurple500OutlinedIcon/>}
+                                ? '⭐'
+                                : '⭕'}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >

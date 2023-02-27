@@ -3,7 +3,7 @@ import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {LinearProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {setLessonStateThunk} from "../../BLL/currentLessonSlice";
-import {incrementBonusProgress, incrementLessonProgress, testCompleted} from "../../BLL/progressSlice";
+import {incrementBonusProgress, incrementLessonProgress, setTestCompleted} from "../../BLL/progressSlice";
 import {earn} from "../../BLL/moneySlice";
 import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/statisticsSlice";
 import LessonForm from "./LessonForm";
@@ -14,7 +14,7 @@ import {incrementStars} from "../../BLL/starsSlice";
 // @ts-ignore
 const LessonScreen: FC = ({
                               sectionName, lessonId, sectionProgress, lessonIndex,
-                              isBonus, isTest, tasks, reward, theory
+                              isBonus, isTest, testCompleted, tasks, reward, theory
                           }: any) => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
@@ -51,8 +51,9 @@ const LessonScreen: FC = ({
             dispatch(incrementStreak())
             dispatch(setStreakIsIncrementable(false))
         }
-        if (isTest) {
-            dispatch(testCompleted({grade: gradeNum - 1, section: sectionName}))
+        if (isTest && !testCompleted) {
+            dispatch(setTestCompleted({grade: gradeNum - 1, section: sectionName}))
+            dispatch(incrementStars())
         } else {
             if (sectionProgress <= lessonIndex) {
                 dispatch(incrementStars())
