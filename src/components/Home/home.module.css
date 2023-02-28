@@ -97,7 +97,9 @@
     width: 50%;
     max-width: 700px;
 }
-
+.gradeTitle {
+    margin-top: 0;
+}
 .right {
     width: 20%;
     display: flex;

@@ -22,6 +22,7 @@ import SignUp from "./BLL/SignUp";
 import "./assets/fonts/Cunia.ttf"
 import {lesson, theory} from "./tasks/taskTypes";
 import lessons from "./tasks/lessons";
+import Preloader from "./components/Preloader";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
@@ -74,6 +75,7 @@ function App() {
     // UPDATING THE STREAK
     const streak = useSelector((state: any) => state.streak)
     useEffect(() => {
+        if (!isInitialized || streak.streakUpdateTime.getTime() === 0) return
         let currentTime = new Date()
         let deadline = streak.streakDeadline
         if (currentTime > deadline) {
@@ -84,11 +86,9 @@ function App() {
         }
     }, [])
     useEffect(() => {
-        if (!isInitialized) return
-        if (streak.streakUpdateTime.getTime() !== 0) {
-            db.collection("users").doc(user?.uid)
-                .update({streak: JSON.stringify(streak)})
-        }
+        if (!isInitialized || streak.streakUpdateTime.getTime() === 0) return
+        db.collection("users").doc(user?.uid)
+            .update({streak: JSON.stringify(streak)})
     }, [streak])
 
     const progress = useSelector((state: any) => state.progress)
@@ -107,30 +107,37 @@ function App() {
     useEffect(() => {
         if (!isInitialized) return
         db.collection("users").doc(user?.uid)
-                .update({money: money})
+            .update({money: money})
     }, [money])
 
     const userData = useSelector((state: any) => state.userData)
 
+    const [isLoading, setIsLoading] = useState(true)
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 2000) // how much?
+    }, [])
     return (
         <>
-            {!user && <Auth app={app}/>}
-            {/*@ts-ignore*/}
-            {user && !userData?.fullName && <SignUp userInAuth={user} db={db}/>}
-            {/*@ts-ignore*/}
-            {user && userData?.fullName && <BrowserRouter>
-                <div className="App">
-                    <Routes>
-                        {/*@ts-ignore*/}
-                        <Route path="" element={<Home signOut={signOut}/>}/>
-                        <Route path="profile" element={<Profile/>}/>
-                        <Route path="shop" element={<Shop/>}/>
-                        <Route path="settings" element={<Settings/>}/>
-                        <Route path="lesson" element={<LessonScreenContainer/>}/>
-                        <Route path="/*" element={<div>404</div>}/>
-                    </Routes>
-                </div>
-            </BrowserRouter>}
+            {isLoading && <Preloader />}
+            {!isLoading && <>
+                {!user && <Auth app={app}/>}
+                {/*@ts-ignore*/}
+                {user && !userData?.fullName && <SignUp userInAuth={user} db={db}/>}
+                {/*@ts-ignore*/}
+                {user && userData?.fullName && <BrowserRouter>
+                    <div className="App">
+                        <Routes>
+                            {/*@ts-ignore*/}
+                            <Route path="" element={<Home signOut={signOut}/>}/>
+                            <Route path="profile" element={<Profile/>}/>
+                            <Route path="shop" element={<Shop/>}/>
+                            <Route path="settings" element={<Settings/>}/>
+                            <Route path="lesson" element={<LessonScreenContainer/>}/>
+                            <Route path="/*" element={<div>404</div>}/>
+                        </Routes>
+                    </div>
+                </BrowserRouter>}
+            </>}
         </>
     );
 }

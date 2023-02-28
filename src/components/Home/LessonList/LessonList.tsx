@@ -1,4 +1,4 @@
-import {Card, CardActions, CardContent, Container} from "@mui/material";
+import {Card, CardActions, CardContent, Container, Skeleton} from "@mui/material";
 import StarBorderPurple500OutlinedIcon from '@mui/icons-material/StarBorderPurple500Outlined';
 import StarIcon from '@mui/icons-material/Star';
 import {useDispatch, useSelector} from "react-redux";
@@ -13,6 +13,8 @@ import Test from "./Test";
 import {spend} from "../../../BLL/moneySlice";
 import {incrementStars} from "../../../BLL/starsSlice";
 import s from './lessonList.module.css'
+import LessonListSkeleton from "./LessonListSkeleton";
+import Theory from "./Theory";
 
 const LessonList = ({sectionName}: any) => {
     const money = useSelector((state: any) => state.money)
@@ -82,12 +84,16 @@ const LessonList = ({sectionName}: any) => {
         }
     }
 
+    const [theoryIsOpen, setTheoryIsOpen] = useState(false)
+    const theoryProps = {theoryIsOpen, setTheoryIsOpen, theory: theory}
+
     return (<>
+        {loading && <LessonListSkeleton/>}
         {!loading && <Card id={sectionName} elevation={5} className={s.lessonList}>
             <CardContent>
                 <h1>{sectionName[0].toUpperCase() + sectionName.substring(1)}</h1>
-                {/*@ts-ignore*/}
-                {theory && <button onClick={() => console.log(theory.data())}>Theory</button>}
+                {theory && <button onClick={() => setTheoryIsOpen(true)}>Theory</button>}
+                {theory && <Theory {...theoryProps}/>}
 
                 <Lessons {...lessonsProps} isBonus={false}/>
                 {bonuses.length !== 0 && <>
@@ -154,7 +160,6 @@ const LessonList = ({sectionName}: any) => {
                 </Container>
             </CardActions>
         </Card>}
-        {loading && <div style={{height: '300px'}}>Loading...</div>}
     </>)
 }
 

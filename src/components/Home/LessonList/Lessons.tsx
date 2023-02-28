@@ -29,26 +29,25 @@ function Lessons({lessons, sectionProgress, testCompleted, sectionName, isBonus}
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>{lesson.data().description}</Typography>
-                            <button onClick={() => alert(lesson.data().theory)}>Theory</button>
-                            <div>
-                                <NavLink to={"/lesson"}
-                                         state={{
-                                             sectionName,
-                                             lessonId: lesson.id,
-                                             sectionProgress,
-                                             lessonIndex: index,
-                                             reward: lesson.data().reward,
-                                             theory: lesson.data().theory,
-                                             isBonus,
-                                             isTest: false,
-                                         }}> start </NavLink>
-                            </div>
+                            {/*<button onClick={() => alert(lesson.data().theory)}>Theory</button>*/}
+                            <NavLink to={"/lesson"}
+                                     state={{
+                                         sectionName,
+                                         lessonId: lesson.id,
+                                         sectionProgress,
+                                         lessonIndex: index,
+                                         reward: lesson.data().reward,
+                                         theory: lesson.data().theory,
+                                         isBonus,
+                                         isTest: false,
+                                     }}> start </NavLink>
                         </AccordionDetails>
                     </Accordion>
                 );
             })}
         </>
-    );
+    )
+        ;
 }
 
 export default Lessons;

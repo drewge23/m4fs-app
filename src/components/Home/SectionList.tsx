@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import {useDocumentOnce} from "react-firebase-hooks/firestore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import s from './home.module.css'
 
 //TODO: refactor
 const SectionList: FC = () => {
@@ -16,7 +17,7 @@ const SectionList: FC = () => {
 
     return (
         <div>
-            <h1>Grade {gradeNum}</h1>
+            <h1 className={s.gradeTitle}>Grade {gradeNum}</h1>
             {/*// @ts-ignore*/}
             {!loading && grade?.data().sections.map((section: any) => {
                     return (
