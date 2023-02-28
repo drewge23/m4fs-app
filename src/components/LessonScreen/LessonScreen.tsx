@@ -66,7 +66,7 @@ const LessonScreen: FC = ({
                 }
             }
         }
-        isTest ? dispatch(earn(reward * 5)) : dispatch(earn(reward))
+        dispatch(earn(reward))
         alert('good job!');
         navigate('/');
         setProgress(0);

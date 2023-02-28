@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./components/Home/Home";
@@ -20,6 +20,8 @@ import Auth from "./BLL/Auth";
 import {useAuthState} from "react-firebase-hooks/auth";
 import SignUp from "./BLL/SignUp";
 import "./assets/fonts/Cunia.ttf"
+import {lesson, theory} from "./tasks/taskTypes";
+import lessons from "./tasks/lessons";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
@@ -36,12 +38,13 @@ const db = firebase.firestore(app)
 const auth = firebase.auth(app)
 
 function App() {
+    // const lessonsToExport: (lesson | theory)[] = lessons
     // const [flag, setFlag] = useState(true)
     // useEffect(() => {
     //     if (!flag) return
-    //     for (let lesson of lessons) {
+    //     for (let lesson of lessonsToExport) {
     //         db.collection("lessons").doc(`grade_${lesson.gradeNum}`)
-    //             .collection(lesson.sectionName).doc(lesson.lessonName).set(lesson)
+    //             .collection(lesson.sectionName).doc(lesson.lessonId).set(lesson)
     //     }
     //     setFlag(false)
     // }, [])

@@ -12,6 +12,7 @@ import Lessons from "./Lessons";
 import Test from "./Test";
 import {spend} from "../../../BLL/moneySlice";
 import {incrementStars} from "../../../BLL/starsSlice";
+import s from './lessonList.module.css'
 
 const LessonList = ({sectionName}: any) => {
     const money = useSelector((state: any) => state.money)
@@ -22,17 +23,21 @@ const LessonList = ({sectionName}: any) => {
     const [section, loading] = useCollectionOnce(db.collection('lessons')
         .doc(`grade_${gradeNum}`).collection(sectionName))
 
-    const [test, setTest] = useState(null)
     const [lessons, setLessons] = useState([])
     const [bonuses, setBonuses] = useState([])
+    const [test, setTest] = useState(null)
+    const [theory, setTheory] = useState(null)
     useEffect(() => {
         if (!section) return
         // @ts-ignore
-        setTest(section?.docs.filter((lesson: any) => lesson.data().isTest)[0])
-        // @ts-ignore
-        setLessons(section?.docs.filter((lesson: any) => (!lesson.data().isBonus && !lesson.data().isTest)))
+        setLessons(section?.docs.filter((lesson: any) =>
+            (!lesson.data().isBonus && !lesson.data().isTest && !lesson.data().isTheory)))
         // @ts-ignore
         setBonuses(section?.docs.filter((lesson: any) => lesson.data().isBonus))
+        // @ts-ignore
+        setTest(section?.docs.filter((lesson: any) => lesson.data().isTest)[0])
+        // @ts-ignore
+        setTheory(section?.docs.filter((lesson: any) => lesson.data().isTheory)[0])
     }, [section])
 
     const [[sectionProgress, bonusProgress, sectionCompleted, bonusCompleted, testCompleted], setProgressArray]
@@ -78,9 +83,11 @@ const LessonList = ({sectionName}: any) => {
     }
 
     return (<>
-        {!loading && <Card id={sectionName}>
+        {!loading && <Card id={sectionName} elevation={5} className={s.lessonList}>
             <CardContent>
-                <h1>{sectionName}</h1>
+                <h1>{sectionName[0].toUpperCase() + sectionName.substring(1)}</h1>
+                {/*@ts-ignore*/}
+                {theory && <button onClick={() => console.log(theory.data())}>Theory</button>}
 
                 <Lessons {...lessonsProps} isBonus={false}/>
                 {bonuses.length !== 0 && <>

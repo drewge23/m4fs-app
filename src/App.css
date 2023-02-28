@@ -6,14 +6,19 @@
 
 :root {
   --dark-color: #0000a0;
-  --main-color: #6969fa;
+  --main-color: #5353ff;
   --light-color: lightblue;
   --white-color: #f0fffb;
   --black-color: #343434;
+  --bg-color: rgb(255, 233, 243)
 }
 
 * {
   box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color);
 }
 
 .App {

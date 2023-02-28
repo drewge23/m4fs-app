@@ -53,7 +53,7 @@ function Header({signOut}: any) {
     }
 
     return (
-        <AppBar position="fixed">
+        <AppBar position="fixed" style={{backgroundColor: 'var(--main-color)'}}>
             <Container sx={{width: '100%', maxWidth: 1600}}>
                 <Box className={s.header}>
                     <Box sx={{display: {xs: 'none', sm: 'flex'}}} className={s.logoContainer}>

@@ -23,8 +23,10 @@ const Home: FC = ({signOut}: any) => {
                         <SectionList/>
                     </div>
                     <Box className={s.right}>
-                        <Streak />
-                        <Stars />
+                        <div className={s.rightContainer}>
+                            <Streak/>
+                            <Stars/>
+                        </div>
                     </Box>
                 </Box>
             </Container>

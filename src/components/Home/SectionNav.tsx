@@ -22,7 +22,7 @@ const SectionNav: FC = () => {
 
     return (
         <>
-            <Box className={s.leftLinksContainer}>
+            <Box className={s.leftContainer}>
                 {/*@ts-ignore*/}
                 {grade?.data().sections.map((section: any) => {
                     let completionPercent = progress[gradeNum - 1][section.name]
