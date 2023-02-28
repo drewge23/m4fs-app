@@ -23,6 +23,7 @@ import "./assets/fonts/Cunia.ttf"
 import {lesson, theory} from "./tasks/taskTypes";
 import lessons from "./tasks/lessons";
 import Preloader from "./components/Preloader";
+import {initialStreak} from "./BLL/initialStreak";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
@@ -75,18 +76,22 @@ function App() {
     // UPDATING THE STREAK
     const streak = useSelector((state: any) => state.streak)
     useEffect(() => {
-        if (!isInitialized || streak.streakUpdateTime.getTime() === 0) return
+        if (streak.streakUpdateTime === initialStreak.streakUpdateTime) return;
+        if (!isInitialized) return
         let currentTime = new Date()
-        let deadline = streak.streakDeadline
+        const deadline = streak.streakDeadline
         if (currentTime > deadline) {
             dispatch(resetStreak())
         }
-        if (currentTime > deadline.setDate(deadline.getDate() - 1)) {
+        let newDayTime = new Date(deadline)
+        newDayTime.setDate(newDayTime.getDate() - 1)
+        if (currentTime > newDayTime) {
             dispatch(setStreakIsIncrementable(true))
         }
-    }, [])
+    }, [streak])
     useEffect(() => {
-        if (!isInitialized || streak.streakUpdateTime.getTime() === 0) return
+        if (streak.streakUpdateTime === initialStreak.streakUpdateTime) return;
+        if (!isInitialized) return
         db.collection("users").doc(user?.uid)
             .update({streak: JSON.stringify(streak)})
     }, [streak])
@@ -116,6 +121,7 @@ function App() {
     useEffect(() => {
         setTimeout(() => setIsLoading(false), 2000) // how much?
     }, [])
+
     return (
         <>
             {isLoading && <Preloader />}
