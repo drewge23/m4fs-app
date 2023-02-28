@@ -34,15 +34,18 @@ const LessonScreen: FC = ({
             // @ts-ignore
             temp.push(currentTask)
             setTasksDone(temp)
-
-            let tempIndex = Math.floor(Math.random() * tasks.length)
-            // @ts-ignore
-            while (tasksDone.includes(tempIndex)) {
-                tempIndex = Math.floor(Math.random() * tasks.length)
-            }
-            setCurrentTask(tempIndex);
         }
     }, [progress])
+    useEffect(() => {
+        if (tasksDone.length === 0) return
+        let tempIndex = Math.floor(Math.random() * tasks.length)
+        // @ts-ignore
+        while (tasksDone.includes(tempIndex)) {
+            tempIndex = Math.floor(Math.random() * tasks.length)
+        }
+        console.log(tasksDone)
+        setCurrentTask(tempIndex);
+    }, [tasksDone])
 
     const streak = useSelector((state: any) => state.streak)
 
