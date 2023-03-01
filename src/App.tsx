@@ -128,7 +128,7 @@ function App() {
             {!isLoading && <>
                 {!user && <Auth app={app}/>}
                 {/*@ts-ignore*/}
-                {user && !userData?.fullName && <SignUp userInAuth={user} db={db}/>}
+                {user && !userData?.fullName && <SignUp userInAuth={user} db={db} signOut={signOut}/>}
                 {/*@ts-ignore*/}
                 {user && userData?.fullName && <BrowserRouter>
                     <div className="App">

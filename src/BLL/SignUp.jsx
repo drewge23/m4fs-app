@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import {setInitialUserDataThunk} from "./userDataSlice";
 
-function SignUp({userInAuth, db}) {
+function SignUp({userInAuth, db, signOut}) {
     const dispatch = useDispatch()
     const [userName, setUserName] = useState(userInAuth.displayName)
 
@@ -31,6 +31,7 @@ function SignUp({userInAuth, db}) {
                        if (e.code === 'Enter') onSubmit()
                    }}
             />
+            <button onClick={signOut}>I've changed my mind</button>
         </div>
     );
 }
