@@ -1,12 +1,13 @@
 import React from 'react';
+import s from './lessonScreen.module.css'
 
 function Lesson({formik, task, subtasks, pic}: any) {
     return (
-        <div>
-            <h2>{task}</h2>
-            <div>
+        <div className={s.lesson}>
+            <h2 className={s.task}>{task}</h2>
+            <div className={s.subtasks}>
                 {subtasks.map((item: any, index: number) => (
-                    <div key={index}>
+                    <div key={index} className={s.subtask}>
                         <label htmlFor={`answers[${index}]`}><span> {item + ' = '} </span></label>
                         <input
                             id={`answers[${index}]`}

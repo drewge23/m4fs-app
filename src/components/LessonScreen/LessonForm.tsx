@@ -1,6 +1,7 @@
 import React from 'react';
 import {useFormik} from "formik";
 import Lesson from "./Lesson";
+import s from './lessonScreen.module.css'
 
 function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives, lives, loseTest}: any) {
 
@@ -49,12 +50,12 @@ const formik = useFormik({
 });
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} className={s.lessonForm}>
             <Lesson formik={formik}
                     pic={tasks[currentTask].pic}
                     task={tasks[currentTask].task}
                     subtasks={tasks[currentTask].subtasks}/>
-            <button type="submit">Submit</button>
+            <button type="submit" className={s.submitButton}>Submit</button>
         </form>
     );
 }

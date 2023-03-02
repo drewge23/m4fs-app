@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from "react";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {LinearProgress} from "@mui/material";
+import {Box, Container, LinearProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {setLessonStateThunk} from "../../BLL/currentLessonSlice";
 import {incrementBonusProgress, incrementLessonProgress, setTestCompleted} from "../../BLL/progressSlice";
@@ -11,6 +11,7 @@ import LessonTheory from "./LessonTheory";
 import {incrementStreak, setStreakIsIncrementable} from "../../BLL/streakSlice";
 import {incrementStars} from "../../BLL/starsSlice";
 import LoadingScreen from "../LoadingScreen";
+import s from './lessonScreen.module.css'
 
 // @ts-ignore
 const LessonScreen: FC = ({
@@ -96,27 +97,31 @@ const LessonScreen: FC = ({
     return <>
         {isLoading
             ? <LoadingScreen/>
-            : <div>
-                <h1>Lesson</h1>
+            : <Container sx={{width: '100%', maxWidth: '600px'}}>
+                <Box className={s.lessonScreen}>
 
-                {!isTest && <button onClick={() => setShowTheory(!showTheory)}>Theory</button>}
+                    <LinearProgress variant="determinate" value={progress}
+                                    color={'secondary'} className={s.progress}/>
 
-                <NavLink to={"/"}>
-                    <button>Exit</button>
-                </NavLink>
+                    <div className={s.hintExit}>
+                        {!isTest && <button className={s.hint}
+                                            onClick={() => setShowTheory(!showTheory)}>💡</button>}
+                        {isTest && <div className={s.lives}>
+                            {lives.map((life: any, index) => <span key={index}> 💗 </span>)}
+                        </div>}
 
-                <LinearProgress variant="determinate" value={progress}/>
+                        <NavLink to={"/"}>
+                            <button className={s.exit}>❌</button>
+                        </NavLink>
+                    </div>
 
-                <div style={{display: showTheory ? 'flex' : 'none'}}>
-                    <LessonTheory theory={theory} setShowTheory={setShowTheory}/>
-                </div>
+                    {showTheory && <LessonTheory theory={theory} setShowTheory={setShowTheory}/>}
 
-                {isTest ? <div> {lives.map((life: any, index) => <span key={index}> 💗 </span>)} </div> : null}
+                    {tasks && <LessonForm {...lessonFormProps}/>}
 
-                {tasks && <LessonForm {...lessonFormProps}/>}
-
-            </div>}
-        </>
+                </Box>
+            </Container>}
+    </>
 }
 
 export default LessonScreen;

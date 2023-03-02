@@ -1,0 +1,70 @@
+.lessonScreen {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.lessonScreen button {
+    background-color: var(--main-color);
+}
+.progress {
+    width: 60%;
+    height: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+}
+.hintExit {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+.hintExit button {
+    font-size: 1.5rem;
+}
+.lives {
+    font-size: 2rem;
+}
+.lesson {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.task {
+    margin-bottom: 3rem;
+}
+.subtasks {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.subtask {
+    margin-bottom: 1rem;
+}
+.subtask label {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+.subtask input {
+    width: 80px;
+    margin-right: 2rem;
+}
+.lessonForm {
+    width: 60%;
+}
+.submitButton {
+    width: 100%;
+    margin-top: 5vh;
+}
+.lessonTheory {
+    margin-top: -50px;
+    width: 30%;
+    border: 5px dashed var(--main-color);
+    border-radius: 1rem;
+}
+.lessonTheory p {
+    font-weight: 550;
+    font-size: 1.25rem;
+}
