@@ -56,7 +56,7 @@ function Auth({app}) {
                     backgroundColor: 'rgba(139,217,241,0.3)',
                 }
         }>
-            <h1>Welcome to M4FS!</h1>
+            <h1 style={{fontFamily: 'Cunia'}}>Welcome to M4FS!</h1>
             <div id="firebaseui-auth-container"></div>
             <div id="loader">Loading...</div>
         </div>
