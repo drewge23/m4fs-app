@@ -1,54 +1,87 @@
 @font-face {
-  font-family: "Cunia";
-  src: local("Cunia"),
-  url("./assets/fonts/Cunia.ttf") format("truetype");
+    font-family: "Cunia";
+    src: local("Cunia"),
+    url("./assets/fonts/Cunia.ttf") format("truetype");
 }
 
 :root {
-  --dark-color: #0000a0;
-  --main-color: #6e6efc;
-  --light-color: lightblue;
-  --white-color: #f0fffb;
-  --black-color: #343434;
-  --bg-color: rgb(252, 242, 245)
+    --dark-color: #0000a0;
+    --main-color: #6e6efc;
+    --light-color: lightblue;
+    --white-color: #f0fffb;
+    --black-color: #343434;
+    --bg-color: rgb(252, 242, 245)
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: var(--bg-color);
+    background-color: var(--bg-color);
 }
 
 .App {
-  text-align: center;
+    text-align: center;
 }
-.preloader {
-  width: 100%;
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.preloader div {
-  width: 500px;
-  height: 200px;
-  border-radius: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
-  background-color: var(--light-color);
-  color: var(--white-color);
-  font-family: 'Cunia', sans-serif;
-  font-size: 4rem;
+.loadingScreen {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.loadingScreen div {
+    width: 500px;
+    height: 200px;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--main-color);
+    color: var(--white-color);
+    font-family: 'Cunia', sans-serif;
+    font-size: 4rem;
+
+    box-shadow: 20px 20px 1px 1px var(--light-color);
+}
+
 button {
-  padding: 0.25rem 0.5rem;
-  margin: 0;
-  border-radius: 0.5rem;
-  border: 0.5px solid var(--black-color);
-  background-color: var(--white-color);
-  min-width: 25px;
+    min-width: 25px;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+
+    border: 0 solid var(--black-color);
+    border-radius: 0.5rem;
+
+    font-size: 1rem;
+    font-family: 'Cunia', sans-serif;
+    color: white;
+    background-color: var(--dark-color);
+    box-shadow: 2px 2px 1px 1px var(--light-color);
+    transition: 200ms;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: translate3d(-1px, -1px, 0);
+    box-shadow: 3px 3px 1px 1px var(--light-color);
+}
+
+button:active {
+    transform: translate3d(2px, 2px, 0);
+    box-shadow: 0 0 1px 1px var(--light-color);
+}
+input {
+    width: 60%;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+    border: 5px solid var(--main-color);
+    background-color: white;
+
+    font-size: 1.5rem;
+    font-family: 'Cunia', sans-serif;
 }

@@ -22,7 +22,7 @@ import SignUp from "./BLL/SignUp";
 import "./assets/fonts/Cunia.ttf"
 import {lesson, theory} from "./tasks/taskTypes";
 import lessons from "./tasks/lessons";
-import Preloader from "./components/Preloader";
+import LoadingScreen from "./components/LoadingScreen";
 import {initialStreak} from "./BLL/initialStreak";
 
 const firebaseConfig = {
@@ -124,7 +124,7 @@ function App() {
 
     return (
         <>
-            {isLoading && <Preloader />}
+            {isLoading && <LoadingScreen />}
             {!isLoading && <>
                 {!user && <Auth app={app}/>}
                 {/*@ts-ignore*/}

@@ -76,15 +76,15 @@ function Header({signOut}: any) {
                     </Box>
 
                     <Box className={s.profile}>
-                        <NavLink to={'/shop'}>
+                        {/*<NavLink to={'/shop'}>*/}
                             <span className={s.money}>
                                 {money}<span className={s.dollar}>$</span>
                             </span>
-                        </NavLink>
+                        {/*</NavLink>*/}
                         <button onClick={signOut} className={s.signOut}>
                             Sign out
                         </button>
-                        <IconButton onClick={handleOpenUserMenu} className={s.icon}>
+                        <IconButton onClick={handleOpenUserMenu} className={s.icon} disabled>
                             <Avatar alt="AA" src={userPhotoURL}/>
                         </IconButton>
                         <Menu

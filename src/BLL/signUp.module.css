@@ -1,0 +1,26 @@
+.signUpScreen {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signUpForm {
+    width: 500px;
+    height: 300px;
+    border-radius: 50px;
+    background-color: var(--white-color);
+    box-shadow: 20px 20px 1px 1px var(--main-color);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.signUpForm label {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+}
+.signUpForm button {
+    margin: 1rem 0.5rem;
+}
