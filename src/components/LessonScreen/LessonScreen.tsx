@@ -46,7 +46,6 @@ const LessonScreen: FC = ({
         while (tasksDone.includes(tempIndex)) {
             tempIndex = Math.floor(Math.random() * tasks.length)
         }
-        console.log(tasksDone)
         setCurrentTask(tempIndex);
     }, [tasksDone])
 
@@ -102,7 +101,14 @@ const LessonScreen: FC = ({
                 <Box className={s.lessonScreen}>
 
                     <LinearProgress variant="determinate" value={progress}
-                                    color={'secondary'} className={s.progress}/>
+                                    color={'secondary'} className={s.progress}
+                                    sx={{
+                                        width: '60%',
+                                        height: '1rem',
+                                        marginBottom: '1rem',
+                                        borderRadius: '1rem',
+                                    }}
+                    />
 
                     <div className={s.hintExit}>
                         {!isTest && <button className={s.hint}

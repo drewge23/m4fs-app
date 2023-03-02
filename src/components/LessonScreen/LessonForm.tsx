@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useFormik} from "formik";
 import Lesson from "./Lesson";
 import s from './lessonScreen.module.css'
@@ -9,6 +9,8 @@ interface Errors {
     answers: string[];
 }
 
+const [isCorrect, setIsCorrect] = useState(false)
+
 const MAX_ANSWERS = 20
 let initialAnswers: string[] = [];
 for (let i = 0; i < MAX_ANSWERS; i++) {
@@ -17,10 +19,15 @@ for (let i = 0; i < MAX_ANSWERS; i++) {
 const formik = useFormik({
     initialValues: {answers: initialAnswers},
     onSubmit: (values, {resetForm}) => {
-        alert(JSON.stringify(values, null, 2));
+        // alert(JSON.stringify(values, null, 2));
         const min = Math.min(tasks.length, 4)
         setProgress(progress + 100 / min)
         resetForm();
+
+        //TODO: make it work
+        setIsCorrect(true)
+        alert('Correct!');
+        setIsCorrect(false)
     },
     validate: (values) => {
         const errors: Errors = {answers: []};
@@ -37,7 +44,7 @@ const formik = useFormik({
                     }
                     canTakeLifeOff = false
                 }
-                console.log(errors.answers[i])
+                // console.log(errors.answers[i])
             }
         }
         if (isTest && lives.length === 0) {
@@ -54,7 +61,9 @@ const formik = useFormik({
             <Lesson formik={formik}
                     pic={tasks[currentTask].pic}
                     task={tasks[currentTask].task}
-                    subtasks={tasks[currentTask].subtasks}/>
+                    subtasks={tasks[currentTask].subtasks}
+                    isCorrect={isCorrect}
+            />
             <button type="submit" className={s.submitButton}>Submit</button>
         </form>
     );

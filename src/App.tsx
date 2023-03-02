@@ -40,6 +40,8 @@ const analytics = firebase.analytics(app);
 const db = firebase.firestore(app)
 const auth = firebase.auth(app)
 
+//TODO: change all alerts to popups or modals
+
 function App() {
     // const lessonsToExport: (lesson | theory)[] = lessons
     // const [flag, setFlag] = useState(true)
