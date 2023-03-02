@@ -3,6 +3,7 @@ import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/ma
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import {NavLink} from "react-router-dom";
+import s from './lessonList.module.css'
 
 function Lessons({lessons, sectionProgress, testCompleted, sectionName, isBonus}: any) {
     function isDisabled(index: number) {
@@ -25,22 +26,26 @@ function Lessons({lessons, sectionProgress, testCompleted, sectionName, isBonus}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography>{lesson.data().lessonName}</Typography>
+                            <p className={s.lessonName}>{lesson.data().lessonName}</p>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Typography>{lesson.data().description}</Typography>
-                            {/*<button onClick={() => alert(lesson.data().theory)}>Theory</button>*/}
-                            <NavLink to={"/lesson"}
-                                     state={{
-                                         sectionName,
-                                         lessonId: lesson.id,
-                                         sectionProgress,
-                                         lessonIndex: index,
-                                         reward: lesson.data().reward,
-                                         theory: lesson.data().theory,
-                                         isBonus,
-                                         isTest: false,
-                                     }}> start </NavLink>
+                            <div className={s.lessonDescriptionContainer}>
+                                <Typography>{lesson.data().description}</Typography>
+                                {/*<button onClick={() => alert(lesson.data().theory)}>Theory</button>*/}
+                                <NavLink to={"/lesson"}
+                                         state={{
+                                             sectionName,
+                                             lessonId: lesson.id,
+                                             sectionProgress,
+                                             lessonIndex: index,
+                                             reward: lesson.data().reward,
+                                             theory: lesson.data().theory,
+                                             isBonus,
+                                             isTest: false,
+                                         }}>
+                                    <button>start</button>
+                                </NavLink>
+                            </div>
                         </AccordionDetails>
                     </Accordion>
                 );

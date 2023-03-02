@@ -22,3 +22,34 @@
     padding: 40px;
     outline: 0;
 }
+
+.sectionName {
+    font-family: 'Cunia', sans-serif;
+    font-size: 1.5rem;
+}
+
+.lessonName {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0;
+}
+.lessonDescriptionContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bonusUnlock {
+    font-family: 'roboto', sans-serif;
+    font-weight: 550;
+    /*background-color: var(--main-color);*/
+}
+.testLink {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.75rem;
+}

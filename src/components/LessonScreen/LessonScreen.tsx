@@ -10,6 +10,7 @@ import LessonForm from "./LessonForm";
 import Theory from "./Theory";
 import {incrementStreak, setStreakIsIncrementable} from "../../BLL/streakSlice";
 import {incrementStars} from "../../BLL/starsSlice";
+import LoadingScreen from "../LoadingScreen";
 
 // @ts-ignore
 const LessonScreen: FC = ({
@@ -87,28 +88,35 @@ const LessonScreen: FC = ({
 
     const lessonFormProps = {tasks, currentTask, setProgress, progress, isTest, setLives, lives, loseTest}
 
+    const [isLoading, setIsLoading] = useState(true)
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 1000)
+    }, [])
+
     return <>
-        <div>
-            <h1>Lesson</h1>
+        {isLoading
+            ? <LoadingScreen/>
+            : <div>
+                <h1>Lesson</h1>
 
-            {!isTest && <button onClick={() => setShowTheory(!showTheory)}>Theory</button>}
+                {!isTest && <button onClick={() => setShowTheory(!showTheory)}>Theory</button>}
 
-            <NavLink to={"/"}>
-                <button>Exit</button>
-            </NavLink>
+                <NavLink to={"/"}>
+                    <button>Exit</button>
+                </NavLink>
 
-            <LinearProgress variant="determinate" value={progress}/>
+                <LinearProgress variant="determinate" value={progress}/>
 
-            <div style={{display: showTheory ? 'flex' : 'none'}}>
-                <Theory theory={theory} setShowTheory={setShowTheory}/>
-            </div>
+                <div style={{display: showTheory ? 'flex' : 'none'}}>
+                    <Theory theory={theory} setShowTheory={setShowTheory}/>
+                </div>
 
-            {isTest ? <div> {lives.map((life: any, index) => <span key={index}> 💗 </span>)} </div> : null}
+                {isTest ? <div> {lives.map((life: any, index) => <span key={index}> 💗 </span>)} </div> : null}
 
-            {tasks && <LessonForm {...lessonFormProps}/>}
+                {tasks && <LessonForm {...lessonFormProps}/>}
 
-        </div>
-    </>
+            </div>}
+        </>
 }
 
 export default LessonScreen;

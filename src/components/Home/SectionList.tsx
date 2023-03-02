@@ -21,7 +21,9 @@ const SectionList: FC = () => {
             {/*// @ts-ignore*/}
             {!loading && grade?.data().sections.map((section: any) => {
                     return (
-                        <LessonList sectionName={section.name} key={section.name}/>
+                        <LessonList key={section.name}
+                                    sectionName={section.name}
+                                    sectionPrice={section.price} />
                     )
                 }
             )}

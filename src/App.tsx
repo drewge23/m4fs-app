@@ -119,7 +119,7 @@ function App() {
 
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
-        setTimeout(() => setIsLoading(false), 2000) // how much?
+        setTimeout(() => setIsLoading(false), 2000)
     }, [])
 
     return (

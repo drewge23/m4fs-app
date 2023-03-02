@@ -16,7 +16,7 @@ import s from './lessonList.module.css'
 import LessonListSkeleton from "./LessonListSkeleton";
 import Theory from "./Theory";
 
-const LessonList = ({sectionName}: any) => {
+const LessonList = ({sectionName, sectionPrice}: any) => {
     const money = useSelector((state: any) => state.money)
     const gradeNum = useSelector((state: any) => state.grade)
     const db = useSelector((state: any) => state.firebase.db)
@@ -76,6 +76,7 @@ const LessonList = ({sectionName}: any) => {
     const testProps = {test, testCompleted, sectionName}
 
     const unlockBonus = (price: number) => {
+        if (!money) return
         if (money >= price) {
             dispatch(spend(price))
             dispatch(incrementBonusProgress({grade: gradeNum - 1, section: sectionName}))
@@ -91,16 +92,16 @@ const LessonList = ({sectionName}: any) => {
         {loading && <LessonListSkeleton/>}
         {!loading && <Card id={sectionName} elevation={5} className={s.lessonList}>
             <CardContent>
-                <h1>{sectionName[0].toUpperCase() + sectionName.substring(1)}</h1>
+                <h1 className={s.sectionName}>{sectionName[0].toUpperCase() + sectionName.substring(1)}</h1>
                 {theory && <button onClick={() => setTheoryIsOpen(true)}>Theory</button>}
                 {theory && <Theory {...theoryProps}/>}
 
                 <Lessons {...lessonsProps} isBonus={false}/>
                 {bonuses.length !== 0 && <>
-                    <h3>Bonus levels</h3>
-                    {bonusProgress < 0 && <button onClick={() => {
-                        unlockBonus(5) // 5 --> section.price
-                    }}> Unlock bonus lessons for 5$ </button>}
+                    <h3>Bonus lessons</h3>
+                    {bonusProgress < 0 && <button className={s.bonusUnlock} onClick={() => {
+                        unlockBonus(sectionPrice)
+                    }}> Unlock bonus lessons for {sectionPrice}$ </button>}
                 </>}
                 <Lessons {...bonusesProps} isBonus={true}/>
 

@@ -38,8 +38,8 @@ const SectionNav: FC = () => {
                             <HashLink smooth to={"#" + section.name}
                                       scroll={el => scrollWithOffset(el)}>
                                 {section.name}
+                                <span className={s.percent}>{completionPercent + "%"}</span>
                             </HashLink>
-                            <span className={s.percent}>{completionPercent + "%"}</span>
                         </div>
                     )
                 })}

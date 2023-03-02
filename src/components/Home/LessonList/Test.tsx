@@ -3,6 +3,7 @@ import {Box} from "@mui/material";
 import {NavLink} from "react-router-dom";
 import {motion} from "framer-motion";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import s from './lessonList.module.css'
 
 function Test({test, sectionName, testCompleted}: any) {
     return (
@@ -22,24 +23,14 @@ function Test({test, sectionName, testCompleted}: any) {
                      textDecoration: 'none'
                  }}
         >
-            <Box
-                component={motion.div}
+            <button
+                className={s.testLink}
                 style={{
-                    width: 100, height: 100,
-                    margin: '0 auto 1rem auto',
-                    borderRadius: '50%',
-                    backgroundColor: testCompleted ? 'white' : 'lightcoral',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '1.75rem',
-                    border: '0.5px solid gray',
+                    backgroundColor: testCompleted ? 'var(--white-color)' : 'var(--main-color)',
                 }}
-                whileHover={{scale: 1.1}}
-                whileTap={{scale: 0.9}}
             >
-                {testCompleted ? '🏆' : '❔'}
-            </Box>
+                {testCompleted ? '🏆' : '🚀'}
+            </button>
         </NavLink>
     );
 }

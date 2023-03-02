@@ -113,6 +113,10 @@
 .leftLinks a {
     color: var(--black-color);
     text-decoration: none;
+    transition: 300ms;
+}
+.leftLinks a:hover {
+    color: var(--dark-color);
 }
 
 .percent {
