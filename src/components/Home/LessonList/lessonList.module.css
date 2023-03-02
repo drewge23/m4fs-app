@@ -42,6 +42,9 @@
     align-items: center;
     font-size: 1.75rem;
 }
+.testLink:active {
+    box-shadow: 0 0 1px 1px var(--light-color);
+}
 
 .theory {
     position: absolute;
