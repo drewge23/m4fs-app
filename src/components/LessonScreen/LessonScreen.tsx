@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from "react";
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, NavLink, redirect, useLocation, useNavigate} from "react-router-dom";
 import {Box, Container, LinearProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {setLessonStateThunk} from "../../BLL/currentLessonSlice";
@@ -18,6 +18,7 @@ const LessonScreen: FC = ({
                               sectionName, lessonId, sectionProgress, lessonIndex,
                               isBonus, isTest, testCompleted, tasks, reward, theory
                           }: any) => {
+
     const dispatch = useDispatch()
     const navigate = useNavigate();
 

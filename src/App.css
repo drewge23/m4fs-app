@@ -48,7 +48,21 @@ body {
 
     box-shadow: 20px 20px 1px 1px var(--light-color);
 }
+.errorRocket {
+    margin: 1rem;
+    text-decoration: none;
+    color: black;
+    font-size: 3rem;
 
+    transition: 1000ms;
+}
+.errorRocket:hover {
+    transform: scale(2.4);
+}
+.errorRocket:active {
+    transition: 500ms;
+    transform: scale(0.8);
+}
 button {
     min-width: 25px;
     padding: 0.5rem 1rem;

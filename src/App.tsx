@@ -24,6 +24,7 @@ import {lesson, theory} from "./tasks/taskTypes";
 import lessons from "./tasks/lessons";
 import LoadingScreen from "./components/LoadingScreen";
 import {initialStreak} from "./BLL/initialStreak";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDdSlecVhBVceLY5YD6-yQmDRhw_F6IpZo",
@@ -123,7 +124,7 @@ function App() {
     }, [])
 
     return (
-        <>
+        <ErrorBoundary>
             {isLoading && <LoadingScreen />}
             {!isLoading && <>
                 {!user && <Auth app={app}/>}
@@ -144,7 +145,7 @@ function App() {
                     </div>
                 </BrowserRouter>}
             </>}
-        </>
+        </ErrorBoundary>
     );
 }
 

@@ -3,6 +3,8 @@ import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setLessonStateThunk} from "../../BLL/currentLessonSlice";
 import LessonScreen from "./LessonScreen";
+import LoadingScreen from "../LoadingScreen";
+import ErrorBoundary from "../ErrorBoundary";
 
 // @ts-ignore
 const LessonScreenContainer: FC = () => {
@@ -10,6 +12,7 @@ const LessonScreenContainer: FC = () => {
     const location = useLocation()
 
     const gradeNum = useSelector((state: any) => state.grade)
+
     const {sectionName, lessonId, sectionProgress, lessonIndex} = location.state;
     const isBonus = location.state.isBonus || false
     const isTest = location.state.isTest || false
@@ -30,7 +33,7 @@ const LessonScreenContainer: FC = () => {
     return <>
         {/*@ts-ignore*/}
         {tasks && <LessonScreen {...lessonScreenProps} />}
-        {!tasks && <div>Loading...</div>}
+        {!tasks && <LoadingScreen />}
     </>
 }
 
