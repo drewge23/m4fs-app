@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Backdrop, Box, Fade, Modal, Typography} from "@mui/material";
 import s from './lessonList.module.css'
 
@@ -7,12 +7,10 @@ function Theory({theoryIsOpen, setTheoryIsOpen, theory}: any) {
 
     return (
         <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
             open={theoryIsOpen}
             onClose={handleClose}
             closeAfterTransition
-            slots={{ backdrop: Backdrop }}
+            slots={{backdrop: Backdrop}}
             slotProps={{
                 backdrop: {
                     // @ts-ignore
@@ -21,17 +19,27 @@ function Theory({theoryIsOpen, setTheoryIsOpen, theory}: any) {
             }}
         >
             <Fade in={theoryIsOpen}>
-                <Box className={s.theory}>
-                    <Typography id="transition-modal-title" variant="h6" component="h2">
-                        Text in a modal
-                    </Typography>
-                    <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
-                </Box>
+                <div>
+                    <Box className={s.theory}>
+                        {theory.data().imageUrl && <img src={theory.data().imageUrl} alt=""/>}
+                        {theory && theory.data().text.map((line: string, index: number) => {
+                            return <div key={index}>
+                                <p className={s.theoryText}>{line}</p>
+                                <p className={s.theoryExample}><b>{theory.data().examples[index]}</b></p>
+                            </div>
+                        })}
+                        <div className={s.theoryButton}>
+                            <button onClick={handleClose}>Nice!</button>
+                        </div>
+                    </Box>
+                    {/*<Box className={s.theoryHint}>*/}
+                    {/*    <p><span>💡</span> Get ready for the lesson!</p>*/}
+                    {/*</Box>*/}
+                </div>
             </Fade>
         </Modal>
-    );
+    )
+        ;
 }
 
 export default Theory;

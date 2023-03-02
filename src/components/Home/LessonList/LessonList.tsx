@@ -129,7 +129,7 @@ const LessonList = ({sectionName, sectionPrice}: any) => {
                 {/*/!*            </AccordionSummary>*!/*/}
                 {/*/!*            <AccordionDetails>*!/*/}
                 {/*/!*                <Typography>{lesson.description}</Typography>*!/*/}
-                {/*/!*                <button onClick={() => alert(lesson.theory)}>Theory</button>*!/*/}
+                {/*/!*                <button onClick={() => alert(lesson.theory)}>LessonTheory</button>*!/*/}
                 {/*/!*                <div>*!/*/}
                 {/*/!*                    <NavLink to={"/lesson"}*!/*/}
                 {/*/!*                             state={{*!/*/}

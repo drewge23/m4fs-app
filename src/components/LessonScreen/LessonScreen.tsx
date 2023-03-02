@@ -7,7 +7,7 @@ import {incrementBonusProgress, incrementLessonProgress, setTestCompleted} from 
 import {earn} from "../../BLL/moneySlice";
 import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/statisticsSlice";
 import LessonForm from "./LessonForm";
-import Theory from "./Theory";
+import LessonTheory from "./LessonTheory";
 import {incrementStreak, setStreakIsIncrementable} from "../../BLL/streakSlice";
 import {incrementStars} from "../../BLL/starsSlice";
 import LoadingScreen from "../LoadingScreen";
@@ -108,7 +108,7 @@ const LessonScreen: FC = ({
                 <LinearProgress variant="determinate" value={progress}/>
 
                 <div style={{display: showTheory ? 'flex' : 'none'}}>
-                    <Theory theory={theory} setShowTheory={setShowTheory}/>
+                    <LessonTheory theory={theory} setShowTheory={setShowTheory}/>
                 </div>
 
                 {isTest ? <div> {lives.map((life: any, index) => <span key={index}> 💗 </span>)} </div> : null}

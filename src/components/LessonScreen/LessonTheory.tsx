@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Theory({theory, setShowTheory, showTheory}: any) {
+function LessonTheory({theory, setShowTheory, showTheory}: any) {
     const [imgUrl, ...text] = theory
     return (
         <div>
@@ -15,4 +15,4 @@ function Theory({theory, setShowTheory, showTheory}: any) {
     );
 }
 
-export default Theory;
+export default LessonTheory;

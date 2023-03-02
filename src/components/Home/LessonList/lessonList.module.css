@@ -12,17 +12,6 @@
     padding-bottom: 1rem;
 }
 
-.theory {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    background-color: var(--white-color);
-    padding: 40px;
-    outline: 0;
-}
-
 .sectionName {
     font-family: 'Cunia', sans-serif;
     font-size: 1.5rem;
@@ -52,4 +41,58 @@
     justify-content: center;
     align-items: center;
     font-size: 1.75rem;
+}
+
+.theory {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    max-width: 500px;
+    max-height: 90vh;
+    padding: 2rem 5rem;
+    outline: 0;
+
+    border-radius: 3rem;
+    background-color: white;
+    border: 5px solid #01016a;
+
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.theory::-webkit-scrollbar {
+    display: none;
+}
+.theoryText {
+    font-size: 1.25rem;
+}
+.theoryExample {
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--dark-color);
+}
+.theoryButton {
+    display: flex;
+    justify-content: center;
+}
+.theoryHint {
+    position: absolute;
+    top: 20%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    max-height: 90vh;
+    padding: 0.5rem 2rem;
+    outline: 0;
+    font-size: 1.25rem;
+
+    border-radius: 3rem;
+    background-color: white;
+    border: 5px solid #01016a;
+}
+.theoryHint span {
+    font-size: 2rem;
+    margin-right: 0.5rem;
 }

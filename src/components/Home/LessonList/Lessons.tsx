@@ -31,7 +31,7 @@ function Lessons({lessons, sectionProgress, testCompleted, sectionName, isBonus}
                         <AccordionDetails>
                             <div className={s.lessonDescriptionContainer}>
                                 <Typography>{lesson.data().description}</Typography>
-                                {/*<button onClick={() => alert(lesson.data().theory)}>Theory</button>*/}
+                                {/*<button onClick={() => alert(lesson.data().theory)}>LessonTheory</button>*/}
                                 <NavLink to={"/lesson"}
                                          state={{
                                              sectionName,
