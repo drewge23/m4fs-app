@@ -6,6 +6,7 @@ const moneySlice = createSlice({
     reducers: {
         setMoney: (state, action) => action.payload,
         earn: (state, action) => {
+            alert('You earned ' + action.payload + '$')
             return state + action.payload
         },
         spend: (state, action) => {
