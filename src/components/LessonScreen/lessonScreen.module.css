@@ -1,22 +1,30 @@
 .lessonScreen {
     width: 100%;
+    max-width: 1000px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    margin: 0 auto;
 }
 .lessonScreen button {
     background-color: var(--main-color);
 }
+.progressContainer {
+    width: 100%;
+    height: 5vh;
+}
 .progress {
-    width: 60%;
+    width: 100%;
     height: 1rem;
     margin-bottom: 1rem;
     border-radius: 1rem;
 }
 .hintExit {
-    width: 60%;
+    width: 100%;
+    height: 10vh;
     display: flex;
     justify-content: space-between;
 }
@@ -27,6 +35,10 @@
     font-size: 2rem;
 }
 .lesson {
+    width: 60%;
+    height: 50vh;
+    margin: 0 auto;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,11 +64,16 @@
     margin-right: 2rem;
 }
 .lessonForm {
-    width: 60%;
+    width: 100%;
+    height: 70vh;
 }
 .submitButton {
     width: 100%;
+    height: 3.5rem;
     margin-top: 5vh;
+}
+.submitButton:hover {
+    background-color: #5959f8;
 }
 .lessonTheory {
     position: absolute;

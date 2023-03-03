@@ -12,7 +12,7 @@ import {incrementStreak, setStreakIsIncrementable} from "../../BLL/streakSlice";
 import {incrementStars} from "../../BLL/starsSlice";
 import LoadingScreen from "../LoadingScreen";
 import s from './lessonScreen.module.css'
-import { snackbarOn } from "../../BLL/utilsSlice";
+import {snackbarOn} from "../../BLL/utilsSlice";
 
 // @ts-ignore
 const LessonScreen: FC = ({
@@ -99,17 +99,19 @@ const LessonScreen: FC = ({
     return <>
         {isLoading
             ? <LoadingScreen/>
-            : <Container sx={{width: '100%', maxWidth: '1200px'}}>
+            : <Container sx={{width: '100%', maxWidth: '1000px'}}>
                 <Box className={s.lessonScreen}>
-                    <LinearProgress variant="determinate" value={progress}
-                                    color={'secondary'} className={s.progress}
-                                    sx={{
-                                        width: '60%',
-                                        height: '1rem',
-                                        marginBottom: '1rem',
-                                        borderRadius: '1rem',
-                                    }}
-                    />
+                    <div className={s.progressContainer}>
+                        <LinearProgress variant="determinate" value={progress}
+                                        color={'secondary'} className={s.progress}
+                                        sx={{
+                                            width: '100%',
+                                            height: '1rem',
+                                            marginBottom: '1rem',
+                                            borderRadius: '1rem',
+                                        }}
+                        />
+                    </div>
 
                     <div className={s.hintExit}>
                         {!isTest && <button className={s.hint}
@@ -123,10 +125,10 @@ const LessonScreen: FC = ({
                         </NavLink>
                     </div>
 
-                    {showTheory && <LessonTheory theory={theory} setShowTheory={setShowTheory} showTheory={showTheory}/>}
+                    {showTheory &&
+                        <LessonTheory theory={theory} setShowTheory={setShowTheory} showTheory={showTheory}/>}
 
                     {tasks && <LessonForm {...lessonFormProps}/>}
-
                 </Box>
             </Container>}
     </>
