@@ -1,5 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {Backdrop, Box, Fade, Modal, Typography} from "@mui/material";
+import React from 'react';
+import {Backdrop, Box, Fade, Modal} from "@mui/material";
 import s from './lessonList.module.css'
 
 function Theory({theoryIsOpen, setTheoryIsOpen, theory}: any) {

@@ -12,6 +12,7 @@ import {incrementStreak, setStreakIsIncrementable} from "../../BLL/streakSlice";
 import {incrementStars} from "../../BLL/starsSlice";
 import LoadingScreen from "../LoadingScreen";
 import s from './lessonScreen.module.css'
+import { snackbarOn } from "../../BLL/utilsSlice";
 
 // @ts-ignore
 const LessonScreen: FC = ({
@@ -72,6 +73,7 @@ const LessonScreen: FC = ({
             }
         }
         dispatch(earn(reward))
+        dispatch(snackbarOn(reward))
         alert('good job!');
         navigate('/');
         setProgress(0);
@@ -97,9 +99,8 @@ const LessonScreen: FC = ({
     return <>
         {isLoading
             ? <LoadingScreen/>
-            : <Container sx={{width: '100%', maxWidth: '600px'}}>
+            : <Container sx={{width: '100%', maxWidth: '1200px'}}>
                 <Box className={s.lessonScreen}>
-
                     <LinearProgress variant="determinate" value={progress}
                                     color={'secondary'} className={s.progress}
                                     sx={{
@@ -122,7 +123,7 @@ const LessonScreen: FC = ({
                         </NavLink>
                     </div>
 
-                    {showTheory && <LessonTheory theory={theory} setShowTheory={setShowTheory}/>}
+                    {showTheory && <LessonTheory theory={theory} setShowTheory={setShowTheory} showTheory={showTheory}/>}
 
                     {tasks && <LessonForm {...lessonFormProps}/>}
 

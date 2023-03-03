@@ -9,6 +9,7 @@ import firebaseReducer from "../firebaseSlice";
 import userDataReducer from "../userDataSlice";
 import streakReducer from "../streakSlice";
 import starsReducer from "../starsSlice";
+import utilsReducer from "../utilsSlice";
 
 enableMapSet()
 
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     streak: streakReducer,
     stars: starsReducer,
     money: moneyReducer,
+    utils: utilsReducer,
 })
 
 const store = configureStore({

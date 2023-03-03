@@ -48,6 +48,7 @@ body {
 
     box-shadow: 20px 20px 1px 1px var(--light-color);
 }
+
 .errorRocket {
     margin: 1rem;
     text-decoration: none;
@@ -56,13 +57,16 @@ body {
 
     transition: 1000ms;
 }
+
 .errorRocket:hover {
     transform: scale(2.4);
 }
+
 .errorRocket:active {
     transition: 500ms;
     transform: scale(0.8);
 }
+
 button {
     min-width: 25px;
     padding: 0.5rem 1rem;
@@ -89,6 +93,21 @@ button {
     transform: translate3d(0px, 5px, 0);
     box-shadow: 0 0 0px 0px var(--light-color);
 }
+
+.snackbar div {
+    background-color: #ffba02;
+}
+
+.snackbar button {
+    transform: none;
+    box-shadow: 0 0 0 0 transparent;
+}
+
+.snackbar button:hover {
+    transform: none;
+    box-shadow: 0 0 0 0 transparent;
+}
+
 input {
     width: 60%;
     padding: 0.25rem 0.5rem;
