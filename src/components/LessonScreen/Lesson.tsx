@@ -10,6 +10,7 @@ function Lesson({formik, task, subtasks, pic, isCorrect}: any) {
                     <div key={index} className={s.subtask}>
                         <label htmlFor={`answers[${index}]`}><span> {item + ' = '} </span></label>
                         <input
+                            disabled={isCorrect}
                             id={`answers[${index}]`}
                             name={`answers[${index}]`}
                             type="text"
@@ -17,7 +18,7 @@ function Lesson({formik, task, subtasks, pic, isCorrect}: any) {
                             value={formik.values.answers[index]}
                             style={
                                 isCorrect
-                                    ? {borderColor: 'green'}
+                                    ? {borderColor: '#13b804'}
                                     : formik.touched.answers && formik.errors.answers &&
                                     formik.touched.answers[index] && formik.errors.answers[index]
                                     && {borderColor: '#e23e31'}

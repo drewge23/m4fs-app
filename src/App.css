@@ -7,9 +7,11 @@
 :root {
     --dark-color: #0000a0;
     --main-color: #6e6efc;
+    --main-color-hover: #5959f8;
     --light-color: lightblue;
     --white-color: #f0fffb;
     --black-color: #343434;
+    --correct-color: #5af84e;
     --bg-color: rgb(252, 242, 245)
 }
 

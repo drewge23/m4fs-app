@@ -73,7 +73,7 @@
     margin-top: 5vh;
 }
 .submitButton:hover {
-    background-color: #5959f8;
+    background-color: var(--main-color-hover);
 }
 .lessonTheory {
     position: absolute;
@@ -112,4 +112,28 @@
 .lessonTheory button:hover {
     cursor: pointer;
     background-color: var(--main-color);
+}
+.correctModal {
+    z-index: 10;
+    background-color: var(--correct-color);
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 20vh; width: 100vw;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.correctModal p {
+    font-family: 'Cunia', sans-serif;
+    font-size: 3rem;
+    color: white;
+}
+.correctModal button {
+    background-color: var(--main-color);
+    font-size: 2rem;
+}
+.correctModal button:hover {
+    cursor: pointer;
+    background-color: var(--main-color-hover);
 }

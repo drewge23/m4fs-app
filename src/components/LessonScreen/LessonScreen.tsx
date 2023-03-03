@@ -1,8 +1,7 @@
 import React, {FC, useEffect, useState} from "react";
-import {Navigate, NavLink, redirect, useLocation, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {Box, Container, LinearProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {setLessonStateThunk} from "../../BLL/currentLessonSlice";
 import {incrementBonusProgress, incrementLessonProgress, setTestCompleted} from "../../BLL/progressSlice";
 import {earn} from "../../BLL/moneySlice";
 import {incrementBonusLessonsTotal, incrementLessonsTotal} from "../../BLL/statisticsSlice";
@@ -85,6 +84,7 @@ const LessonScreen: FC = ({
     const loseTest = () => {
         alert("nice try anyway! here's something for going this far")
         dispatch(earn(1));
+        dispatch(snackbarOn(1))
         navigate('/');
         setProgress(0);
     }

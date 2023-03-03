@@ -2,7 +2,7 @@ import {FC} from "react";
 import SectionList from "./SectionList";
 import {useSelector} from "react-redux";
 import Header from "./Header";
-import {Box, Container, Grid} from "@mui/material";
+import {Box, Container} from "@mui/material";
 import SectionNav from "./SectionNav";
 import s from './home.module.css'
 import Streak from "./Streak";
