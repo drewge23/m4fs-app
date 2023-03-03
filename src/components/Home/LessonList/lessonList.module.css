@@ -80,6 +80,10 @@
     display: flex;
     justify-content: center;
 }
+.theoryButton button:hover {
+    cursor: pointer;
+    background-color: var(--main-color-hover);
+}
 .theoryHint {
     position: absolute;
     top: 20%;

@@ -22,11 +22,11 @@ function LessonTheory({theory, setShowTheory, showTheory}: any) {
             <Fade in={showTheory}>
                 <div>
                     <Box className={s.lessonTheory}>
-                        <button onClick={handleClose}>Hide</button>
                         {imgUrl && <img src={imgUrl} alt="pic.1"/>}
                         {text.map((line: string, index: number) => {
                             return <p key={index}>{line}</p>
                         })}
+                        <button onClick={handleClose}>Hide</button>
                     </Box>
                 </div>
             </Fade>

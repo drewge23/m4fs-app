@@ -73,7 +73,7 @@ const LessonScreen: FC = ({
         }
         dispatch(earn(reward))
         dispatch(snackbarOn(reward))
-        alert('good job!');
+        // alert('good job!');
         navigate('/');
         setProgress(0);
     }
@@ -82,7 +82,7 @@ const LessonScreen: FC = ({
 
     const [lives, setLives] = useState([1, 1, 1]);
     const loseTest = () => {
-        alert("nice try anyway! here's something for going this far")
+        alert("Nice try anyway! here's something for going this far")
         dispatch(earn(1));
         dispatch(snackbarOn(1))
         navigate('/');

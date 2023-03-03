@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './lessonScreen.module.css'
-import {Backdrop, Box, Fade, Modal} from "@mui/material";
+import {Box, Fade} from "@mui/material";
 
 function CorrectModal({isCorrect, handleContinue}: any) {
     return (

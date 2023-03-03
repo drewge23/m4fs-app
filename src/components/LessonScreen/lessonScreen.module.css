@@ -44,6 +44,7 @@
     align-items: center;
 }
 .task {
+    font-size: 2rem;
     margin-bottom: 3rem;
 }
 .subtasks {
@@ -83,7 +84,7 @@
     width: 60%;
     max-width: 500px;
     max-height: 80vh;
-    padding: 2rem 5rem;
+    padding: 1rem 5rem;
     outline: 0;
 
     display: flex;
@@ -106,16 +107,24 @@
     display: none;
 }
 .lessonTheory p {
+    margin: 0.75rem;
     font-weight: 550;
     font-size: 1.25rem;
 }
+.lessonTheory button {
+    margin: 0.75rem;
+    width: 80%;
+    height: 50px;
+    background-color: var(--main-color);
+}
 .lessonTheory button:hover {
     cursor: pointer;
-    background-color: var(--main-color);
+    background-color: var(--main-color-hover);
 }
 .correctModal {
     z-index: 10;
     background-color: var(--correct-color);
+    border-top: 1px solid var(--bg-color);
     position: absolute;
     bottom: 0; left: 0;
     height: 20vh; width: 100vw;

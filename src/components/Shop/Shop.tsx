@@ -24,7 +24,7 @@ const Shop: FC = () => {
                             playCoinSound()
                             console.log('money well-spent!')
                         } else {
-                            alert('not enough money')
+                            // alert('not enough money')
                         }
                     }}> spend! </button>
                 </div>
