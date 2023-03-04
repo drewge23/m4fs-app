@@ -50,7 +50,17 @@ body {
 
     box-shadow: 20px 20px 1px 1px var(--light-color);
 }
-
+.errorBoundary {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 10vh;
+    background-color: rgb(255,240,240);
+    font-family: 'Cunia', sans-serif;
+}
 .errorRocket {
     margin: 1rem;
     text-decoration: none;

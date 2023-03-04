@@ -20,16 +20,7 @@ class ErrorBoundary extends React.Component {
         // @ts-ignore
         if (this.state.hasError) {
             return (
-                <div style={{
-                    height: '100vh',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    paddingBottom: '10vh',
-                    backgroundColor: 'rgb(255,240,240)',
-                    fontFamily: 'Cunia',
-                }}>
+                <div className='errorBoundary'>
                     <h1>Something went wrong</h1>
                     <h2>Get back home: </h2>
                     <a href={'/'} className='errorRocket'>🚀</a>

@@ -27,6 +27,7 @@
 .grade {
     width: 50%;
     max-width: 700px;
+    margin: 0 1rem;
 
     display: flex;
     justify-content: center;
@@ -37,6 +38,14 @@
     margin: 0 1rem;
     font-family: 'Cunia', sans-serif;
     font-size: 3rem;
+}
+
+.headerStreak {
+    min-width: 150px;
+    font-size: 1.5rem;
+    font-family: 'Cunia', sans-serif;
+    justify-content: center;
+    gap: 1rem;
 }
 
 .profile {
@@ -53,7 +62,7 @@
 }
 
 .money {
-    margin: 0 1rem;
+    margin: 0 1rem 0 0;
     font-family: 'Cunia', sans-serif;
     font-size: 2rem;
 }
@@ -89,6 +98,7 @@
 }
 
 .left {
+    flex-grow: 3;
     width: 30%;
     max-width: 250px;
     padding: 0 1rem;
@@ -124,6 +134,7 @@
 }
 
 .center {
+    flex-grow: 5;
     width: 50%;
     max-width: 700px;
 }
@@ -133,8 +144,9 @@
 }
 
 .right {
+    flex-grow: 3;
     width: 30%;
-    display: flex;
+    /*display: flex;*/
     justify-content: center;
     margin-left: 2vw;
 }
@@ -150,8 +162,10 @@
 }
 
 .streak {
-    width: 200px;
-    height: 200px;
+    width: 20vw;
+    height: 20vw;
+    max-width: 180px;
+    max-height: 180px;
     background-color: var(--light-color);
 
     display: flex;
@@ -161,4 +175,34 @@
     border-radius: 1rem;
 
     box-shadow: 10px 10px 1px 1px var(--main-color);
+}
+
+@media screen and (max-width: 650px) {
+    .logoContainer {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 599.5px) {
+    .signOut {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .headerStreak {
+        min-width: 70px;
+    }
+    .stars {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .grade {
+        margin: 0 0.1rem;
+    }
+    .money {
+        margin: 0 0.1rem;
+    }
 }

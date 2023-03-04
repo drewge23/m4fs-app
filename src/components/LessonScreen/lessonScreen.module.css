@@ -146,3 +146,18 @@
     cursor: pointer;
     background-color: var(--main-color-hover);
 }
+
+@media screen and (max-width: 600px) {
+    .lesson {
+        width: 90%;
+    }
+    .lessonTheory {
+        padding: 0.5rem;
+    }
+    .correctModal p {
+        font-size: 1.5rem;
+    }
+    .correctModal button {
+        font-size: 1rem;
+    }
+}

@@ -21,6 +21,8 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function Header({signOut}: any) {
     const userPhotoURL = useSelector((state: any) => state.firebase.user.photoURL)
     const money = useSelector((state: any) => state.money)
+    const streak = useSelector((state: any) => state.streak)
+    const stars = useSelector((state: any) => state.stars)
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -56,7 +58,7 @@ function Header({signOut}: any) {
         <AppBar position="fixed" style={{backgroundColor: 'var(--main-color)'}}>
             <Container sx={{width: '100%', maxWidth: 1600}}>
                 <Box className={s.header}>
-                    <Box sx={{display: {xs: 'none', sm: 'flex'}}} className={s.logoContainer}>
+                    <Box className={s.logoContainer}>
                         <Typography
                             variant="h4"
                             noWrap
@@ -75,6 +77,11 @@ function Header({signOut}: any) {
                         <button onClick={increment}> + </button>
                     </Box>
 
+                    <Box className={s.headerStreak} sx={{display: {xs: 'flex', md: 'none'}}}>
+                        <span>{streak.streakIsIncrementable ? '🕔 ' : '🔥 '}{streak.streak}</span>
+                        <span className={s.stars}>⭐ {stars}</span>
+                    </Box>
+
                     <Box className={s.profile}>
                         {/*<NavLink to={'/shop'}>*/}
                             <span className={s.money}>
@@ -84,7 +91,7 @@ function Header({signOut}: any) {
                         <button onClick={signOut} className={s.signOut}>
                             Sign out
                         </button>
-                        <IconButton onClick={handleOpenUserMenu} className={s.icon} disabled>
+                        <IconButton sx={{display: {xs: 'flex', sm: 'none'}}} onClick={handleOpenUserMenu} className={s.icon}>
                             <Avatar alt="AA" src={userPhotoURL}/>
                         </IconButton>
                         <Menu
@@ -93,25 +100,20 @@ function Header({signOut}: any) {
                             anchorEl={anchorElUser}
                             anchorOrigin={{
                                 vertical: 'top',
-                                horizontal: 'right',
+                                horizontal: 'center',
                             }}
                             keepMounted
                             transformOrigin={{
                                 vertical: 'top',
-                                horizontal: 'right',
+                                horizontal: 'center',
                             }}
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
                             <MenuItem onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">
-                                    <NavLink to={"/profile"}> Profile </NavLink>
-                                </Typography>
-                            </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">
-                                    <NavLink to={"/settings"}> Settings </NavLink>
-                                </Typography>
+                                    <span onClick={signOut}>
+                                        Sign out
+                                    </span>
                             </MenuItem>
                         </Menu>
                     </Box>

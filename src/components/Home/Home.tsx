@@ -18,17 +18,17 @@ const Home: FC = ({signOut}: any) => {
             <Header signOut={signOut}/>
             <Container sx={{width: '100%', maxWidth: 1600}}>
                 <Box className={s.main}>
-                    <div className={s.left}>
+                    <Box className={s.left} sx={{display: {xs: 'none', sm: 'flex'}}}>
                         <SectionNav/>
-                    </div>
-                    <div className={s.center}>
+                    </Box>
+                    <Box className={s.center}>
                         <SectionList/>
-                    </div>
-                    <Box className={s.right}>
-                        <div className={s.rightContainer}>
+                    </Box>
+                    <Box className={s.right} sx={{display: {xs: 'none', md: 'flex'}}}>
+                        <Box className={s.rightContainer} sx={{display: {xs: 'none', md: 'flex'}}}>
                             <Streak/>
                             <Stars/>
-                        </div>
+                        </Box>
                     </Box>
                 </Box>
             </Container>
