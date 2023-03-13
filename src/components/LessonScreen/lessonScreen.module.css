@@ -124,7 +124,7 @@
 .correctModal {
     z-index: 10;
     background-color: var(--correct-color);
-    border-top: 1px solid var(--bg-color);
+    border-top: 4px solid #397934;
     position: absolute;
     bottom: 0; left: 0;
     height: 20vh; width: 100vw;
@@ -137,14 +137,15 @@
     font-family: 'Cunia', sans-serif;
     font-size: 3rem;
     color: white;
+    text-shadow: 2px 2px #397934;
 }
 .correctModal button {
-    background-color: var(--main-color);
     font-size: 2rem;
+    background-color: var(--main-color-hover);
 }
 .correctModal button:hover {
     cursor: pointer;
-    background-color: var(--main-color-hover);
+    background-color: var(--main-color);
 }
 
 @media screen and (max-width: 600px) {

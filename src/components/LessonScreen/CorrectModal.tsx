@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import s from './lessonScreen.module.css'
 import {Box, Fade} from "@mui/material";
 
@@ -8,7 +8,7 @@ function CorrectModal({isCorrect, handleContinue}: any) {
             <div>
                 <Box className={s.correctModal}>
                     <p>Good job!</p>
-                    <button onClick={handleContinue} type={'button'}> Continue</button>
+                    <button onClick={handleContinue} type={'button'} autoFocus> Continue</button>
                 </Box>
             </div>
         </Fade>

@@ -1,4 +1,5 @@
-import React from 'react';
+import { nanoid } from '@reduxjs/toolkit';
+import React, {useEffect, useRef} from 'react';
 import s from './lessonScreen.module.css'
 
 function Lesson({formik, task, subtasks, pic, isCorrect}: any) {
@@ -10,6 +11,9 @@ function Lesson({formik, task, subtasks, pic, isCorrect}: any) {
                     <div key={index} className={s.subtask}>
                         <label htmlFor={`answers[${index}]`}><span> {item + ' = '} </span></label>
                         <input
+                            autoFocus={index === 0}
+                            key={Number(isCorrect)}
+
                             disabled={isCorrect}
                             id={`answers[${index}]`}
                             name={`answers[${index}]`}

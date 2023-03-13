@@ -67,7 +67,7 @@ function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives
                     isCorrect={isCorrect}
             />
             <button type="submit" className={s.submitButton} disabled={isCorrect}>Submit</button>
-            <CorrectModal isCorrect={isCorrect} handleContinue={handleContinue}/>
+            {isCorrect && <CorrectModal isCorrect={isCorrect} handleContinue={handleContinue}/>}
         </form>
     );
 }
