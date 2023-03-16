@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {Box, Container, LinearProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {incrementBonusProgress, incrementLessonProgress, setTestCompleted} from "../../BLL/progressSlice";
@@ -21,7 +21,7 @@ const LessonScreen: FC = ({
                           }: any) => {
 
     const dispatch = useDispatch()
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const gradeNum = useSelector((state: any) => state.grade)
 
@@ -84,6 +84,11 @@ const LessonScreen: FC = ({
     const [showTheory, setShowTheory] = useState(false)
 
     const [lives, setLives] = useState([1, 1, 1]);
+    useEffect(() => {
+        if (isTest && lives.length === 0) {
+            loseTest()
+        }
+    }, [lives])
     const loseTest = () => {
         // alert("Nice try anyway! here's something for going this far")
         dispatch(earn(1))

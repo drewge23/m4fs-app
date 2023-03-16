@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import s from './lessonScreen.module.css'
 import {Box, Fade} from "@mui/material";
 
@@ -9,7 +9,7 @@ function WrongModal({isWrong, setIsWrong, isLastLife}: any) {
             <div>
                 <Box className={s.correctModal} style={{
                     backgroundColor: '#e07979',
-                    borderTop: '1px solid #ac4670',
+                    borderTop: '4px solid #ac4670',
                 }}>
                     {!isLastLife
                         ? <p>Incorrect</p>

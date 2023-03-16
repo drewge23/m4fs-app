@@ -1,8 +1,7 @@
-import { nanoid } from '@reduxjs/toolkit';
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import s from './lessonScreen.module.css'
 
-function Lesson({formik, task, subtasks, pic, isCorrect}: any) {
+function Lesson({formik, task, subtasks, pic, isCorrect, isWrong}: any) {
     return (
         <div className={s.lesson}>
             <h2 className={s.task}>{task}</h2>
@@ -12,9 +11,9 @@ function Lesson({formik, task, subtasks, pic, isCorrect}: any) {
                         <label htmlFor={`answers[${index}]`}><span> {item + ' = '} </span></label>
                         <input
                             autoFocus={index === 0}
-                            key={Number(isCorrect)}
+                            key={Number(isCorrect) + Number(isWrong)}
 
-                            disabled={isCorrect}
+                            disabled={isCorrect || isWrong}
                             id={`answers[${index}]`}
                             name={`answers[${index}]`}
                             type="text"

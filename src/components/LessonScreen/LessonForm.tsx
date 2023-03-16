@@ -45,9 +45,6 @@ function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives
                     // console.log(errors.answers[i])
                 }
             }
-            if (isTest && lives.length === 1) {
-                loseTest()
-            }
             return errors.answers.length === 0 ? {} : errors;
         },
         validateOnBlur: false,
@@ -74,6 +71,7 @@ function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives
                     task={tasks[currentTask].task}
                     subtasks={tasks[currentTask].subtasks}
                     isCorrect={isCorrect}
+                    isWrong={isWrong}
             />
             <button type="submit" className={s.submitButton} disabled={isCorrect}>Submit</button>
             {isCorrect && <CorrectModal isCorrect={isCorrect} handleContinue={handleContinue}/>}
