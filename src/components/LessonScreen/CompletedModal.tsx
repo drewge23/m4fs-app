@@ -36,7 +36,10 @@ function CompletedModal({reward, showCompleted, setShowCompleted, setProgress, t
                                 <h2>Congratulations! 🎉 </h2>
                                 <h2>You've earned {reward}$ 💸</h2>
                             </div>
-                            : <h2>Nice job anyway! Here's 1$ for going this far 🎁</h2>}
+                            : <div>
+                                <h2>You didn't pass the test 😓</h2>
+                                <h2>Nice job anyway! Here's 1$ for going this far 🎁</h2>
+                            </div>}
                         <button onClick={handleClose}> OK</button>
                     </Box>
                 </div>

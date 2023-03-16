@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useFormik} from "formik";
 import Lesson from "./Lesson";
 import s from './lessonScreen.module.css'
 import CorrectModal from "./CorrectModal";
+import WrongModal from "./WrongModal";
 
 function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives, lives, loseTest}: any) {
 
@@ -11,6 +12,8 @@ function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives
     }
 
     const [isCorrect, setIsCorrect] = useState(false)
+    const [isWrong, setIsWrong] = useState(false)
+    const [isLastLife, setIsLastLife] = useState(false)
 
     const MAX_ANSWERS = 20
     let initialAnswers: string[] = [];
@@ -58,6 +61,12 @@ function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives
         setIsCorrect(false)
     }
 
+    useEffect(() => {
+        if (lives.length >= 3) return
+        if (lives.length === 1) setIsLastLife(true)
+        if (lives.length !== 0) setIsWrong(true)
+    }, [lives])
+
     return (
         <form onSubmit={formik.handleSubmit} className={s.lessonForm}>
             <Lesson formik={formik}
@@ -68,6 +77,7 @@ function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives
             />
             <button type="submit" className={s.submitButton} disabled={isCorrect}>Submit</button>
             {isCorrect && <CorrectModal isCorrect={isCorrect} handleContinue={handleContinue}/>}
+            {isWrong && <WrongModal isWrong={isWrong} setIsWrong={setIsWrong} isLastLife={isLastLife}/>}
         </form>
     );
 }
