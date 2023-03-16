@@ -42,7 +42,7 @@ function LessonForm({tasks, currentTask, setProgress, progress, isTest, setLives
                     // console.log(errors.answers[i])
                 }
             }
-            if (isTest && lives.length === 0) {
+            if (isTest && lives.length === 1) {
                 loseTest()
             }
             return errors.answers.length === 0 ? {} : errors;

@@ -12,6 +12,7 @@ import {incrementStars} from "../../BLL/starsSlice";
 import LoadingScreen from "../LoadingScreen";
 import s from './lessonScreen.module.css'
 import {snackbarOn} from "../../BLL/utilsSlice";
+import CompletedModal from "./CompletedModal";
 
 // @ts-ignore
 const LessonScreen: FC = ({
@@ -25,6 +26,9 @@ const LessonScreen: FC = ({
     const gradeNum = useSelector((state: any) => state.grade)
 
     const [progress, setProgress] = useState(0);
+    const [showCompleted, setShowCompleted] = useState(false)
+    const [testLost, setTestLost] = useState(false)
+
     const [tasksDone, setTasksDone] = useState([])
     const [currentTask, setCurrentTask] = useState(Math.floor(Math.random() * tasks.length))
 
@@ -74,19 +78,18 @@ const LessonScreen: FC = ({
         dispatch(earn(reward))
         dispatch(snackbarOn(reward))
         // alert('good job!');
-        navigate('/');
-        setProgress(0);
+        setShowCompleted(true)
     }
 
     const [showTheory, setShowTheory] = useState(false)
 
     const [lives, setLives] = useState([1, 1, 1]);
     const loseTest = () => {
-        alert("Nice try anyway! here's something for going this far")
-        dispatch(earn(1));
+        // alert("Nice try anyway! here's something for going this far")
+        dispatch(earn(1))
         dispatch(snackbarOn(1))
-        navigate('/');
-        setProgress(0);
+        setTestLost(true)
+        setShowCompleted(true)
     }
 
     const lessonFormProps = {tasks, currentTask, setProgress, progress, isTest, setLives, lives, loseTest}
@@ -117,7 +120,12 @@ const LessonScreen: FC = ({
                         {!isTest && <button className={s.hint}
                                             onClick={() => setShowTheory(!showTheory)}>💡</button>}
                         {isTest && <div className={s.lives}>
-                            {lives.map((life: any, index) => <span key={index}> 💗 </span>)}
+                            {lives.map((life: any, index) => <span key={index}> ❤️ </span>)}
+                            {[0, 1, 2].map((i: any, index) => (
+                                lives[i]
+                                    ? null
+                                    : <span key={index} style={{opacity: '0.4'}}> 💔 </span>
+                            ))}
                         </div>}
 
                         <NavLink to={"/"}>
@@ -127,6 +135,11 @@ const LessonScreen: FC = ({
 
                     {showTheory &&
                         <LessonTheory theory={theory} setShowTheory={setShowTheory} showTheory={showTheory}/>}
+                    {showCompleted &&
+                        <CompletedModal setShowCompleted={setShowCompleted} showCompleted={showCompleted}
+                                        reward={reward}
+                                        testLost={testLost}
+                                        setProgress={setProgress}/>}
 
                     {tasks && <LessonForm {...lessonFormProps}/>}
                 </Box>
