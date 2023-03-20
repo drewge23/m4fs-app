@@ -14,12 +14,14 @@ import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {decrementGrade, incrementGrade} from "../../BLL/gradeSlice";
 import s from './home.module.css'
+import {useState} from "react";
+import ProfileModal from "../Profile/ProfileModal";
 
 const GRADES_COUNT = 2
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header({signOut}: any) {
-    const userPhotoURL = useSelector((state: any) => state.firebase.user.photoURL)
+    const avatar = useSelector((state: any) => state.userData.avatarUrl)
     const money = useSelector((state: any) => state.money)
     const streak = useSelector((state: any) => state.streak)
     const stars = useSelector((state: any) => state.stars)
@@ -54,8 +56,18 @@ function Header({signOut}: any) {
         }
     }
 
+    const [showProfile, setShowProfile] = useState(false)
+    const handleOpenProfile = (event: React.MouseEvent<HTMLElement>) => {
+        setShowProfile(true)
+    };
+
+    const profileProps = {showProfile, setShowProfile, signOut}
+
     return (
         <AppBar position="fixed" style={{backgroundColor: 'var(--main-color)'}}>
+
+            {showProfile && <ProfileModal {...profileProps} />}
+
             <Container sx={{width: '100%', maxWidth: 1600}}>
                 <Box className={s.header}>
                     <Box className={s.logoContainer}>
@@ -72,9 +84,9 @@ function Header({signOut}: any) {
                     </Box>
 
                     <Box className={s.grade}>
-                        <button onClick={decrement}> - </button>
+                        <button onClick={decrement}> -</button>
                         <span> {gradeNum} </span>
-                        <button onClick={increment}> + </button>
+                        <button onClick={increment}> +</button>
                     </Box>
 
                     <Box className={s.headerStreak} sx={{display: {xs: 'flex', md: 'none'}}}>
@@ -84,16 +96,14 @@ function Header({signOut}: any) {
 
                     <Box className={s.profile}>
                         {/*<NavLink to={'/shop'}>*/}
-                            <span className={s.money}>
+                        <span className={s.money}>
                                 {money}<span className={s.dollar}>$</span>
                             </span>
                         {/*</NavLink>*/}
                         <button onClick={signOut} className={s.signOut}>
                             Sign out
                         </button>
-                        <IconButton sx={{display: {xs: 'flex', sm: 'none'}}} onClick={handleOpenUserMenu} className={s.icon}>
-                            <Avatar alt="AA" src={userPhotoURL}/>
-                        </IconButton>
+                        <Avatar alt="AA" src={avatar} onClick={handleOpenProfile} className={s.avatar}/>
                         <Menu
                             sx={{mt: '45px'}}
                             id="menu-appbar"

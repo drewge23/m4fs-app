@@ -130,3 +130,63 @@ input {
     font-size: 1.5rem;
     font-family: 'Cunia', sans-serif;
 }
+
+.avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-size: cover;
+    border: 1px solid #9191bb;
+    transition: 300ms;
+}
+
+.avatar:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px 3px #9191bb;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 500px;
+    max-height: 80vh;
+    padding: 1rem 5rem;
+    outline: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 5px dashed var(--main-color);
+    border-radius: 1rem;
+    background-color: white;
+
+    /*border-radius: 3rem;*/
+    /*border: 5px solid #01016a;*/
+
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.modal::-webkit-scrollbar {
+    display: none;
+}
+.modal p {
+    margin: 0.75rem;
+    font-weight: 550;
+    font-size: 1.25rem;
+}
+.modal button {
+    margin: 0.75rem;
+    width: 80%;
+    height: 50px;
+    background-color: var(--main-color);
+}
+.modal button:hover {
+    cursor: pointer;
+    background-color: var(--main-color-hover);
+}

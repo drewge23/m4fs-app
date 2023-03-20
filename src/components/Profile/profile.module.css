@@ -1,0 +1,36 @@
+.profile button {
+    margin: 5px;
+    max-height: 40px;
+    min-width: 100px;
+    max-width: 150px;
+}
+
+.profile p {
+    font-size: 1rem;
+}
+
+.profile label {
+    margin: 5px;
+}
+
+.submitClose {
+    display: flex;
+    gap: 0px;
+}
+
+.submitClose button {
+    max-height: 40px;
+    width: 100px;
+}
+
+.delete:hover {
+    background-color: #868686 !important;
+}
+
+.submit:hover {
+    background-color: #52a74a !important;
+}
+
+.close:hover {
+    background-color: #a55656 !important;
+}

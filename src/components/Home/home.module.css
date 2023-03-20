@@ -75,6 +75,14 @@
     font-size: 0.9rem;
 }
 
+.avatar {
+    transition: 300ms;
+}
+.avatar:hover {
+    cursor: pointer;
+    box-shadow: 0 0 7px 7px var(--main-color-hover)
+}
+
 .icon {
     transition: box-shadow 1000ms;
     box-shadow: 0 0 0 0 var(--light-color);
@@ -125,6 +133,7 @@
     text-decoration: none;
     transition: 300ms;
 }
+
 .leftLinks a:hover {
     color: var(--dark-color);
 }
@@ -193,6 +202,7 @@
     .headerStreak {
         min-width: 70px;
     }
+
     .stars {
         display: none;
     }
@@ -202,6 +212,7 @@
     .grade {
         margin: 0 0.1rem;
     }
+
     .money {
         margin: 0 0.1rem;
     }

@@ -11,11 +11,18 @@ const userDataSlice = createSlice({
     initialState: {
         isInitialized: false,
         fullName: null,
-        // progress: null
+        avatarUrl: null,
+        userId: null,
     },
     reducers: {
         setUserData: (state, action) => {
             return action.payload
+        },
+        setUserName: (state, action) => {
+            return {...state, fullName: action.payload}
+        },
+        setUserAvatarUrl: (state, action) => {
+            return {...state, avatarUrl: action.payload}
         },
     }
 })
@@ -30,6 +37,8 @@ export const getUserDataThunk = (db: any, userId: any) => (dispatch: any) => {
                 dispatch(setStars(response.data().stars))
                 dispatch(setUserData({
                     fullName: response.data().fullName,
+                    avatarUrl: response.data().avatarUrl,
+                    userId: response.data().userId,
                     isInitialized: true,
                 }))
             }
@@ -53,5 +62,15 @@ export const setInitialUserDataThunk = (db: any, userId: any, userData: any) => 
         })
 }
 
+export const updateUserPersonalDataThunk = (db: any, userId: any, userData: any) => (dispatch: any) => {
+    db.collection('users').doc(userId).update({
+        fullName: userData.fullName,
+        avatarUrl: userData.avatarUrl,
+    })
+        .then(() => {
+            dispatch(setUserName(userData.fullName))
+            dispatch(setUserAvatarUrl(userData.avatarUrl))
+        })
+}
 export default userDataSlice.reducer
-export const {setUserData} = userDataSlice.actions
+export const {setUserData, setUserName, setUserAvatarUrl} = userDataSlice.actions

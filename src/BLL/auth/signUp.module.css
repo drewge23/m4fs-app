@@ -7,7 +7,8 @@
 }
 .signUpForm {
     width: 500px;
-    height: 300px;
+    padding: 2rem 0;
+    /*height: 500px;*/
     border-radius: 50px;
     background-color: var(--white-color);
     box-shadow: 20px 20px 1px 1px var(--main-color);
@@ -18,9 +19,12 @@
     align-items: center;
 }
 .signUpForm label {
-    margin: 1rem 0;
+    margin-bottom: 0.5rem;
     font-size: 1.5rem;
 }
 .signUpForm button {
     margin: 1rem 0.5rem;
+}
+.signUpScreen button:hover {
+    cursor: pointer;
 }

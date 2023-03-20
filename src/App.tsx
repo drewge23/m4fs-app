@@ -16,9 +16,9 @@ import LessonScreenContainer from "./components/LessonScreen/LessonScreenContain
 import {resetStreak, setStreakIsIncrementable} from "./BLL/streakSlice";
 import {getUserDataThunk} from "./BLL/userDataSlice";
 import initialProgress from "./BLL/initialProgress";
-import Auth from "./BLL/Auth";
+import Auth from "./BLL/auth/Auth";
 import {useAuthState} from "react-firebase-hooks/auth";
-import SignUp from "./BLL/SignUp";
+import SignUp from "./BLL/auth/SignUp";
 import "./assets/fonts/Cunia.ttf"
 import {lesson, theory} from "./tasks/taskTypes";
 import lessons from "./tasks/lessons";
